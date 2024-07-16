@@ -75,10 +75,10 @@ const Dashboard = () => {
                         <p className="items-center flex justify-center text-2xl md:text-[42px] text-gray-800 font-extrabold">recomendam os nossos produtos</p>
                         <p className="items-center flex justify-center text-sm md:text-lg text-gray-800">Confira as instituições que já utilizam o Melhor Escola para captar alunos</p>
                         <div className="flex flex-col md:flex-row w-full space-y-5 md:space-y-0 md:space-x-20 items-center justify-between p-6 md:p-16 gap-5">
-                            <img className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-mackenzie.png" alt="mackenzie" />
-                            <img className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cogna.png" alt="cogna" />
-                            <img className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-anglo.png" alt="angle" />
-                            <img className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cruzeirodosul.png" alt="cruzeirodo" />
+                            <Image className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-mackenzie.png" alt="mackenzie" />
+                            <Image className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cogna.png" alt="cogna" />
+                            <Image className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-anglo.png" alt="angle" />
+                            <Image className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cruzeirodosul.png" alt="cruzeirodo" />
                         </div>
                     </section>
                 </div>

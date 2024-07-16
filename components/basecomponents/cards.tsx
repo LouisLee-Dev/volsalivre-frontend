@@ -1,5 +1,4 @@
-import { log } from "console";
-import { start } from "repl";
+import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { removeFromLocalStorage } from "@/utils/localstorage";
 
@@ -72,7 +71,7 @@ const OtherSchoolsCard: React.FC<OtherSchoolsCardProps> = ({
   return (
     <div className="flex flex-col p-5 bg-white rounded-lg justify-between gap-5">
       <div className="flex gap-2 items-center">
-        <img
+        <Image
           src={mark}
           alt=""
           width={70}
@@ -109,7 +108,7 @@ const LatestArticleCard: React.FC<LatestArticleCardProps> = ({
 }) => {
   return (
     <div className="flex flex-col gap-5 rounded-lg bg-white p-5">
-      <img src={img} className="w-full" alt="" />
+      <Image src={img} className="w-full" alt="" />
       <p className="text-lg font-semibold">{title}</p>
       <p>{text}</p>
     </div>
@@ -138,7 +137,7 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
   return (
     <div className="flex flex-col p-5 bg-white rounded-lg justify-between gap-5">
       <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-0">
-        <img
+        <Image
           src={mark}
           alt=""
           width={70}
@@ -217,7 +216,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   return (
     <div className="flex flex-col bg-white rounded-lg justify-between gap-2">
       <div className="flex justify-between items-center">
-        <img
+        <Image
           src={mark}
           alt=""
           width={70}
@@ -275,7 +274,7 @@ interface PopularSchoolCardProps {
 const PopularSchoolCard: React.FC<PopularSchoolCardProps> = ({ mark }) => {
   return (
     <div className="flex ">
-      <img
+      <Image
         src={mark}
         alt="#"
         width={70}
@@ -311,7 +310,7 @@ const BlogCard: React.FC<BlogCardProps> = ({img, title, date, env,category}) => 
         </div>
       </div>
       <div className="flex w-full  overflow-hidden">
-        <img className="rounded-3xl object-contain w-full" src={img} alt="img" />
+        <Image className="rounded-3xl object-contain w-full" src={img} alt="img" />
       </div>
       <div className="flex flex-col w-full  items-start space-y-5">
         <p className="text-gray-500">{env}</p>

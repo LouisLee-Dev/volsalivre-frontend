@@ -1,14 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import React, { useState } from "react";
+import Image from "next/image";
 import "swiper/scss";
 import "swiper/scss/pagination";
-import { PrivateSchoolCard } from "@/components/basecomponents/cards";
-import { useGetLevelMutation } from "@/lib/features/level/levelApi";
-import { useAddSchoolMutation, useGetAllMutation, useUpdateSchoolMutation } from "@/lib/features/schools/schoolsApi";
-import { toast } from "react-toastify";
-import Tab from "./tab";
 import Modal from '@/components/basecomponents/modal';
 interface Title {
   title: string;
@@ -67,21 +62,6 @@ const PainelBoard: React.FC<Title> = ({ title }) => {
             Média por etapa de ensino no meio período <br />
             Cidade: <strong> Capixaba </strong>
           </p>
-          {/* <div className="gap-5">
-                <div className="flex items-center justify-center w-full">
-                    <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <span className='text-lg font-bold'>Disposicao a pagar</span>
-                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                            </svg>
-                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                        </div>
-                        <input id="dropzone-file" type="file" className="hidden" />
-                    </label>
-                </div> 
-            </div> */}
         </div>
       </div>
     </div>
@@ -359,7 +339,7 @@ const ServiceBoard: React.FC<Title> = ({ title }) => {
           </p>
         </div>
         <div className="flex flex-col md:flex-row justify-between border rounded-xl p-5 bg-white gap-10">
-          <img src="" alt="no image" className="w-full md:w-auto md:h-auto" />
+          <Image src="" alt="no image" className="w-full md:w-auto md:h-auto" />
           <div className="flex flex-col justify-between gap-5 w-full md:w-auto">
             <strong>Acelera Cash</strong>
             <p>

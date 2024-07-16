@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import {EscolaDetailCard} from '@/components/basecomponents/cards';
 
 interface DetailProps {
@@ -47,7 +48,7 @@ const Detail:React.FC<DetailProps> = ({title}) => {
                             </p>
                             <p className="text-[16px] text-gray-600">{"27"} Avaliações</p>
                         </div>
-                        <img src="https://img.imageboss.me/me/cover:center/48x48/format:auto/20200129173502210.jpg" height="64" width="64" loading="lazy" className="sub-header-pdp__logo" title="Logo Colégio Paulino E Paulino" alt="Logo Colégio Paulino E Paulino" />
+                        <Image src="https://img.imageboss.me/me/cover:center/48x48/format:auto/20200129173502210.jpg" height="64" width="64" loading="lazy" className="sub-header-pdp__logo" title="Logo Colégio Paulino E Paulino" alt="Logo Colégio Paulino E Paulino" />
                     </div>
                 </div>
                 <div className="row-span-1 lg:row-span-2 w-full md:w-full flex justify-center items-center">

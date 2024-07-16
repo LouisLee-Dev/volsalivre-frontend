@@ -1,6 +1,7 @@
 'use client';
 
 import React, {useState} from "react";
+import Image from "next/image";
 import Link from 'next/link'
 
 let article = [
@@ -66,7 +67,7 @@ const Dashboard = () => {
                                 as={`/artigos/${encodeURIComponent(result.title)}`} 
                                 className="flex flex-row p-4 justify-between bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                             >
-                                <img className=" rounded-md card-img card-article-img w-2/5 " src={result.mark} alt=" Musicalização infantil: o que é, como aplicar e quais benefícios? "/>
+                                <Image className=" rounded-md card-img card-article-img w-2/5 " src={result.mark} alt=" Musicalização infantil: o que é, como aplicar e quais benefícios? "/>
                                 <div className="flex flex-col justify-between pt-0 pl-4 items-start leading-normal">
                                     <span className=" text-[14px] tracking-tight text-gray-700 dark:text-white"> {result.title} </span>
                                     <p className="text-xs text-ellipsis text-gray-500 pb-1 overflow-hidden ... ">{result.detail}</p>
