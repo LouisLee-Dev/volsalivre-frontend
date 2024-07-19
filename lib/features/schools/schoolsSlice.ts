@@ -18,7 +18,7 @@ const initialState: SchoolsState = {
 const schoolsSlice = createSlice({
   name: "schools",
   initialState,
-  reducers: {
+  reducers: {    
     fetchDataStart: (state) => {
       state.loading = true;
       state.error = null;

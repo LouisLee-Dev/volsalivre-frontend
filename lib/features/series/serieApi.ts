@@ -21,11 +21,11 @@ const axiosBaseQuery =
     }
   };
 
-export const levelApi = createApi({
-  reducerPath: 'levelApi',
-  baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/levels' }),
+export const serieApi = createApi({
+  reducerPath: 'seriesApi',
+  baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/series' }),
   endpoints: (builder) => ({
-    getLevel: builder.mutation<{ level: [] }, void>({
+    getSeries: builder.mutation<{ level: [] }, void>({
       query: (credentials) => ({
         url: '/all',
         method: 'get',
@@ -35,4 +35,4 @@ export const levelApi = createApi({
   }),
 });
 
-export const { useGetLevelMutation } = levelApi;
+export const { useGetSeriesMutation } = serieApi;

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.6",
     "@types/react-redux": "^7.1.33",
     "@types/react-slick": "^0.23.13",
@@ -26,7 +27,8 @@
     "redux-thunk": "^3.1.0",
     "sass": "^1.77.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.1.4"
+    "swiper": "^11.1.4",
+    "use-places-autocomplete": "^4.0.1"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -11,7 +11,7 @@ import levelReducer from '@/lib/features/level/levelSlice';
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
-    auth: authReducer,
+    auth: authReducer,    
     [schoolsApi.reducerPath]: schoolsApi.reducer,
     schools: schoolsReducer,
     [levelApi.reducerPath]: levelApi.reducer,

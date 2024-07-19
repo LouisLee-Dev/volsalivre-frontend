@@ -13,12 +13,14 @@ interface ToEnterProps {
 }
 
 const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
-  const [name, setName] = useState<string>(""); 
+  const [name, setName] = useState<string>("");
   const [nameVal, setNameVal] = useState<boolean>(false);
   const [cpf, setCPF] = useState<string>("");
   const [cpfVal, setCPFVal] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [emailVal, setEmailVal] = useState<boolean>(false);
+  const [phone, setPhone] = useState<string>("");
+  const [phoneVal, setPhoneVal] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [passwordVal, setPasswordVal] = useState<boolean>(false);
   const [loginInput, setLogin] = useState<string>("");
@@ -29,30 +31,39 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
   const [register] = useRegisterMutation();
   const dispatch = useAppDispatch();
 
-  const handleLogin = async () => {
-    // if (cpf.length) {
-      
-    // }
+  const handleLogin = async () => {    
     if (!statuss) {
       const newUserData = {
         name: name,
         email: email,
         cpf: cpf,
+        phone: phone,
         password: password,
         password2: password,
       };
       try {
-        const { name } = await register(newUserData).unwrap();        
+        const { name } = await register(newUserData).unwrap();
         if (name) {
           setStatus(!statuss);
           toast.success("Successfully registered ....")
           setCPF('');
           setName('');
           setEmail('');
+          setPhone('');
           setPassword('');
-        }
+        }      console.log(
+          {
+            name: name,
+          email: email,
+          cpf: cpf,
+          phone: phone,
+          password: password,
+          password2: password,
+          }
+        );
+  
       } catch (error) {
-        
+
       }
     } else {
       const data = {
@@ -76,9 +87,8 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
 
   return (
     <div
-      className={`${
-        isShow ? "flex" : "hidden"
-      } fixed w-screen h-screen top-0 left-0 justify-center items-center z-20`}
+      className={`${isShow ? "flex" : "hidden"
+        } fixed w-screen h-screen top-0 left-0 justify-center items-center z-20`}
     >
       <div className="absolute w-screen h-screen bg-slate-700 opacity-50"></div>
       <div className="flex flex-col gap-4 mb-6 md:grid md:grid-cols-2 bg-white rounded-md px-5 py-10 z-50 max-w-lg md:max-w-2xl mx-4 md:mx-0">
@@ -110,10 +120,9 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
               <div>
                 <label
                   htmlFor="filled_success"
-                  className={`font-bold text-gray-700 text-sm px-2 ${
-                    nameVal === true &&
+                  className={`font-bold text-gray-700 text-sm px-2 ${nameVal === true &&
                     (name !== "" ? "text-green-500" : "text-red-500")
-                  }`}
+                    }`}
                 >
                   Nome completo
                 </label>
@@ -133,10 +142,9 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
               <div>
                 <label
                   htmlFor="filled_success"
-                  className={`font-bold text-gray-700 text-sm px-2 ${
-                    cpfVal === true &&
+                  className={`font-bold text-gray-700 text-sm px-2 ${cpfVal === true &&
                     (cpf !== "" ? "text-green-500" : "text-red-500")
-                  }`}
+                    }`}
                 >
                   CPF
                 </label>
@@ -145,7 +153,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   type="text"
                   aria-describedby="filled_success_help"
                   className="block text-sm rounded-full px-16 py-2 w-full text-gray-900 bg-gray-50 border focus:outline-purple-500 border-slate-500 appearance-none peer"
-                  placeholder="Digite seu CPF (999.999.999-99)"
+                  placeholder="123.456.789-99"
                   value={cpf}
                   pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"
                   onChange={(e) => setCPF(e.target.value)}
@@ -157,10 +165,9 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
               <div>
                 <label
                   htmlFor="filled_success"
-                  className={`font-bold text-gray-700 text-sm px-2 ${
-                    emailVal === true &&
-                    (email.includes("@") ? "text-green-500" : "text-red-500")
-                  }`}
+                  className={`font-bold text-gray-700 text-sm px-2 ${emailVal === true &&
+                    (email.includes("@") && email.includes(".co") ? "text-green-500" : "text-red-500")
+                    }`}
                 >
                   E-mail
                 </label>
@@ -176,17 +183,43 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                 />
               </div>
             </div>
+            <div className="col-span-2 md:col-span-2">
+              <div>
+                <label
+                  htmlFor="filled_success"
+                  className={`font-bold text-gray-700 text-sm px-2 ${phoneVal === true &&
+                    (phone.length !== 13 ? "text-green-500" : "text-red-500")
+                    }`}
+                >
+                  WhatsApp
+                </label>
+                <span className="text-gray-600 text-xs"> (obrigatório) </span>
+                <div
+                  className="relative flex items-center"
+                >
+                  <span className="absolute left-12 text-gray-600 text-lg z-50">+</span>
+                  <input
+                    type="number"
+                    aria-describedby="filled_success_help"
+                    className="block text-sm rounded-full px-16 py-2 w-full text-gray-900 bg-gray-50 border focus:outline-purple-500 border-slate-500 appearance-none peer"
+                    placeholder="55 (35) 98763-4321"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    onBlur={() => setPhoneVal(true)}
+                  />
+                </div>
+              </div>
+            </div>
           </>
         ) : (
           <div className="col-span-2">
             <div>
               <label
                 htmlFor="filled_success"
-                className={`font-bold text-gray-700 text-sm px-2 ${
-                  loginVal === true &&
+                className={`font-bold text-gray-700 text-sm px-2 ${loginVal === true &&
                   (loginInput !== "" ? "text-green-500" : "text-red-500")
-                }`}
-              >
+                  }`}
+              >                
                 E-mail ou CPF
               </label>
               <span className="text-gray-600 text-xs"> (obrigatório) </span>
@@ -206,10 +239,9 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           <div>
             <label
               htmlFor="filled_success"
-              className={`font-bold text-gray-700 text-sm px-2 ${
-                passwordVal === true &&
+              className={`font-bold text-gray-700 text-sm px-2 ${passwordVal === true &&
                 (password !== "" ? "text-green-500" : "text-red-500")
-              }`}
+                }`}
             >
               Senha
             </label>
@@ -240,7 +272,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           <div className="text-center">
             <p className="text-gray-700">Já tem uma conta?</p>
             <p
-              className="text-orange-600"
+              className="text-orange-600 cursor-pointer"
               onClick={() => {
                 setStatus(!statuss);
               }}

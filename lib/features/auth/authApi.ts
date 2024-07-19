@@ -1,15 +1,21 @@
 // services/authApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { toast } from 'react-toastify';
 import axios from 'axios';
 
 const axiosBaseQuery =
-  ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }) =>
-  async ({ url, method, data, params }: { url: string; method: any; data?: any; params?: any }) => {
+  ({ baseUrl }: { baseUrl: string }) =>
+  async ({ url, method, data }: { url: string; method: string; data?: any }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data, params });
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+      });
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError as any;
+      toast.error(err)
       return {
         error: {
           status: err.response?.status,
@@ -30,7 +36,7 @@ export const authApi = createApi({
         data: credentials,
       }),
     }),
-    register: builder.mutation<{ name: string }, { name:string; cpf:string; email: string; password: string; password2: string }>({
+    register: builder.mutation<{ name: string }, { name:string; cpf:string; email: string; phone: string; password: string; password2: string }>({
       query: (credentials) => ({
         url: '/users/register',
         method: 'post',

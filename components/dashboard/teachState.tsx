@@ -24,7 +24,6 @@ const TeachStage: React.FC = () => {
           </p>
           <div className="grid lg:grid-cols-3 lg:gap-10 sm:grid-cols-2 gap-3">
             <Link
-              // type="button"
               href="/escola/busca"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
@@ -47,7 +46,6 @@ const TeachStage: React.FC = () => {
               Educação Infantil
             </Link>
             <Link
-              // type="button"
               href="/escola/busca"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
@@ -76,28 +74,9 @@ const TeachStage: React.FC = () => {
                   d="m256 175.15l-76.09 63.83L200 320h112l20.09-81.02zm76.09 63.83l52.87-22.4l25.78-73.26M447 269.97l-62.04-53.39m-205.05 22.4l-52.87-22.4l-25.78-73.26M65 269.97l62.04-53.39M256 175.15v-57.57l64-42.64m-128-.01l64 42.65M312 320l28 48l-28 71m98.74-71H342m-142-48l-28 48l28.37 71.5M101.63 368H172"
                 />
               </svg>
-              Ensino Fundamental I
-            </Link>
-            {/* <Link
-              // type="button"
-              href="/escola/busca"
-              className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2.5em"
-                height="2.5em"
-                viewBox="0 0 712 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M328.9 2.7c-5.4-3.6-12.4-3.6-17.8 0L171.2 96H64C28.7 96 0 124.7 0 160V448c0 35.3 28.7 64 64 64H256h32 64 32H576c35.3 0 64-28.7 64-64V160c0-35.3-28.7-64-64-64H468.8L328.9 2.7zM384 384c0-35.3-28.7-64-64-64s-64 28.7-64 64v96H64c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32H176c3.2 0 6.2-.9 8.9-2.7L320 35.2l135.1 90.1c2.6 1.8 5.7 2.7 8.9 2.7H576c17.7 0 32 14.3 32 32V448c0 17.7-14.3 32-32 32H384V384zm-32 96H288V384c0-17.7 14.3-32 32-32s32 14.3 32 32v96zM96 192v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32zm64 0v64H128V192h32zm320-32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V192c0-17.7-14.3-32-32-32H480zm0 32h32v64H480V192zM96 352v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32H128c-17.7 0-32 14.3-32 32zm64 0v64H128V352h32zm320-32c-17.7 0-32 14.3-32 32v64c0 17.7 14.3 32 32 32h32c17.7 0 32-14.3 32-32V352c0-17.7-14.3-32-32-32H480zm0 32h32v64H480V352zM320 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128zm0 160a96 96 0 1 0 0-192 96 96 0 1 0 0 192zm16-128c0-8.8-7.2-16-16-16s-16 7.2-16 16v32c0 8.8 7.2 16 16 16h24c8.8 0 16-7.2 16-16s-7.2-16-16-16h-8V160z"
-                ></path>
-              </svg>
-              Teaching Fundamental 2
-            </Link> */}
-            <Link
-              // type="button"
+              Ensino Fundamental
+            </Link>            
+            <Link              
               href="/escola/busca"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >

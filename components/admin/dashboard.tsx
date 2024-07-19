@@ -111,7 +111,7 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
             </label>
           </div>
           <div className="flex justify-between text-gray-700 gap-3 ">
-            <button className="border rounded-lg bg-slate-200 p-1.5" onClick={openModal}>ENSINO BÁSICO</button>
+            <button className="border rounded-lg bg-slate-200 p-1.5" onClick={()=>openModal()}>ENSINO BÁSICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">TÉCNICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">FACULDADE</button>
           </div>

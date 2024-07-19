@@ -1,69 +1,11 @@
-import React from "react";
+'use client';
+
+import React, { useState, useEffect, useRef } from "react";
 import Filters from "@/components/basecomponents/filters";
 import { SearchResultCard } from "@/components/basecomponents/cards";
-import Link from "next/link";
+import Map from "../basecomponents/google_map";
 
 let SearchResults = [
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    amount: "306.57",
-    period: "Early Childhood Education - Nursery (0 to 1 year old)",
-    schoolYear: [2024, 2025],
-    shift: ["full", "morning"],
-    originUnit: "R$",
-    originPrice: 1000,
-    presentUnit: "BRL",
-    presentPrice: 500,
-  },
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    amount: "306.57",
-    period: "Early Childhood Education - Nursery (0 to 1 year old)",
-    schoolYear: [2024, 2025],
-    shift: ["full", "morning"],
-    originUnit: "R$",
-    originPrice: 1000,
-    presentUnit: "BRL",
-    presentPrice: 500,
-  },
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    amount: "306.57",
-    period: "Early Childhood Education - Nursery (0 to 1 year old)",
-    schoolYear: [2024, 2025],
-    shift: ["full", "morning"],
-    originUnit: "R$",
-    originPrice: 1000,
-    presentUnit: "BRL",
-    presentPrice: 500,
-  },
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    amount: "306.57",
-    period: "Early Childhood Education - Nursery (0 to 1 year old)",
-    schoolYear: [2024, 2025],
-    shift: ["full", "morning"],
-    originUnit: "R$",
-    originPrice: 1000,
-    presentUnit: "BRL",
-    presentPrice: 500,
-  },
   {
     mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
     star: 1,
@@ -82,6 +24,56 @@ let SearchResults = [
 ];
 
 const Dashboard = () => {
+  const [switchMap, setSwitchMap] = useState<boolean>(false);
+  const [searchParam, setSearchParam] = useState<any>(null);
+  const [schools, setSchools] = useState<any>(null);
+  const [timer, setTimer] = useState<boolean>(false);
+
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools/all';
+
+    const fetchSchools = async (searchParam: any) => {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(searchParam), // Include data if required (e.g., for POST requests)
+      };
+
+      try {
+        const result = await fetch(url, requestOptions);
+        if (!result.ok) {
+          throw new Error(`HTTP error! Status: ${result.status}`);
+        }
+        const data = await result.json();        
+        setSchools(data); // Update state with fetched data
+      } catch (error) {
+        console.error('Error fetching schools:', error);
+      }
+    };
+
+    // Clear the previous timeout if it exists
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Set a new timeout
+    timeoutRef.current = setTimeout(() => {
+      fetchSchools(searchParam);
+    }, 3000); // 5 seconds
+
+    // Cleanup function to clear the timeout on component unmount or before setting a new timeout
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParam])
+
   return (
     <div className="flex flex-col bg-slate-100 py-0 space-y-6 items-center">
       <div className="flex border-b pb-2 gap-3 items-center xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pt-3 w-full">
@@ -92,7 +84,7 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-col lg:flex-row lg:justify-between md:flex-row md:justify-between sm:flex-col gap-10 justify-between xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 w-full">
         <p>
-          {} bags found in {}
+          { } bags found in { }
         </p>
         <div className="flex flex-col sm:flex-row justify-around items-center gap-5 w-full sm:w-auto">
           <div className="flex items-center relative text-gray-700 text-sm w-full sm:w-auto">
@@ -121,7 +113,7 @@ const Dashboard = () => {
               </svg>
             </span>
           </div>
-          <div className="flex gap-5 md:items-center sm:justify-between">
+          <div className="flex gap-5 md:items-center sm:justify-between cursor-pointer" onClick={() => setSwitchMap(!switchMap)}>
             <span className="rounded-full bg-orange-600 text-white px-2 py-2 flex items-center cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,37 +143,43 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="pt-0 flex flex-row gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
-        <div className="max-[1200px]:hidden">
-          <Filters type="search" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
-          {SearchResults.map((result: any, index: number) => (
-            <div
-              key={index}
-              className="bg-white max-w-sm p-4 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
-            >
-              <SearchResultCard
-                key={index}
-                mark={result.mark}
-                title={result.title}
-                star={result.star}
-                at={result.at}
-                period={result.period}
-                position={result.position}
-                schoolYear={result.schoolYear}
-                shift={result.shift}
-                originUnit={result.originUnit}
-                originPrice={result.originPrice}
-                presentUnit={result.presentUnit}
-                presentPrice={result.presentPrice}
-              />
+      {
+        switchMap ?
+          <Map /> :
+          <div className="pt-0 flex flex-row gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
+            <div className="max-[1200px]:hidden">
+              <Filters type="search" setSearchParam={setSearchParam} />
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
+              {schools?.map((result: any, index: number) => (
+                <div
+                  key={index}
+                  className="bg-white max-w-sm p-4 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <SearchResultCard
+                    key={index}
+                    mark={result.mark}
+                    title={result.title}
+                    star={result.star}
+                    at={result.at}
+                    period={result.period}
+                    position={result.position}
+                    schoolYear={result.years}
+                    shift={result.shift}
+                    level = {result.level}
+                    originUnit={result.originUnit}
+                    originPrice={result.originPrice}
+                    presentUnit={result.presentUnit}
+                    presentPrice={result.presentPrice}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+      }
     </div>
   );
 };
 
 export default Dashboard;
+

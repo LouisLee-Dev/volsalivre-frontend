@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { removeFromLocalStorage } from "@/utils/localstorage";
+import Link from 'next/link';
 
 const stars = [0, 0, 0, 0, 0];
 
@@ -69,7 +70,7 @@ const OtherSchoolsCard: React.FC<OtherSchoolsCardProps> = ({
   secure,
 }) => {
   return (
-    <div className="flex flex-col p-5 bg-white rounded-lg justify-between gap-5">
+    <Link href={`/artigos/${title}`} className="flex flex-col p-5 bg-white rounded-lg justify-between gap-5">
       <div className="flex gap-2 items-center">
         <Image
           src={mark}
@@ -91,7 +92,7 @@ const OtherSchoolsCard: React.FC<OtherSchoolsCardProps> = ({
         <p>{at}</p>
       </div>
       <p>{secure}</p>
-    </div>
+    </Link>
   );
 };
 
@@ -122,7 +123,7 @@ interface PrivateSchoolCardProps {
   at: string;
   position: string;
   scholarUnit: string;
-  amount: number; 
+  amount: number;
 }
 
 const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
@@ -155,7 +156,7 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
       <div className="flex flex-col gap-2 text-gray-400 text-center md:text-left">
         <p>{position}</p>
         <p>{at}</p>
-      </div><hr className="p-2"/>
+      </div><hr className="p-2" />
       <div className="flex flex-col space-y-0 text-center md:text-left">
         <p className="pb-0 text-gray-400">sholarships form:</p>
         <p className="pt-0 font-semibold text-gray-700">{scholarUnit} {amount}</p>
@@ -173,6 +174,7 @@ interface SearchResultCardProps {
   position: string;
   schoolYear: any;
   shift: any;
+  level: any;
   originUnit: string;
   originPrice: number;
   presentUnit: string;
@@ -187,6 +189,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   period,
   position,
   schoolYear,
+  level,
   shift,
   originUnit,
   originPrice,
@@ -235,7 +238,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
         <p className="text-gray-700 text-sm">{period}</p>
         <p className="text-sm">{position}</p>
         <p className="text-sm">{at}</p>
-      </div><hr className="p-2"/>
+      </div><hr className="p-2" />
       <div className="flex flex-col text-sm">
         <p>School year</p>
         <span className="flex justify-start">
@@ -249,13 +252,25 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
       <div className="flex justify-between items-center">
         <p className="pb-0 text-gray-400 line-through decoration-gray-500">{originUnit} {originPrice}</p>
         <p className="pt-0 font-semibold text-gray-700">
-          {presentUnit} {presentPrice} 
+          {presentUnit} {presentPrice}
           {/* <span className="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
           </span> */}
         </p>
       </div>
+      <div className="flex flex-col justify-between">
+        <span>Levels</span>
+        {
+          level && level.map((l: any, index: any) => (
+            <div key={index} className="flex gap-5 pt-0 font-semibold text-gray-700">
+              <span>{l.level}</span>
+              <span>{l.grade}</span>
+            </div>
+          ))
+        }
+      </div>
+
       <div className="flex flex-col">
-        <a 
+        <a
           // type="button" 
           href={`/escola/${encodeURIComponent(title)}`}
           className="text-white py-2 bg-orange-500 hover:bg-orange-600 focus:outline-double focus:ring-4 focus:ring-purple-500 font-medium rounded-full text-sm px-5 text-center me-2"
@@ -290,27 +305,27 @@ interface BlogCardProps {
   title: string;
   date: string;
   env: string;
-  category:string;
+  category: string;
 }
-  
-const BlogCard: React.FC<BlogCardProps> = ({img, title, date, env,category}) => {
+
+const BlogCard: React.FC<BlogCardProps> = ({ img, title, date, env, category }) => {
   return (
     <div className="flex flex-col space-y-5">
       <div className="space-y-3">
         <p className="text-xl md:text-2xl font-semibold text-gray-900">{title}</p>
         <div className="flex text-xs text-gray-500 gap-3">
           <a href="#" className="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208s208-93.13 208-208S370.87 48 256 48m96 240h-96a16 16 0 0 1-16-16V128a16 16 0 0 1 32 0v128h80a16 16 0 0 1 0 32"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M256 48C141.13 48 48 141.13 48 256s93.13 208 208 208s208-93.13 208-208S370.87 48 256 48m96 240h-96a16 16 0 0 1-16-16V128a16 16 0 0 1 32 0v128h80a16 16 0 0 1 0 32" /></svg>
             <span>{date}</span>
           </a>
           <a href="#" className="flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M408 96H252.11a23.9 23.9 0 0 1-13.31-4L211 73.41A55.77 55.77 0 0 0 179.89 64H104a56.06 56.06 0 0 0-56 56v24h416c0-30.88-25.12-48-56-48m15.75 352H88.25a56 56 0 0 1-55.93-55.15L16.18 228.11v-.28A48 48 0 0 1 64 176h384.1a48 48 0 0 1 47.8 51.83v.28l-16.22 164.74A56 56 0 0 1 423.75 448m56.15-221.45"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M408 96H252.11a23.9 23.9 0 0 1-13.31-4L211 73.41A55.77 55.77 0 0 0 179.89 64H104a56.06 56.06 0 0 0-56 56v24h416c0-30.88-25.12-48-56-48m15.75 352H88.25a56 56 0 0 1-55.93-55.15L16.18 228.11v-.28A48 48 0 0 1 64 176h384.1a48 48 0 0 1 47.8 51.83v.28l-16.22 164.74A56 56 0 0 1 423.75 448m56.15-221.45" /></svg>
             <span>{category}</span>
           </a>
         </div>
       </div>
       <div className="flex w-full  overflow-hidden">
-        <Image className="rounded-3xl object-contain w-full" src={img} alt="img" />
+        <Image className="rounded-3xl object-contain w-full" src={img} width={100} height={100} alt="img" />
       </div>
       <div className="flex flex-col w-full  items-start space-y-5">
         <p className="text-gray-500">{env}</p>
@@ -321,24 +336,24 @@ const BlogCard: React.FC<BlogCardProps> = ({img, title, date, env,category}) => 
 };
 
 interface CategoriesCardProps {
-  name:any;
+  name: any;
 }
 
-const CategoriesCard: React.FC<CategoriesCardProps> = ({name}) => {
+const CategoriesCard: React.FC<CategoriesCardProps> = ({ name }) => {
   const cateLi: any = [];
   const length = name.length;
   for (let i = 0; i < length; i++) {
-      cateLi.push(
-          <li key={i} className="border-b">
-              <a className="hover:text-gray-500" href="">{name[i]}</a>
-          </li>
-      )
+    cateLi.push(
+      <li key={i} className="border-b">
+        <a className="hover:text-gray-500" href="">{name[i]}</a>
+      </li>
+    )
   }
   return (
     <>
       <p className="uppercase text-gray-900 font-bold">CATEGORIAS</p>
       <ul className="flex flex-col text-orange-500 space-y-6">
-          {cateLi}
+        {cateLi}
       </ul>
     </>
   )
@@ -354,7 +369,7 @@ interface EscolaDetailCardProps {
   presentPrice: number;
 }
 
-const EscolaDetailCard:React.FC<EscolaDetailCardProps> = ({
+const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({
   period,
   schoolYear,
   shift,
@@ -369,92 +384,92 @@ const EscolaDetailCard:React.FC<EscolaDetailCardProps> = ({
     const element = schoolYear[i];
     schoolYearArray.push(
       <div className="flex items-center me-4">
-        <input id="inline-radio" type="radio" value={element} name="inline-radio-group" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"/>
+        <input id="inline-radio" type="radio" value={element} name="inline-radio-group" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
         <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900">{element}</label>
       </div>
-)
+    )
   }
   return (
     <div className="flex border w-full bg-white rounded-lg p-3 justify-between">
       <div className="flex flex-col w-full justify-between space-y-3">
-          <div className="flex flex-col space-y-3">
-              <p className="text-[16px] text-gray-700 font-bold"> Ano letivo</p>
-              {/* year */}
-              <div className="flex">
-                  {schoolYearArray}
-              </div>
-              {/* end year */}
+        <div className="flex flex-col space-y-3">
+          <p className="text-[16px] text-gray-700 font-bold"> Ano letivo</p>
+          {/* year */}
+          <div className="flex">
+            {schoolYearArray}
           </div>
-          <div className="flex justify-between items-center gap-5">
-              <div className="flex flex-col justify-between">
-                  <p className="text-[14px] font-semibold"> Série</p>
-                  {/* period */}
-                  <p className="text-xs text-gray-400">{period}</p>
-                  {/* end period */}
-              </div>
-              <div className="flex border border-purple-600 px-3 py-1 rounded-full">
-                  <span className="text-sm hover:text-slate-400"> Alterar </span>
-              </div>
+          {/* end year */}
+        </div>
+        <div className="flex justify-between items-center gap-5">
+          <div className="flex flex-col justify-between">
+            <p className="text-[14px] font-semibold"> Série</p>
+            {/* period */}
+            <p className="text-xs text-gray-400">{period}</p>
+            {/* end period */}
           </div>
-          <div className="flex justify-between items-center gap-5 pb-2 border-b">
-              <div className="flex flex-col justify-between">
-                  <p className="text-[14px] font-semibold"> Turno</p>
-                  {/* period */}
-                  <p className="text-xs text-gray-400">{shift}</p>
-                  {/* end period */}
-              </div>
-              <div className="flex border border-purple-600 px-3 py-1 rounded-full">
-                  <span className="text-sm hover:text-slate-400"> Alterar </span>
-              </div>
+          <div className="flex border border-purple-600 px-3 py-1 rounded-full">
+            <span className="text-sm hover:text-slate-400"> Alterar </span>
           </div>
-          <div className="flex justify-start gap-3 text-[12px]">
-            <p className="pb-0 text-gray-400 line-through decoration-gray-500">{originUnit} {originPrice}</p>
-            <p className="pt-0 font-semibold text-gray-700">
-              {presentUnit} {presentPrice} 
-            </p>
+        </div>
+        <div className="flex justify-between items-center gap-5 pb-2 border-b">
+          <div className="flex flex-col justify-between">
+            <p className="text-[14px] font-semibold"> Turno</p>
+            {/* period */}
+            <p className="text-xs text-gray-400">{shift}</p>
+            {/* end period */}
           </div>
-          <div className="flex items-center justify-between">
-            <a href="#" className="bg-orange-500 text-center items-center w-full py-1.5 rounded-full text-gray-200 hover:bg-orange-700">
-              Quero esta bolsa
-            </a>
+          <div className="flex border border-purple-600 px-3 py-1 rounded-full">
+            <span className="text-sm hover:text-slate-400"> Alterar </span>
           </div>
+        </div>
+        <div className="flex justify-start gap-3 text-[12px]">
+          <p className="pb-0 text-gray-400 line-through decoration-gray-500">{originUnit} {originPrice}</p>
+          <p className="pt-0 font-semibold text-gray-700">
+            {presentUnit} {presentPrice}
+          </p>
+        </div>
+        <div className="flex items-center justify-between">
+          <a href="#" className="bg-orange-500 text-center items-center w-full py-1.5 rounded-full text-gray-200 hover:bg-orange-700">
+            Quero esta bolsa
+          </a>
+        </div>
       </div>
-  </div>
+    </div>
   )
 }
 
-const MenuTipCard:React.FC = () => {
+const MenuTipCard: React.FC = () => {
   return (
     <div className="origin-top-right absolute right-0 mt-48 text-center w-32 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-    <a
-      href={`/meus-dados/${encodeURIComponent('Meu perfil')}`}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-    >
-      Meu perfil
-    </a>
-    <a
-      href={`/meus-dados/${encodeURIComponent('Meus dados')}`}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-    >
-      Meus dados
-    </a>
-    <a
-      href={`/meus-dados/${encodeURIComponent('Minhas bolsas')}`}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b"
-    >
-      Minhas bolsas
-    </a>
-    <a
-      onClick={() => {
-        removeFromLocalStorage('token');
-        window.location.href='/';
-        toast.success("Successfully logged out....")
-      }}
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-    >
-      Sair
-    </a>
-  </div>
+      <a
+        href={`/meus-dados/${encodeURIComponent('Meu perfil')}`}
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        Meu perfil
+      </a>
+      <a
+        href={`/meus-dados/${encodeURIComponent('Meus dados')}`}
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        Meus dados
+      </a>
+      <a
+        href={`/meus-dados/${encodeURIComponent('Minhas bolsas')}`}
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b"
+      >
+        Minhas bolsas
+      </a>
+      <a
+        onClick={() => {
+          removeFromLocalStorage('token');
+          window.location.href = '/';
+          toast.success("Successfully logged out....")
+        }}
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+      >
+        Sair
+      </a>
+    </div>
   )
 }
 

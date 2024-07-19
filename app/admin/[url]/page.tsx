@@ -8,22 +8,22 @@ import "@/app/globals.css";
 
 const Page = (url:any) => {
     const decode_url = decodeURIComponent(url.params.url);
-    const showDashboard: any = [];
+    let showDashboard;
     switch (decode_url) {
         case 'Painel do Gestor':
-            showDashboard.push( < PainelBoard title={decode_url} key={1}/>);
+            showDashboard = <PainelBoard title={decode_url} key={1}/>;
             break;
         case 'Minha Escola':
-            showDashboard.push( <EscolaBoard  title={decode_url} key={1}/>);
+            showDashboard = <EscolaBoard  title={decode_url} key={1}/>;
             break;
         case 'Minhas Ofertas':
-            showDashboard.push( <OfertasBoard  title={decode_url} key={1}/>);
+            showDashboard = <OfertasBoard  title={decode_url} key={1}/>;
             break;
         case 'Meus Alunos':
-            showDashboard.push( <AlunosBoard  title={decode_url} key={1}/>);
+            showDashboard = <AlunosBoard  title={decode_url} key={1}/>;
             break;
         case 'Servios':
-            showDashboard.push( <ServiceBoard  title={decode_url} key={1}/>);
+            showDashboard = <ServiceBoard  title={decode_url} key={1}/>;
             break;
     }
     return (

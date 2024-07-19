@@ -64,10 +64,10 @@ const Dashboard = () => {
                         <div onClick={(e: any) => {showDetail(result)}} key={index} className="flex rounded-sm h-[160px] hover:ring-2 hover:ring-slate-400">
                             <Link
                                 href="/artigos/[title]" 
-                                as={`/artigos/${encodeURIComponent(result.title)}`} 
+                                as={`/artigos/${encodeURIComponent(result.title)}`}
                                 className="flex flex-row p-4 justify-between bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                             >
-                                <Image className=" rounded-md card-img card-article-img w-2/5 " src={result.mark} alt=" Musicalização infantil: o que é, como aplicar e quais benefícios? "/>
+                                <Image className=" rounded-md card-img card-article-img w-2/5 " src={result.mark} alt=" Musicalização infantil: o que é, como aplicar e quais benefícios? " width={100} height={100}/>
                                 <div className="flex flex-col justify-between pt-0 pl-4 items-start leading-normal">
                                     <span className=" text-[14px] tracking-tight text-gray-700 dark:text-white"> {result.title} </span>
                                     <p className="text-xs text-ellipsis text-gray-500 pb-1 overflow-hidden ... ">{result.detail}</p>

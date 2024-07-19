@@ -1,63 +1,63 @@
 "use client";
 
-"use client";  
+"use client";
 
-import React, { useState, useEffect } from "react";  
-import { useGetLevelMutation } from "@/lib/features/level/levelApi";  
-import {  
-  useAddSchoolMutation,  
-  useGetAllMutation,  
-  useUpdateSchoolMutation,  
-} from "@/lib/features/schools/schoolsApi";  
-import { toast } from "react-toastify";  
+import React, { useState, useEffect } from "react";
+import {
+  useAddSchoolMutation,
+  useGetAllMutation,
+} from "@/lib/features/schools/schoolsApi";
+import { toast } from "react-toastify";
 
-interface ModalProps {  
-  isOpen: boolean;  
-  onClose: () => void;  
-}  
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-const options = [  
-  { label: "Option 1", value: "option1" },  
-  { label: "Option 2", value: "option2" },  
-  { label: "Option 3", value: "option3" },  
-];  
+const options = [
+  { label: "Option 1", value: "option1" },
+  { label: "Option 2", value: "option2" },
+  { label: "Option 3", value: "option3" },
+];
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {  
-  const [addSchool] = useAddSchoolMutation();  
-  const [getLevel] = useGetLevelMutation();  
-  const [getAll] = useGetAllMutation();  
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const [addSchool] = useAddSchoolMutation();
+  const [getAll] = useGetAllMutation();
 
-  const [schoolTitle, setSchoolTitle] = useState<string>("");  
+  const [schoolTitle, setSchoolTitle] = useState<string>("");
   const [schoolTitleList, setSchoolTitleList] = useState<any>(null);  
-  const [changeSchoolTitleList, setChangeSchoolTitleList] = useState<string>("");  
-  const [years, setYears] = useState<string>("");  
-  const [levels, setLevels] = useState<any>(null);  
-  const [changeLevels, setChangeLevels] = useState<string>("");  
-  const [grade, setGrade] = useState<string>("");  
-  const [step, setStep] = useState<string>("");  
-  const [monthly, setMonthly] = useState<string>("");  
-  const [monthlyState, setMonthlyState] = useState<string>("");  
-  const [discount, setDiscount] = useState<number>(0);  
-  const [regFee, setRegFee] = useState<string>("");  
-  const [vacancies, setVacancies] = useState<string>("");  
-  const [commit, setCommit] = useState<string>("");  
-  
-  const [isValidMonthly, setIsValidMonthly] = useState<boolean>(true);  
-  const [isValidMonthlyState, setIsValidMonthlyState] = useState<boolean>(true);  
-  const [isValidRegisterFee, setIsValidRegisterFee] = useState<boolean>(true);  
-  
-  const [formSwitch, setFormSwitch] = useState<boolean>(false);  
+  const [years, setYears] = useState<string>("");
+  const [levels, setLevels] = useState<any>(null);
+  const [series, setSeries] = useState<any>(null);
+  const [changeLevels, setChangeLevels] = useState<string>("");
+  const [grade, setGrade] = useState<string>("");
+  const [step, setStep] = useState<string>("");
+  const [monthly, setMonthly] = useState<string>("");
+  const [monthlyState, setMonthlyState] = useState<string>("");
+  const [discount, setDiscount] = useState<number>(0);
+  const [regFee, setRegFee] = useState<string>("");
+  const [vacancies, setVacancies] = useState<string>("");
+  const [commit, setCommit] = useState<string>("");
+
+  const [isValidMonthly, setIsValidMonthly] = useState<boolean>(true);
+  const [isValidMonthlyState, setIsValidMonthlyState] = useState<boolean>(true);
+  const [isValidRegisterFee, setIsValidRegisterFee] = useState<boolean>(true);
+
+  const [formSwitch, setFormSwitch] = useState<boolean>(false);
   useEffect(() => {
     // Fetch private school data when component mounts
-    getLevel()
-      .unwrap()
-      .then((fetchedData) => {
-        setLevels(fetchedData); // Update state with fetched data
-        // console.log('Fetched private school data:', fetchedData);
-      })
-      .catch((err) => {
-        console.error("Error fetching private school data:", err);
-      });
+    const fetchLevels = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/levels/all`);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        setLevels(data);
+      } catch (err) {
+        toast.error('Error: Level loading error!!!');
+      }
+    };
     getAll()
       .unwrap()
       .then((fetchedData) => {
@@ -67,6 +67,20 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       .catch((err) => {
         console.error("Error fetching private school data:", err);
       });
+    const fetchSeries = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/series/all`);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        setSeries(data);
+      } catch (err) {
+        toast.error('Error: Level loading error!!!');
+      }
+    };
+    fetchLevels();
+    fetchSeries();    
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures useEffect runs only on mount
   const levelData =
@@ -84,70 +98,40 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       </option>
     );
   }
+
   const SaveAndEdit = async () => {
-    if (formSwitch) {
-      alert("edit");
-      const newSchool = {
-        title: schoolTitle,
-        years: [years],
-        level: [{ level: levels, grade: grade }],
-        // step: step,
-        scholarUnit: "R$",
-        amount: monthly,
-        type: "public",
-        star: "4",
-        position: "Juliao Ramos",
-        at: "Joinville - SC",
-        shift: ["morning", "Afternoon"],
-      };
-      try {
-        const { success } = await addSchool(newSchool).unwrap();
-        if (success) {
-          toast.success("Successfully School Added ....");
-          setSchoolTitle("");
-          setLevels("");
-          setTimeout(() => {
-            setFormSwitch(true);
-          }, 1000);
-        } else {
-          toast.warning("Try again ...");
-        }
-      } catch (error) {
-        console.log(error);
+    const schoolData = {
+      title: schoolTitle,
+      years: [years],
+      level: [{ level: changeLevels, grade: grade }],
+      step: step,
+      scholarUnit: "R$",
+      amount: monthly,
+      type: "public",
+      star: "4",
+      position: "Juliao Ramos",
+      at: "Joinville - SC",
+      shift: ["morning", "Afternoon"],
+    };
+  
+    try {
+      const { success } = await addSchool(schoolData).unwrap()
+  
+      if (success) {
+        toast.success(`Successfully ${formSwitch ? 'Added' : 'Updated'} School ....`);
+        setSchoolTitle("");
+        setLevels("");
+        setTimeout(() => {
+          setFormSwitch(true);
+        }, 1000);
+      } else {
+        toast.warning("Try again ...");
       }
-      alert("register");
-    } else {
-      const editSchool = {
-        title: changeSchoolTitleList,
-        years: [years],
-        level: [{ level: levels, grade: grade }],
-        // step: step,
-        scholarUnit: "R$",
-        amount: monthly,
-        type: "public",
-        star: "4",
-        position: "Juliao Ramos",
-        at: "Joinville - SC",
-        shift: ["morning", "Afternoon"],
-      };
-      try {
-        const { success } = await addSchool(editSchool).unwrap();
-        if (success) {
-          toast.success("Successfully School Update ....");
-          setSchoolTitle("");
-          setLevels("");
-          setTimeout(() => {
-            setFormSwitch(true);
-          }, 1000);
-        } else {
-          toast.warning("Try again ...");
-        }
-      } catch (error) {
-        console.log(error);
-      }
-      alert(editSchool);
+    } catch (error:any) {      
+      toast.error("Confirm fields value");
     }
   };
+  
   //multi Selected start
   // const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   // const handleMultiSelectChange = (selected: string[]) => {
@@ -161,7 +145,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   // };
   //end
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50">
+    <div className={`fixed inset-0 ${isOpen ? 'flex' : 'hidden'} items-center justify-center z-50`}>
       <div
         className="fixed inset-0 bg-black opacity-50"
         onClick={onClose}
@@ -190,8 +174,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 Escola
               </label>
               <select
-                value={changeSchoolTitleList}
-                onChange={(e) => setChangeSchoolTitleList(e.target.value)}
+                value={schoolTitle}
+                onChange={(e) => setSchoolTitle(e.target.value)}
                 className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
               >
                 <option>Escolha uma escola</option>
@@ -212,7 +196,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
                 placeholder="Escola Mamãe Com Açúcar"
                 value={schoolTitle}
-                onChange={(e) => setSchoolTitle(e.target.value)}
+                onChange={(e) => {setSchoolTitle(e.target.value); console.log(schoolTitle);}}
                 required
               />
             </div>
@@ -255,14 +239,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Serie:
             </label>
-            <input
-              type="text"
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-              placeholder="Bercario (0-1ano)"
+            <select              
+              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"              
               value={step}
               onChange={(e) => setStep(e.target.value)}
               required
-            />
+            >
+              <option value="0">Select Serie</option>
+              {series?.map((serie:any) => (
+                <option key={serie._id} value={serie._id}>{serie.series}</option>
+              ))}
+            </select>
           </div>
           <div className="mb-5">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -287,18 +274,17 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </div>
               <input
                 type="text"
-                className={`${
-                  isValidMonthly
+                className={`${isValidMonthly
                     ? "focus:ring-orange-500"
                     : " focus:ring-red-600"
-                }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
+                  }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
                 value={monthly}
                 onChange={(e) => {
-                  setMonthly(e.target.value);
+                  setMonthly(e.target.value);                  
                   const pattern = /^\d{2}\.\d{2}$/;
-                  setIsValidMonthly(pattern.test(e.target.value));
+                  setIsValidMonthly(pattern.test(e.target.value));                  
                 }}
                 required
               />
@@ -319,11 +305,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </div>
               <input
                 type="text"
-                className={`${
-                  isValidMonthlyState
+                className={`${isValidMonthlyState
                     ? "focus:ring-orange-500"
                     : " focus:ring-red-600"
-                }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
+                  }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
                 value={monthlyState}
@@ -363,11 +348,10 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </div>
               <input
                 type="text"
-                className={`${
-                  isValidRegisterFee
+                className={`${isValidRegisterFee
                     ? "focus:ring-orange-500"
                     : " focus:ring-red-600"
-                }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
+                  }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
                 value={regFee}
