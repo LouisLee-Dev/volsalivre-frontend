@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { removeFromLocalStorage } from "@/utils/localstorage";
@@ -136,8 +139,8 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
   amount,
 }) => {
   return (
-    <div className="flex flex-col p-5 bg-white rounded-lg justify-between gap-5">
-      <div className="flex flex-col md:flex-row justify-center items-center gap-3 md:gap-0">
+    <div className="flex flex-col p-5 bg-white rounded-lg justify-between w-60 gap-2 border border-slate-400">
+      <div className="flex md:flex-row items-center gap-1 md:gap-0">
         <Image
           src={mark}
           alt=""
@@ -196,6 +199,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   presentUnit,
   presentPrice,
 }) => {
+  console.log(mark)
   const shiftArray: any = [];
   const schoolYearArray: any = [];
   let shiftlength = shift.length;
@@ -217,10 +221,10 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
     )
   }
   return (
-    <div className="flex flex-col bg-white rounded-lg justify-between gap-2">
-      <div className="flex justify-between items-center">
+    <div className="flex flex-col bg-white rounded-lg justify-between items-between gap-2">
+      <div className="flex gap-5 items-center">
         <Image
-          src={mark}
+          src={`data:${mark && mark.contentType};base64,${mark && mark.data.data.toString('base64')}`}
           alt=""
           width={70}
           height={70}
@@ -245,6 +249,9 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
           {schoolYearArray}
         </span>
         <p>Shift</p>
+        <span className="flex justify-start">
+          {shiftArray}
+        </span>
         {/* <span className="flex justify-start">
           {shiftArray}
         </span> */}
@@ -360,78 +367,141 @@ const CategoriesCard: React.FC<CategoriesCardProps> = ({ name }) => {
 }
 
 interface EscolaDetailCardProps {
-  period: string;
-  schoolYear: any;
-  shift: any;
-  originUnit: string;
-  originPrice: number;
-  presentUnit: string;
-  presentPrice: number;
+  school: any | null;
 }
 
-const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({
-  period,
-  schoolYear,
-  shift,
-  originUnit,
-  originPrice,
-  presentUnit,
-  presentPrice
-}) => {
-  const schoolYearArray: any = [];
-  let yearlength = schoolYear.length;
-  for (let i = 0; i < yearlength; i++) {
-    const element = schoolYear[i];
-    schoolYearArray.push(
-      <div className="flex items-center me-4">
-        <input id="inline-radio" type="radio" value={element} name="inline-radio-group" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500" />
-        <label htmlFor="inline-radio" className="ms-2 text-sm font-medium text-gray-900">{element}</label>
+const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({ school }) => {
+  const [selectedYear, setSelectedYear] = useState<any>();
+  const [selectedSerie, setSelectedSerie] = useState<any>("");
+  const [selectedShift, setSelectedShift] = useState<any>("");
+  const [serieShow, setSerieShow] = useState<boolean>(false);
+  const [shiftShow, setShiftShow] = useState<boolean>(false);
+
+  useEffect(() => {
+    school && setSelectedSerie(school.series[0]);
+    school && setSelectedShift(school.shift[0]);
+  }, [school])
+
+  if (school) {
+    return (
+      <div className="flex flex-col gap-3 p-5 border border-slate-300 rounded-lg shadow-inner">
+
+        <span className="text-xl font-semibold">
+          {
+            school.title
+          }
+        </span>
+        <div className="flex gap-5">
+          {
+            school.years.map((year: any, index: number) => (
+              <div className="flex gap-1" key={index}>
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    value={year}
+                    checked={year === selectedYear}
+                    onChange={() => setSelectedYear(year)}
+                    className="form-radio text-purple-600 focus:ring-purple-500"
+                  />
+                  <span className="ml-2">{year}</span>
+                </label>
+              </div>
+            ))
+          }
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="text-lg font-semibold">Serie</span>
+          <div className="flex justify-between gap-5">
+            <span>
+              {
+                selectedSerie
+              }
+            </span>
+            <button className="rounded-full bg-purple-100 text-purple-500 border border-purple-300 focus:ring-purple-300 px-5 py-2" onClick={() => setSerieShow(true)}>
+              Alterar
+            </button>
+          </div>
+        </div>
+        <div className="flex flex-col gap-1">
+          <span className="text-lg font-semibold">Turno</span>
+          <div className="flex justify-between gap-5">
+            <span>
+              {
+                selectedShift
+              }
+            </span>
+            <button className="rounded-full bg-purple-100 text-purple-500 border border-purple-300 focus:ring-purple-300 px-5 py-2" onClick={() => setShiftShow(true)}>
+              Alterar
+            </button>
+          </div>
+        </div>
+        <br />
+        <div className="flex gap-1">
+          <span className="text-slate-400 line-through">{school.scholarUnit} {school.amount}</span>
+          <span className="text-slate-700">{school.scholarUnit} {school.monthlyState}</span>
+        </div>
+        <p><svg className='float-start mx-1' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path className="" fill="currentColor" d="M277.1 48c23 0 42.5 14.7 49.8 35.2c4.4 12.5 18.1 19 30.6 14.6s19-18.1 14.6-30.6C358.3 28.1 321 0 277.1 0S195.8 28.1 182 67.2c-4.4 12.5 2.1 26.2 14.6 30.6s26.2-2.1 30.6-14.6C234.5 62.7 254.1 48 277.1 48zM66.7 197.5c11.9-5.9 16.7-20.3 10.7-32.2s-20.3-16.7-32.2-10.7l-4.7 2.3C15.7 169.3 0 194.7 0 222.6c0 37.4 28 68.3 64.2 72.9C66.4 344.7 91 388.2 128 416v48c0 26.5 21.5 48 48 48h48c26.5 0 48-21.5 48-48V448h48v16c0 26.5 21.5 48 48 48h48c26.5 0 48-21.5 48-48V426.6c18.7-10.8 35.1-25.4 48-42.6h32c17.7 0 32-14.3 32-32V256c0-17.7-14.3-32-32-32H530.7c-8.2-18.8-19.9-35.7-34.2-49.8l11.3-36.8-22.9-7 22.9 7c6.3-20.6-9.1-41.4-30.6-41.4H456c-31.5 0-60.2 12.2-81.6 32H224c-74.4 0-137 50.8-154.9 119.6c-12-2-21.1-12.5-21.1-25.1c0-9.6 5.4-18.4 14.1-22.8l4.7-2.3zM424 288a24 24 0 1 0 0-48 24 24 0 1 0 0 48zM402.3 168c13.1-14.7 32.1-23.9 53.2-24L446 174.8c-2.9 9.4 .2 19.6 7.9 25.8c17.4 13.9 30.4 32.8 37.1 54.5c3.1 10.1 12.4 17 22.9 17h14v64H499.4c-8.3 0-16 4.3-20.3 11.3c-11.7 18.7-28.7 33.7-48.9 42.8C421.5 394 416 402.5 416 412v52H368V424c0-13.3-10.7-24-24-24H248c-13.3 0-24 10.7-24 24v40H176V403.4c0-8.3-4.3-16-11.3-20.3c-31.7-19.8-52.7-55-52.7-95c0-61.9 50.1-112 112-112H384h0l.4 0c6.8 0 13.4-2.9 17.9-8z"></path></svg>Desconto de 40% nas mensalidades</p>
+        <p><svg className='float-start mx-1' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path className="" fill="currentColor" d="M160 25.4C143 9.6 120.2 0 95.2 0C42.6 0 0 42.6 0 95.2c0 18.8 5.5 36.3 14.9 51.1L160 25.4zM256 112a176 176 0 1 1 0 352 176 176 0 1 1 0-352zm0 400c53.2 0 102.1-18.6 140.5-49.5L439 505c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-42.5-42.5c31-38.4 49.5-87.3 49.5-140.5C480 164.3 379.7 64 256 64S32 164.3 32 288c0 53.2 18.6 102.1 49.5 140.5L39 471c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l42.5-42.5c38.4 31 87.3 49.5 140.5 49.5zM497.1 146.4C506.5 131.6 512 114 512 95.2C512 42.6 469.4 0 416.8 0C391.8 0 369 9.6 352 25.4L497.1 146.4zM280 184c0-13.3-10.7-24-24-24s-24 10.7-24 24V288c0 6.4 2.5 12.5 7 17l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-41-41V184z"></path></svg> Só restam 1 bolsas! </p>
+        <button className="bg-orange-500 rounded-full p-3 text-white text-xl font-semibold">Quero esta bolsa</button>
+        <EscolaRegisterCard
+          option={selectedSerie}
+          options={school.series}
+          setOption={setSelectedSerie}
+          show={serieShow}
+          setShow={setSerieShow}
+        />
+        <EscolaRegisterCard
+          option={selectedShift}
+          options={school.shift}
+          setOption={setSelectedShift}
+          show={shiftShow}
+          setShow={setShiftShow}
+        />
       </div>
     )
   }
+
+  return <div></div>
+}
+
+interface EscolaRegisterCardProps {
+  options?: any[];
+  option?: any;
+  setOption?: any;
+  show: boolean;
+  setShow?: any;
+}
+
+const EscolaRegisterCard: React.FC<EscolaRegisterCardProps> = ({ options, option, setOption, show, setShow }) => {
+
   return (
-    <div className="flex border w-full bg-white rounded-lg p-3 justify-between">
-      <div className="flex flex-col w-full justify-between space-y-3">
-        <div className="flex flex-col space-y-3">
-          <p className="text-[16px] text-gray-700 font-bold"> Ano letivo</p>
-          {/* year */}
-          <div className="flex">
-            {schoolYearArray}
-          </div>
-          {/* end year */}
+    <div className={`${show ? 'fixed' : 'hidden'} top-0 left-0 flex w-[100vw] h-[100vh] justify-center items-center z-50`}>
+      <div className="w-full h-full bg-slate-900 opacity-75" onClick={() => setShow(false)}>
+      </div>
+      <div className="absolute flex flex-col gap-5 w-96 h-[550px] bg-white px-5 py-10 rounded-lg" >
+        <span className="text-2xl font-semibold border-b border-slate-200 p-2">
+          Selecione o turno desejado
+        </span>
+        <div className="flex flex-col gap-5 h-[400px] overflow-y-scrol overflow-hidden px-5">
+          {
+            options?.map((op:any, index:any) => (
+              <div className="flex gap-1" key={index}>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    value={op}
+                    checked={option === op}
+                    onChange={() => setOption(op)}
+                    className="form-radio text-purple-600 focus:ring-purple-500"
+                  />
+                  <span className="ml-2">{op}</span>
+                </label>
+              </div>
+            ))
+          }
         </div>
-        <div className="flex justify-between items-center gap-5">
-          <div className="flex flex-col justify-between">
-            <p className="text-[14px] font-semibold"> Série</p>
-            {/* period */}
-            <p className="text-xs text-gray-400">{period}</p>
-            {/* end period */}
-          </div>
-          <div className="flex border border-purple-600 px-3 py-1 rounded-full">
-            <span className="text-sm hover:text-slate-400"> Alterar </span>
-          </div>
-        </div>
-        <div className="flex justify-between items-center gap-5 pb-2 border-b">
-          <div className="flex flex-col justify-between">
-            <p className="text-[14px] font-semibold"> Turno</p>
-            {/* period */}
-            <p className="text-xs text-gray-400">{shift}</p>
-            {/* end period */}
-          </div>
-          <div className="flex border border-purple-600 px-3 py-1 rounded-full">
-            <span className="text-sm hover:text-slate-400"> Alterar </span>
-          </div>
-        </div>
-        <div className="flex justify-start gap-3 text-[12px]">
-          <p className="pb-0 text-gray-400 line-through decoration-gray-500">{originUnit} {originPrice}</p>
-          <p className="pt-0 font-semibold text-gray-700">
-            {presentUnit} {presentPrice}
-          </p>
-        </div>
-        <div className="flex items-center justify-between">
-          <a href="#" className="bg-orange-500 text-center items-center w-full py-1.5 rounded-full text-gray-200 hover:bg-orange-700">
-            Quero esta bolsa
-          </a>
+        <div className='bg-purple-600 text-white py-2 rounded-full text-center cursor-pointer' onClick={()=>setShow(false)}>
+          Selecionar bolsa
         </div>
       </div>
     </div>

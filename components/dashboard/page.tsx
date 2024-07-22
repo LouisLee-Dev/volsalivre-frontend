@@ -14,7 +14,7 @@ import { useGetByPrivateMutation } from "@/lib/features/schools/schoolsApi";
 
 
 const Dashboard: React.FC = () => {
-  const [privateSchoolsData, setPrivateSchoolsData] = useState<any>(null); // State to hold fetched data
+  const [privateSchoolsData, setPrivateSchoolsData] = useState<any>(); // State to hold fetched data
   const [getByPrivate, { isLoading, isError, error }] = useGetByPrivateMutation();
   
   useEffect(() => {
@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
     .unwrap()
     .then((fetchedData) => {
       setPrivateSchoolsData(fetchedData); // Update state with fetched data
-      // console.log('Fetched private school data:', fetchedData);
+      console.log('Fetched private school data:', fetchedData);
     })
     .catch((err) => {
       console.error('Error fetching private school data:', err);

@@ -1,27 +1,43 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import {EscolaDetailCard} from '@/components/basecomponents/cards';
+import { EscolaDetailCard } from '@/components/basecomponents/cards';
 
 interface DetailProps {
     title: any;
 }
 
-let cardData = [
-    {
-        location:"Rua João Passalaqua, 181 - Bela Vista, São Paulo - SP - São Paulo",
-        review: "27",
-        period:"Early Childhood Education - Nursery (0 to 1 year old)",
-        schoolYear:["2024", "2025"],
-        shift:"Manhã",
-        originUnit: "R$",
-        originPrice: 1000,
-        presentUnit: "BRL",
-        presentPrice: 500,
-    }
-]
+const Detail: React.FC<DetailProps> = ({ title }) => {
+    const [school, setSchool] = useState<any>();
+    useEffect(() => {
+        const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools/all';
+        const fetchSchool = async () => {
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title: title }), // Include data if required (e.g., for POST requests)
+            };
 
-const Detail:React.FC<DetailProps> = ({title}) => {
+            try {
+                const result = await fetch(url, requestOptions);
+                if (!result.ok) {
+                    throw new Error(`HTTP error! Status: ${result.status}`);
+                }
+                const data = await result.json();
+                setSchool(data[0]);
+            } catch (error) {
+                console.error('Error fetching schools:', error);
+            }
+        };
+
+        fetchSchool();
+        console.log(school);
+    }, [])
+
     return (
         <>
             <div className="grid grid-cols-1 lg:grid-cols-3 grid-rows-2 py-10 px-4 lg:px-28 gap-10">
@@ -32,8 +48,8 @@ const Detail:React.FC<DetailProps> = ({title}) => {
                             <p className="text-3xl text-gray-800 font-extrabold">{title}</p>
                             <p className="flex text-[12px] text-gray-600 justify-between items-center gap-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M256 48c-79.5 0-144 61.39-144 137c0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137"/>
-                                    <circle cx="256" cy="192" r="48" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32"/>
+                                    <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" d="M256 48c-79.5 0-144 61.39-144 137c0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137" />
+                                    <circle cx="256" cy="192" r="48" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" />
                                 </svg>
                                 <span>Rua João Passalaqua, 181 - Bela Vista, São Paulo - SP - São Paulo</span>
                             </p>
@@ -52,14 +68,8 @@ const Detail:React.FC<DetailProps> = ({title}) => {
                     </div>
                 </div>
                 <div className="row-span-1 lg:row-span-2 w-full md:w-full flex justify-center items-center">
-                    <EscolaDetailCard 
-                        period={cardData[0].period}
-                        schoolYear={cardData[0].schoolYear}
-                        shift={cardData[0].shift}
-                        originUnit={cardData[0].originUnit}
-                        originPrice={cardData[0].originPrice}
-                        presentUnit={cardData[0].presentUnit}
-                        presentPrice={cardData[0].presentPrice}
+                    <EscolaDetailCard
+                        school={school}
                     />
                 </div>
             </div>

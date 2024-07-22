@@ -17,7 +17,7 @@ interface SearchButtonProps {
 };
 
 let checkedData = [
-  ["2024", "2025"],
+  ["2023", "2024", "2025", "2026"],
   ["Morning", "Afternoon", "Full", "Semi-integral", "Nocturnal", "EAD", "Saturday"],
   ["Super School"],
 ];
@@ -29,7 +29,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
     setFilters({...filters, geo: geo});
   }
   return (
-    <div className={`${className}`} onBlur={() => setShowGeo(false)}>
+    <div className={`${className}`}>
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center">
@@ -64,7 +64,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               className={`py-3 focus:outline-none rounded-full w-4/5 text-sm `}
               value={geo}
               onChange={(e) => {setGeo(e.target.value); handleFilters();}}
-              onClick={() => setShowGeo(true)}
+              onClick={() =>  setShowGeo(!showGeo)}
             />
           </div>
         </>
@@ -78,7 +78,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               type="text"
               className="px-7 py-1 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-purple-500 border border-purple-500"
               value={geo}
-              onClick={() => setShowGeo(true)}
+              onClick={() => setShowGeo(!showGeo)}
               onChange={(e) => {setGeo(e.target.value); handleFilters();}}
             />
             <span className="absolute left-2">
@@ -153,7 +153,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
     setFilters({...filters, neigh: neigh});
   }
   return (
-    <div className={`${className} relative`} onBlur={() => setShowNeigh(false)}>
+    <div className={`${className} relative`}>
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center px-5">
@@ -182,7 +182,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               value={neigh}
               onChange={(e) => {setNeigh(e.target.value); handleFilters();}}
               placeholder="Eter your neighbor"
-              onClick={() => setShowNeigh(true)}
+              onClick={() => setShowNeigh(!showNeigh)}
             />
           </div>
         </>
@@ -197,7 +197,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               placeholder="Enter your neighborhood"
               className="px-10 py-1.5 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-2 focus:ring-purple-500"
               value={neigh}
-              onClick={() => { setShowNeigh(true) }}
+              onClick={() => { setShowNeigh(!showNeigh) }}
               onChange={(e) => {setNeigh(e.target.value); handleFilters();}}
             />
             <span className="absolute left-2">
@@ -241,6 +241,8 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
   disp,
   className,
   setSchoolParent,
+  filters,
+  setFilters,
 }) => {
   const [schools, setSchools] = useState<any[]>([]);
   const [school, setSchool] = useState<string>("");
@@ -256,7 +258,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
         const data = await res.json();        
         setSchools(data);
       } catch (err) {
-        toast.error('Error: Level loading error!!!');
+        console.error('Error: Level loading error!!!');
       }
     };
     fetchSchools();
@@ -269,7 +271,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
   };
 
   return (
-    <div className={`${className} relative`} onBlur={() => setShowSchool(false)}>
+    <div className={`${className} relative`} >
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center px-5">
@@ -298,7 +300,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
               value={school}
               onChange={(e) => {handleSetSchool(e.target.value);}}
               placeholder="Enter your neighbor"
-              onClick={() => setShowSchool(true)}
+              onClick={() => setShowSchool(!showSchool)}
             />
           </div>
         </>
@@ -314,7 +316,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
                 placeholder="Enter School"
                 className="px-10 py-1 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-purple-500 focus:ring-2"
                 value={school}
-                onClick={() => setShowSchool(true)}
+                onClick={() => setShowSchool(!showSchool)}
                 onChange={(e) => {handleSetSchool(e.target.value); }}
               />
               <span className="absolute left-2">
@@ -345,8 +347,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
           } absolute top-full flex flex-col max-h-48 mt-4 overflow-y-auto rounded border border-slate-150 z-50`}
       >
         <p
-          className="px-4 py-2 font-semibold bg-slate-100 text-slate-500 cursor-pointer"
-          onClick={() => handleSetSchool("BUSCAR POR CIDADE")}
+          className="px-4 py-2 font-semibold bg-slate-100 text-slate-500 cursor-pointer"          
         >
           SEARCH BY SCHOOL
         </p>
@@ -358,7 +359,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
               role="option"
               aria-selected="true"
               onClick={() => {
-                setSchool(schoolObje._id);
+                setSchool(schoolObje.title);
               }}
             >
               <strong className="z-text z-text--size-medium z-text--weight-middle z-text--left z-list-box__option-label-title z-text--white">
@@ -386,14 +387,14 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   useEffect(() => {
     const fetchSeries = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/series/all`);
+        const res = await fetch(`http://localhost:5000/api/series/all/${level && level}`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await res.json();
         setSeriesList(data);
       } catch (err) {
-        toast.error('Error: Level loading error!!!');
+        console.error('Error: Level loading error!!!');
       }
     };
     fetchSeries();
@@ -405,7 +406,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   }
   
   return (
-    <div className={`${className} relative`} onBlur={() => setShowValue(false)}>
+    <div className={`${className} relative`} >
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center justify-center">
@@ -434,7 +435,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               value={series}
               onChange={(e) => {setSeries(e.target.value); handleFilters()}}
               placeholder="Select a series"
-              onClick={() => setShowValue(true)}
+              onClick={() => setShowValue(!showValue)}
             />
             <span className="bg-orange-500 rounded-full p-[7px]">
               <svg
@@ -467,7 +468,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               placeholder="Select a series"
               className="px-10 py-1.5 text-sm rounded-full w-full border focus:outline-none border-purple-500 focus:ring-2 focus:ring-purple-500"
               value={series}
-              onClick={() => setShowValue(true)}
+              onClick={() => setShowValue(!showValue)}
               onChange={(e) => {setSeries(e.target.value); handleFilters();}}
             />
             <span className="absolute left-2">
@@ -504,7 +505,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               role="option"
               aria-selected="true"
               onClick={() => {
-                setSeries(seriesObj._id);
+                setSeries(seriesObj.series);
                 setShowValue(false);
               }}
             >
@@ -524,7 +525,6 @@ const TeachingState: React.FC<SearchButtonProps> = ({
   filters,
   setFilters,
 }) => {
-  const [level, setLevel] = useState<string[]>([]);
   const [levels, setLevels] = useState<string[]>([]);
   const [state, setState] = useState<string | any>();
   const [showValue, setShowValue] = useState<boolean>(false);
@@ -539,29 +539,29 @@ const TeachingState: React.FC<SearchButtonProps> = ({
         const data = await res.json();
         setLevels(data);
       } catch (err) {
-        toast.error('Error: Level loading error!!!');
+        console.error('Error: Level loading error!!!');
       }
     };
     fetchLevels();
   }, []);
 
   const handleFilters = () => {
-    setFilters({...filters, level: level});
+    setFilters({...filters, level: state});
   }
 
   return (
-    <div className={`${className} relative`} onBlur={() => setShowValue(false)}>
+    <div className={`${className} relative`}>
       <>
         <label htmlFor="" className="font-semibold text-sm">
-          Teaching State:
+          Teaching Level:
         </label>
         <div className={`flex pt-1 items-center relative rounded-full`}>
           <input
             type="text"
-            placeholder="Select a teaching step"
+            placeholder="Select a teaching level"
             className="px-10 py-1.5 text-sm rounded-full w-full border focus:outline-none border-purple-500 focus:ring-2 focus:ring-purple-500"
             value={state}
-            onClick={() => setShowValue(true)}
+            onClick={() => setShowValue(!showValue)}
             onChange={(e) =>{ setState(e.target.value); handleFilters(); }}
           />
           <span className="absolute left-2">
@@ -597,7 +597,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
               role="option"
               aria-selected="true"
               onClick={() => {
-                setState(levelObj._id);
+                setState(levelObj.level);
                 setShowValue(false);
               }}
             >

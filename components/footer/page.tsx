@@ -42,7 +42,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col gap-10">
             <p className="text-lg font-semibold">Parceiros</p>
             <div className="flex flex-col gap-3">
-                <a href=""><span>Quero ser parceiro</span></a>
+                <a href="/mais-alunos"><span>Quero ser parceiro</span></a>
                 <a href="/blog"><span>Blog Gestores</span></a>
                 <a href=""><span>Área do Gestor</span></a>                
             </div>

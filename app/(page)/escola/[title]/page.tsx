@@ -1,6 +1,6 @@
 'use client';
 
-import Detail from "@/components/dashboard/detail";
+import Detail from "@/components/escola/detail";
 import "@/app/globals.css";
 import Header from "@/components/header/page";
 import Footer from "@/components/footer/page";

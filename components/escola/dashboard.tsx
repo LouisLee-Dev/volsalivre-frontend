@@ -48,8 +48,8 @@ const Dashboard = () => {
         if (!result.ok) {
           throw new Error(`HTTP error! Status: ${result.status}`);
         }
-        const data = await result.json();        
-        setSchools(data); // Update state with fetched data
+        const data = await result.json();
+        setSchools(data);
       } catch (error) {
         console.error('Error fetching schools:', error);
       }
@@ -63,7 +63,7 @@ const Dashboard = () => {
     // Set a new timeout
     timeoutRef.current = setTimeout(() => {
       fetchSchools(searchParam);
-    }, 3000); // 5 seconds
+    }, 1000);
 
     // Cleanup function to clear the timeout on component unmount or before setting a new timeout
     return () => {
@@ -146,15 +146,16 @@ const Dashboard = () => {
       {
         switchMap ?
           <Map /> :
-          <div className="pt-0 flex flex-row gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
+          <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
             <div className="max-[1200px]:hidden">
               <Filters type="search" setSearchParam={setSearchParam} />
             </div>
+            
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
               {schools?.map((result: any, index: number) => (
                 <div
                   key={index}
-                  className="bg-white max-w-sm p-4 border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+                  className="bg-white max-w-sm p-4 border border-gray-200 rounded-lg"
                 >
                   <SearchResultCard
                     key={index}

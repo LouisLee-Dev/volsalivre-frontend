@@ -25,9 +25,11 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="flex z-10 mt-8 md:mt-0">
-                        <Image
+                        <Image                        
                             src={Colegio}
                             alt="colegio"
+                            width={400}
+                            height={100}
                             className="md:w-full md:h-auto sm:w-full sm:h-auto"
                         />
                     </div>
@@ -38,7 +40,7 @@ const Dashboard = () => {
                         <p className="items-center flex justify-center text-2xl md:text-[42px] text-gray-800 font-extrabold">vaga no Melhor Escola</p>
                         <div className="flex flex-col md:flex-row w-full justify-between p-6 md:p-16 gap-5">
                             <div className="flex flex-col space-y-5 border w-full md:w-1/3 rounded-md p-5 bg-white h-auto md:h-[420px]">
-                                <Image src={Capacao} alt="capacao" />
+                                <Image src={Capacao} alt="capacao" width={100} height={100} />
                                 <h3 className="font-bold text-xl md:text-2xl text-gray-800">
                                     Captação de alunos nos maiores marketplaces de educação
                                 </h3>
@@ -47,7 +49,7 @@ const Dashboard = () => {
                                 </p>
                             </div>
                             <div className="flex flex-col space-y-5 border w-full md:w-1/3 rounded-md p-5 bg-white h-auto md:h-[420px]">
-                                <Image src={Acesse} alt="acesse" />
+                                <Image src={Acesse} alt="acesse" width={100} height={100} />
                                 <h3 className="font-bold text-xl md:text-2xl text-gray-800">
                                     Acesse dados estratégicos sobre sua escola
                                 </h3>
@@ -56,7 +58,7 @@ const Dashboard = () => {
                                 </p>
                             </div>
                             <div className="flex flex-col space-y-5 border w-full md:w-1/3 rounded-md p-5 bg-white h-auto md:h-[420px]">
-                                <Image src={Invista} alt="invista" />
+                                <Image src={Invista} alt="invista" width={100} height={100} />
                                 <h3 className="font-bold text-xl md:text-2xl text-gray-800">
                                     Invista em sua formação com aulas sobre gestão escolar
                                 </h3>
@@ -75,10 +77,10 @@ const Dashboard = () => {
                         <p className="items-center flex justify-center text-2xl md:text-[42px] text-gray-800 font-extrabold">recomendam os nossos produtos</p>
                         <p className="items-center flex justify-center text-sm md:text-lg text-gray-800">Confira as instituições que já utilizam o Melhor Escola para captar alunos</p>
                         <div className="flex flex-col md:flex-row w-full space-y-5 md:space-y-0 md:space-x-20 items-center justify-between p-6 md:p-16 gap-5">
-                            <Image className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-mackenzie.png" alt="mackenzie" />
-                            <Image className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cogna.png" alt="cogna" />
-                            <Image className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-anglo.png" alt="angle" />
-                            <Image className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cruzeirodosul.png" alt="cruzeirodo" />
+                            <Image width={100} height={100} className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-mackenzie.png" alt="mackenzie" />
+                            <Image width={100} height={100} className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cogna.png" alt="cogna" />
+                            <Image width={100} height={100} className="w-2/3 md:w-1/6 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-anglo.png" alt="angle" />
+                            <Image width={100} height={100} className="w-2/3 md:w-1/5 h-auto" src="https://www.melhorescola.com.br/themes/site/assets/special-pages/mais-alunos/images/logo-cruzeirodosul.png" alt="cruzeirodo" />
                         </div>
                     </section>
                 </div>

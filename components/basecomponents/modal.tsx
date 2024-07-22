@@ -1,5 +1,4 @@
-"use client";
-
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -7,34 +6,50 @@ import {
   useAddSchoolMutation,
   useGetAllMutation,
 } from "@/lib/features/schools/schoolsApi";
+import { MultiOption, MultiSeries, MultiSelect } from "./multiSelect";
 import { toast } from "react-toastify";
+
+const shifts = [
+  "Morning",
+  "Afternoon",
+  "Full",
+  "Semi-integral",
+  "Nocturnal",
+  "EAD",
+  "Saturday",
+];
+
+const years = [
+  "2023",
+  "2024",
+  "2025",
+  "2026",
+];
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const options = [
-  { label: "Option 1", value: "option1" },
-  { label: "Option 2", value: "option2" },
-  { label: "Option 3", value: "option3" },
-];
-
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [addSchool] = useAddSchoolMutation();
   const [getAll] = useGetAllMutation();
 
+  const [image, setImage] = useState<any | null>(null);
+  const [imagePreview, setImagePreview] = useState<any>(null);
   const [schoolTitle, setSchoolTitle] = useState<string>("");
-  const [schoolTitleList, setSchoolTitleList] = useState<any>(null);  
-  const [years, setYears] = useState<string>("");
+  const [schoolTitleList, setSchoolTitleList] = useState<any>(null);
+  const [at, setAt] = useState<string>("");
+  const [position, setPosition] = useState<string>("");
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
   const [levels, setLevels] = useState<any>(null);
-  const [series, setSeries] = useState<any>(null);
-  const [changeLevels, setChangeLevels] = useState<string>("");
-  const [grade, setGrade] = useState<string>("");
-  const [step, setStep] = useState<string>("");
+  const [changeLevels, setChangeLevels] = useState<any>([]);
+  const [series, setSeries] = useState<any[]>([]);
+  const [steps, setSteps] = useState<any[]>([]);
+  const [type, setType] = useState<string>("public");
+  const [shift, setShift] = useState<string[]>([]);
   const [monthly, setMonthly] = useState<string>("");
   const [monthlyState, setMonthlyState] = useState<string>("");
-  const [discount, setDiscount] = useState<number>(0);
   const [regFee, setRegFee] = useState<string>("");
   const [vacancies, setVacancies] = useState<string>("");
   const [commit, setCommit] = useState<string>("");
@@ -44,6 +59,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [isValidRegisterFee, setIsValidRegisterFee] = useState<boolean>(true);
 
   const [formSwitch, setFormSwitch] = useState<boolean>(false);
+
   useEffect(() => {
     // Fetch private school data when component mounts
     const fetchLevels = async () => {
@@ -55,14 +71,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         const data = await res.json();
         setLevels(data);
       } catch (err) {
-        toast.error('Error: Level loading error!!!');
+        console.error('Error: Level loading error!!!');
       }
     };
     getAll()
       .unwrap()
       .then((fetchedData) => {
-        setSchoolTitleList(fetchedData); // Update state with fetched data
-        // console.log('Fetched private school data:', fetchedData);
+        setSchoolTitleList(fetchedData); // Update state with fetched data        
       })
       .catch((err) => {
         console.error("Error fetching private school data:", err);
@@ -74,99 +89,88 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           throw new Error('Network response was not ok');
         }
         const data = await res.json();
+        console.log(data)
         setSeries(data);
       } catch (err) {
-        toast.error('Error: Level loading error!!!');
+        console.error('Error: Level loading error!!!');
       }
     };
     fetchLevels();
-    fetchSeries();    
+    fetchSeries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Empty dependency array ensures useEffect runs only on mount
-  const levelData =
-    levels && typeof levels === "object" ? Object.values(levels) : [];
+
+  const changeImage = (e: any) => {
+    setImage(e.target.files[0]);
+    setImagePreview(URL.createObjectURL(e.target.files[0]));
+  }
+
   const schoolsData =
     schoolTitleList && typeof schoolTitleList === "object"
       ? Object.values(schoolTitleList)
       : [];
 
-  const ano = [];
-  for (let i = 1; i <= 12; i++) {
-    ano.push(
-      <option key={i} value={i}>
-        {i}
-      </option>
-    );
-  }
 
   const SaveAndEdit = async () => {
     const schoolData = {
       title: schoolTitle,
-      years: [years],
-      level: [{ level: changeLevels, grade: grade }],
-      step: step,
+      years: selectedYears,
+      level: changeLevels,
+      series: steps,
       scholarUnit: "R$",
       amount: monthly,
-      type: "public",
+      monthlyState: monthlyState,
+      regFee: regFee,
+      vagas: vacancies,
+      type: type,
       star: "4",
-      position: "Juliao Ramos",
-      at: "Joinville - SC",
-      shift: ["morning", "Afternoon"],
+      position: position,
+      at: at,
+      shift: shift,
+      mark: image
     };
-  
-    try {
+
+    try {      
       const { success } = await addSchool(schoolData).unwrap()
-  
+
       if (success) {
         toast.success(`Successfully ${formSwitch ? 'Added' : 'Updated'} School ....`);
         setSchoolTitle("");
-        setLevels("");
+        setChangeLevels([]);
         setTimeout(() => {
           setFormSwitch(true);
         }, 1000);
       } else {
         toast.warning("Try again ...");
       }
-    } catch (error:any) {      
-      toast.error("Confirm fields value");
+    } catch (error: any) {
+      toast.error(`Confirm fields value: , ${error}`);      
     }
   };
-  
-  //multi Selected start
-  // const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
-  // const handleMultiSelectChange = (selected: string[]) => {
-  //   setSelectedOptions(selected);
-  //   const selectedJson = selected.map(value => {
-  //     const option = options.find(opt => opt.value === value);
-  //     return option ? { label: option.label, value: option.value } : null;
-  //   }).filter(option => option !== null);
-  //   console.log("Selected options as JSON:", JSON.stringify(selectedJson, null, 2)); // JSON formatted selected values
 
-  // };
-  //end
+
   return (
     <div className={`fixed inset-0 ${isOpen ? 'flex' : 'hidden'} items-center justify-center z-50`}>
       <div
         className="fixed inset-0 bg-black opacity-50"
         onClick={onClose}
       ></div>
-      <div className="bg-white p-6 rounded-lg shadow-lg z-10 w-11/12 md:w-1/2 lg:w-1/3 overflow-y-auto max-h-96">
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col ">
-            <h2 className="text-xl font-bold mb-1">Adicionar Oferta</h2>
-            <p className="mb-4 text-sm text-gray-700">
-              Preecha os campos abaixo
-            </p>
+      <div className="bg-white p-6 rounded-lg shadow-lg z-10 w-11/12 md:w-1/2 lg:w-1/3 overflow-y-auto max-h-[90vh]">
+        <div className="relative flex justify-center items-center">
+          <div className="flex justify-center items-center">
+            <label htmlFor="mark" className="flex w-20 h-20 rounded-full cursor-pointer bg-slate-400 border border-spacing-4 border-purple-700 justify-center items-center">{imagePreview && <img src={imagePreview} alt="" width={200} height={200} className="rounded-full" />}</label>
+            <input type="file" id="mark" className="hidden" onChange={changeImage} />
           </div>
-          <div className="flex">
+          <div className="flex absolute right-1 top-1">
             <button
-              className="border bg-orange-500 rounded-full p-2 text-white"
+              className="border bg-purple-500 rounded-full p-2 text-white text-sm px-2"
               onClick={() => setFormSwitch(!formSwitch)}
             >
-              {!formSwitch ? "atualização" : "register"}
+              {!formSwitch ? "Atualização" : "Register"}
             </button>
           </div>
         </div>
+
         <div className="grid grid-cols-2 p-1 gap-3">
           {formSwitch ? (
             <div className="mb-5">
@@ -176,7 +180,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <select
                 value={schoolTitle}
                 onChange={(e) => setSchoolTitle(e.target.value)}
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
               >
                 <option>Escolha uma escola</option>
                 {schoolsData.map((value: any, index: number) => (
@@ -193,77 +197,74 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </label>
               <input
                 type="text"
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
                 placeholder="Escola Mamãe Com Açúcar"
                 value={schoolTitle}
-                onChange={(e) => {setSchoolTitle(e.target.value); console.log(schoolTitle);}}
+                onChange={(e) => { setSchoolTitle(e.target.value); }}
                 required
               />
             </div>
           )}
-          <div className="mb-5"></div>
-          <div className="mb-5">
+          <div className="mb-5 col-span-2 grid grid-cols-2 gap-2">
+            <div className="flex flex-col">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                At:
+              </label>
+              <select
+                onChange={(e) => setAt(e.target.value)}
+                value={at}
+                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+              >
+                <option>Select At</option>
+                <option value="Juliao-RC">Juliao-RC</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Position:
+              </label>
+              <select
+                onChange={(e) => setPosition(e.target.value)}
+                value={position}
+                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+              >
+                <option>Select Position</option>
+                <option value="Juliao">Juliao</option>
+              </select>
+            </div>
+          </div>
+          <div className="mb-5 col-span-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Ano letivo:
             </label>
-            <select
-              onChange={(e) => setYears(e.target.value)}
-              value={years}
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-            >
-              <option>Escolha o ano</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-              <option value="2025">2025</option>
-              <option value="2026">2026</option>
-            </select>
+            <MultiOption
+              options={years}
+              selectedOptions={selectedYears}
+              onChange={setSelectedYears}
+            />
           </div>
-          <div className="mb-5">
+          <div className="mb-5 col-span-2 grap-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              nível
+              Mensalidade sem desconto:
             </label>
-            <select
-              onChange={(e) => setChangeLevels(e.target.value)}
-              value={changeLevels}
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-            >
-              <option>Escolha os níveis</option>
-              {levelData.map((value: any, index: number) => (
-                <option key={index} value={value.level}>
-                  {value.level}
-                </option>
-              ))}
-            </select>
+            <MultiSeries
+              options={series}
+              selectedOptions={steps}
+              onChange={setSteps}
+            />
           </div>
-          <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Serie:
-            </label>
-            <select              
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"              
-              value={step}
-              onChange={(e) => setStep(e.target.value)}
-              required
-            >
-              <option value="0">Select Serie</option>
-              {series?.map((serie:any) => (
-                <option key={serie._id} value={serie._id}>{serie.series}</option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-5">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Turno
-            </label>
-            <select
-              onChange={(e) => setGrade(e.target.value)}
-              value={grade || ""}
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-            >
-              <option>Escolha os ano</option>
-              {ano}
-            </select>
-          </div>
+        </div>
+        <div className="mb-5">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            nível
+          </label>
+          <MultiSelect
+            options={levels}
+            selectedOptions={changeLevels}
+            onChange={setChangeLevels}
+          />
+        </div>
+        <div className="grid grid-cols-2 p-1 gap-3">
           <div className="mb-5">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Mensalidade sem desconto:
@@ -275,16 +276,16 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 className={`${isValidMonthly
-                    ? "focus:ring-orange-500"
-                    : " focus:ring-red-600"
+                  ? "focus:ring-purple-500"
+                  : " focus:ring-red-600"
                   }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
                 value={monthly}
                 onChange={(e) => {
-                  setMonthly(e.target.value);                  
+                  setMonthly(e.target.value);
                   const pattern = /^\d{2}\.\d{2}$/;
-                  setIsValidMonthly(pattern.test(e.target.value));                  
+                  setIsValidMonthly(pattern.test(e.target.value));
                 }}
                 required
               />
@@ -306,8 +307,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 className={`${isValidMonthlyState
-                    ? "focus:ring-orange-500"
-                    : " focus:ring-red-600"
+                  ? "focus:ring-purple-500"
+                  : " focus:ring-red-600"
                   }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
@@ -349,8 +350,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <input
                 type="text"
                 className={`${isValidRegisterFee
-                    ? "focus:ring-orange-500"
-                    : " focus:ring-red-600"
+                  ? "focus:ring-purple-500"
+                  : " focus:ring-red-600"
                   }bg-gray-50 focus:outline-none focus:ring-1 text-gray-900 text-sm rounded-full border block w-full ps-10 p-2.5`}
                 placeholder="00.00"
                 pattern="^\d{2}\.\d{2}$"
@@ -374,8 +375,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               Vagas:
             </label>
             <input
-              type="text"
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+              type="number"
+              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
               placeholder="Vagas disponíveis"
               value={vacancies}
               onChange={(e) => setVacancies(e.target.value)}
@@ -384,30 +385,51 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </div>
           <div className="mb-5">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Type:
+            </label>
+            <select
+              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              required
+            >
+              <option value="public">public</option>
+              <option value="private">private</option>
+            </select>
+          </div>
+          <div className="mb-5 col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Shift:
+            </label>
+            <MultiOption
+              options={shifts}
+              selectedOptions={shift}
+              onChange={setShift}
+            />
+          </div>
+
+          <div className="mb-5 col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Informações adicionais
             </label>
             <textarea
-              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-orange-500 text-gray-900 text-sm rounded-xl min-h-[50px] block w-full p-2.5"
+              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-xl min-h-[50px] block w-full p-2.5"
               required
               value={commit}
               onChange={(e) => setCommit(e.target.value)}
             />
           </div>
-          {/* <MultiSelect
-            options={options}
-            selectedOptions={selectedOptions}
-            onChange={handleMultiSelectChange}
-          /> */}
         </div>
+
         <div className="flex gap-5 justify-end">
           <button
-            className="bg-orange-500 justify-end text-white px-4 py-2  rounded-full hover:bg-orange-600"
+            className="bg-purple-500 justify-end text-white px-4 py-2  rounded-full hover:bg-purple-600"
             onClick={SaveAndEdit}
           >
             Salvar
           </button>
           <button
-            className="bg-orange-500 justify-end text-white px-4 py-2  rounded-full hover:bg-orange-600"
+            className="bg-purple-500 justify-end text-white px-4 py-2  rounded-full hover:bg-purple-600"
             onClick={onClose}
           >
             Cancelar

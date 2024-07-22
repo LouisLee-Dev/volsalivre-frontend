@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Works: React.FC = () => {
   return (
     <div className="lg:flex lg:gap-5 lg:justify-between bg-white 2xl:w-[70vw] xl:w-[80vw] lg:w-[90vw] w-full px-2">
@@ -61,9 +63,9 @@ const Works: React.FC = () => {
           </svg>
           <span>Check out and leave testimonials and reveiws of schools</span>
         </div>
-        <button className="px-20 py-2 bg-orange-600 text-white hover:bg-orange-500 rounded-full">
+        <Link href="/artigos/faq-melhor-escola" className="px-20 py-2 bg-orange-600 text-white hover:bg-orange-500 rounded-full">
             <span>know more</span>
-        </button>
+        </Link>
       </div>
       <div className="lg:w-1/2">
         <iframe className="w-full h-full rounded-lg" src="https://www.youtube.com/embed/kIMTAD3iRiM" ></iframe>

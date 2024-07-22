@@ -4,9 +4,9 @@ import { toast } from 'react-toastify';
 
 const axiosBaseQuery =
   ({ baseUrl }: { baseUrl: string } = { baseUrl: '' }) =>
-  async ({ url, method, data, params }: { url: string; method: any; data?: any; params?: any }) => {
+  async ({ url, method, data, params, headers }: { url: string; method: any; data?: any; params?: any; headers?: any; }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data, params });
+      const result = await axios({ url: baseUrl + url, method, data, params, headers });
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError as any;      
@@ -30,20 +30,39 @@ export const schoolsApi = createApi({
         data: credentials,
       }),
     }),
-    addSchool: builder.mutation<{ success: string }, { title: string; star: string; position: string; at: string; level: any; shift: any; type: string; scholarUnit: string; amount: string }>({
-      query: (credentials) => ({
-        url: '/add',
-        method: 'post',
-        data: credentials,
-      }),
-    }),    
-    addLevel: builder.mutation<{ name: string }, { name: string; cpf: string; email: string; password: string; password2: string }>({
-      query: (credentials) => ({
-        url: '/level/add/:name',
-        method: 'post',
-        data: credentials,
-      }),
+    addSchool: builder.mutation<{ success: string }, { title: string; star: string; position: string; at: string; level: any; shift: any; type: string; scholarUnit: string; amount: string; mark: File; }>({
+      query: (credentials) => {
+        const formData = new FormData();    
+    
+        Object.keys(credentials).forEach(key => {
+          let value = (credentials as any)[key];
+          if (value instanceof File) {
+            console.log(`Appending file: ${key}`, value);
+          } else {
+            if (Array.isArray(value) || typeof value === 'object') {
+              // Convert array or object to JSON string
+              value = JSON.stringify(value);
+            }
+            console.log(`Appending value: ${key}`, value);
+          }
+          formData.append(key, value);
+        });
+    
+        // Log FormData to verify contents
+        formData.forEach((value, key) => {
+          console.log(`FormData key: ${key}, value:`, value);
+        });
+    
+        return {
+          url: '/add',
+          method: 'POST',
+          data: formData,
+          headers: { 'Content-Typ': 'multipart/form-data' }
+        }
+      },
     }),
+        
+    
     getByPrivate: builder.mutation<{ privateSchool: [] }, void>({
       query: () => ({
         url: '/getByPrivate',
@@ -74,8 +93,7 @@ export const schoolsApi = createApi({
 
 export const {
   useStepSearchMutation,
-  useAddSchoolMutation,
-  useAddLevelMutation,
+  useAddSchoolMutation,  
   useGetByPrivateMutation,
   useGetAllMutation,
   useGetByNameMutation,

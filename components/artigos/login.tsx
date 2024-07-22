@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
+import { CPFInput, PhoneInput } from "../basecomponents/input";
 import { toast } from 'react-toastify'
 import { useLoginMutation, useRegisterMutation } from "@/lib/features/auth/authApi";
 import { useAppDispatch, RootState } from "@/lib/store";
@@ -31,7 +31,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
   const [register] = useRegisterMutation();
   const dispatch = useAppDispatch();
 
-  const handleLogin = async () => {    
+  const handleLogin = async () => {
     if (!statuss) {
       const newUserData = {
         name: name,
@@ -51,17 +51,17 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           setEmail('');
           setPhone('');
           setPassword('');
-        }      console.log(
+        } console.log(
           {
             name: name,
-          email: email,
-          cpf: cpf,
-          phone: phone,
-          password: password,
-          password2: password,
+            email: email,
+            cpf: cpf,
+            phone: phone,
+            password: password,
+            password2: password,
           }
         );
-  
+
       } catch (error) {
 
       }
@@ -93,7 +93,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
       <div className="absolute w-screen h-screen bg-slate-700 opacity-50"></div>
       <div className="flex flex-col gap-4 mb-6 md:grid md:grid-cols-2 bg-white rounded-md px-5 py-10 z-50 max-w-lg md:max-w-2xl mx-4 md:mx-0">
         <span
-          className=" start-0 items-end cursor-pointer"
+          className="justify-self-end cursor-pointer"
           onClick={() => setShow(false)}
         >
           <svg
@@ -149,15 +149,9 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   CPF
                 </label>
                 <span className="text-gray-600 text-xs"> (obrigatório) </span>
-                <input
-                  type="text"
-                  aria-describedby="filled_success_help"
-                  className="block text-sm rounded-full px-16 py-2 w-full text-gray-900 bg-gray-50 border focus:outline-purple-500 border-slate-500 appearance-none peer"
-                  placeholder="123.456.789-99"
+                <CPFInput
                   value={cpf}
-                  pattern="[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}"
-                  onChange={(e) => setCPF(e.target.value)}
-                  onBlur={() => setCPFVal(true)}
+                  onChange={setCPF}
                 />
               </div>
             </div>
@@ -194,20 +188,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   WhatsApp
                 </label>
                 <span className="text-gray-600 text-xs"> (obrigatório) </span>
-                <div
-                  className="relative flex items-center"
-                >
-                  <span className="absolute left-12 text-gray-600 text-lg z-50">+</span>
-                  <input
-                    type="number"
-                    aria-describedby="filled_success_help"
-                    className="block text-sm rounded-full px-16 py-2 w-full text-gray-900 bg-gray-50 border focus:outline-purple-500 border-slate-500 appearance-none peer"
-                    placeholder="55 (35) 98763-4321"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    onBlur={() => setPhoneVal(true)}
-                  />
-                </div>
+                <PhoneInput value={phone} onChange={setPhone} />                
               </div>
             </div>
           </>
@@ -219,7 +200,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                 className={`font-bold text-gray-700 text-sm px-2 ${loginVal === true &&
                   (loginInput !== "" ? "text-green-500" : "text-red-500")
                   }`}
-              >                
+              >
                 E-mail ou CPF
               </label>
               <span className="text-gray-600 text-xs"> (obrigatório) </span>
