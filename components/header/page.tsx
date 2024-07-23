@@ -12,10 +12,10 @@ const Header = () => {
   
   return (
     <div className="flex flex-col items-center lg:p-4 p-2 gap-4 bg-[#7D00E6]">
-      <div className={`flex ${menu === 1 ? "flex-col fixed top-0 left-0 w-full h-full bg-white lg:w-[85%] z-20" : "space-y-1"}`}>
-        <div className="lg:flex grid-cols-1 justify-center 2xl:gap-10 gap-2 space-x-5">
+      <div className={`flex ${menu === 1 ? "flex-col fixed top-0 left-0 w-full h-full bg-white lg:w-[85%] z-20" : "space-y-1"} lg:gap-5`}>
+        <div className="lg:flex grid grid-cols-1 lg:justify-center 2xl:gap-10 gap-2">
           <div className={`${menu === 1 ? "hidden" : "flex"} flex-col gap-2`}>
-            <div className={`flex justify-between`}>
+            <div className='flex justify-between'>
               <a href="/">
                 <Image
                   src={Logo}

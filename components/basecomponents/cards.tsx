@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { toast } from 'react-toastify';
 import { removeFromLocalStorage } from "@/utils/localstorage";
 import Link from 'next/link';
+import SchoolImage from './schoolImage';
 
 const stars = [0, 0, 0, 0, 0];
 
@@ -198,8 +199,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   originPrice,
   presentUnit,
   presentPrice,
-}) => {
-  console.log(mark)
+}) => {  
   const shiftArray: any = [];
   const schoolYearArray: any = [];
   let shiftlength = shift.length;
@@ -223,13 +223,14 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   return (
     <div className="flex flex-col bg-white rounded-lg justify-between items-between gap-2">
       <div className="flex gap-5 items-center">
-        <Image
-          src={`data:${mark && mark.contentType};base64,${mark && mark.data.data.toString('base64')}`}
+        {/* <Image
+          src={`data:${mark && mark.contentType};base64,${mark && mark.data.toString('base64')}`}
           alt=""
           width={70}
           height={70}
           className="w-10 h-10 rounded-full ring-2 "
-        />
+        /> */}
+        <SchoolImage title={title} />
         <p className="text-based font-semibold text-sm text-gray-700">{title}</p>
       </div>
       <div className="flex gap-1">
@@ -249,7 +250,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
           {schoolYearArray}
         </span>
         <p>Shift</p>
-        <span className="flex justify-start">
+        <span className="flex flex-wrap justify-start">
           {shiftArray}
         </span>
         {/* <span className="flex justify-start">
