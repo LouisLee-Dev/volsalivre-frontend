@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { CPFInput, PhoneInput } from "../basecomponents/input";
 import { toast } from 'react-toastify'
 import { useLoginMutation, useRegisterMutation } from "@/lib/features/auth/authApi";
@@ -262,6 +263,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
             </p>
           </div>
         </div>
+        <Link href={`/admin/Painel%20do%20Gestor`} className="w-full py-2 col-span-2 bg-purple-500 text-white text-x text-center rounded-full">Admin</Link>
       </div>
     </div>
   );
