@@ -1,7 +1,8 @@
 import Dashboard from "@/components/artigos/dashboard/page";
-import Header from "@/components/artigos/header/page";
+const Header = dynamic(()=> import("@/components/header/page"), { ssr: false});
 import Footer from "@/components/artigos/footer/page";
 import "@/app/globals.css";
+import dynamic from "next/dynamic";
 
 export default function Home() {
   return (

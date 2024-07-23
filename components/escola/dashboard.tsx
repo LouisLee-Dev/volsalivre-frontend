@@ -5,29 +5,11 @@ import Filters from "@/components/basecomponents/filters";
 import { SearchResultCard } from "@/components/basecomponents/cards";
 import Map from "../basecomponents/google_map";
 
-let SearchResults = [
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    amount: "306.57",
-    period: "Early Childhood Education - Nursery (0 to 1 year old)",
-    schoolYear: [2024, 2025],
-    shift: ["full", "morning"],
-    originUnit: "R$",
-    originPrice: 1000,
-    presentUnit: "BRL",
-    presentPrice: 500,
-  },
-];
-
 const Dashboard = () => {
   const [switchMap, setSwitchMap] = useState<boolean>(false);
   const [searchParam, setSearchParam] = useState<any>(null);
   const [schools, setSchools] = useState<any>(null);
-  const [timer, setTimer] = useState<boolean>(false);
+  // const [timer, setTimer] = useState<boolean>(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -152,7 +134,7 @@ const Dashboard = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
-              {schools?.map((result: any, index: number) => (
+              {schools && schools.map((result: any, index: number) => (
                 <div
                   key={index}
                   className="bg-white max-w-sm p-4 border border-gray-200 rounded-lg"

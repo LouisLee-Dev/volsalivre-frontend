@@ -1,7 +1,10 @@
+'use client';
+
 import Dashboard from "@/components/artigos//faq-bolsa-escola/page";
-import Header from "@/components/artigos/header/page";
+const Header = dynamic(()=> import("@/components/header/page"), { ssr: false});
 import Footer from "@/components/artigos/footer/page";
 import "@/app/globals.css";
+import dynamic from "next/dynamic";
 
 export default function Home() {
   return (

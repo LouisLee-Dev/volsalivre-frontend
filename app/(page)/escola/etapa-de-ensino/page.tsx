@@ -1,11 +1,12 @@
-import Link from "next/link";
-import Filters from "@/components/basecomponents/filters";
+// import Link from "next/link";
+// import Filters from "@/components/basecomponents/filters";
 import { PrivateSchoolCard } from "@/components/basecomponents/cards";
 import "@/app/globals.css";
-import Header from "@/components/header/page";
+const Header = dynamic(()=> import("@/components/header/page"), { ssr: false});
 import Footer from "@/components/footer/page";
+import dynamic from "next/dynamic";
 
-let PopularSchools = [
+const PopularSchools = [
   {
     mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
     star: 1,
@@ -108,12 +109,11 @@ export default function RootLayout() {
             </div>
           </div>
         </div>
-        {/* <hr className="text-gray-700 p-0" /> */}
         <div className="flex flex-col bg-slate-100 py-5 space-y-6 items-center">
           <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] px-3 pb-5">
-            <div className="max-[1200px]:hidden">
+            {/* <div className="max-[1200px]:hidden">
               <Filters type="education" setSearchParam={()=>{}} />
-            </div>
+            </div> */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 w-full">
               {PopularSchools.map((school: any, index: number) => (
                 <div

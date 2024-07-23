@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import Carousel from "@/components/dashboard/popularschools/carousel";
 
 interface PopularSchoolsProps {}

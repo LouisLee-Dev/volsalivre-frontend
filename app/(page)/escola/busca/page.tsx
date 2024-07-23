@@ -1,9 +1,10 @@
 import "@/app/globals.css";
-import Header from "@/components/header/page";
+const Header = dynamic(()=> import("@/components/header/page"), { ssr: false});
 import Footer from "@/components/footer/page";
 import Dashboard from "@/components/escola/dashboard";
+import dynamic from "next/dynamic";
 
-export default function RootLayout() {
+export default function Busca() {
   return (
     <>
       <Header />

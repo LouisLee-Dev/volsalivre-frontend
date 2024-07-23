@@ -9,7 +9,7 @@ const axiosBaseQuery =
       const result = await axios({ url: baseUrl + url, method, data, params, headers });
       return { data: result.data };
     } catch (axiosError) {
-      let err = axiosError as any;      
+      const err = axiosError as any;      
       return {
         error: {
           status: err.response?.status,
@@ -82,6 +82,7 @@ export const schoolsApi = createApi({
         data: credentials,
       }),
     }),
+    // eslint-disable-next-line @typescript-eslint/ban-types
     getAllByParams: builder.mutation<{ schoolByParamList: {}}, { title: string; star: string; position: string; at: string; level: any; shift: any; type: string; scholarUnit: any; amount: string; benefits: any; }>({
       query: () => ({
         url: '/getParams',

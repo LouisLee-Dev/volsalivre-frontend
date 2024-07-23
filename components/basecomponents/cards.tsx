@@ -202,8 +202,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
 }) => {  
   const shiftArray: any = [];
   const schoolYearArray: any = [];
-  let shiftlength = shift.length;
-  let yearlength = schoolYear.length;
+  const shiftlength = shift.length;
+  const yearlength = schoolYear.length;
   for (let i = 0; i < shiftlength; i++) {
     const element = shift[i];
     shiftArray.push(
@@ -221,7 +221,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
     )
   }
   return (
-    <div className="flex flex-col bg-white rounded-lg justify-between items-between gap-2">
+    <div className="flex flex-col bg-white rounded-lg justify-between items-between ">
       <div className="flex gap-5 items-center">
         {/* <Image
           src={`data:${mark && mark.contentType};base64,${mark && mark.data.toString('base64')}`}

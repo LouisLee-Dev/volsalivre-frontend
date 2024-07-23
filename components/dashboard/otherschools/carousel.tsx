@@ -5,7 +5,7 @@ import "swiper/scss";
 import "swiper/scss/pagination";
 import { OtherSchoolsCard } from "../../basecomponents/cards";
 
-let OtherSchools = [{
+const OtherSchools = [{
   mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20190128114624518.png",
   star: 5,
   title: "Santo Antonio College",

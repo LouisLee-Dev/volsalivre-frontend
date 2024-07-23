@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import Image from "next/image";
 import Link from 'next/link'
 
-let article = [
+const article = [
 {
     mark:"https://img.imageboss.me/me/cdn/quality:50/20240619170345659.jpg ",
     title:"Musicalização infantil: o que é, como aplicar e quais benefícios?",

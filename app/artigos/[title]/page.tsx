@@ -5,7 +5,7 @@ import "@/app/globals.css";
 import Header from "@/components/header/page";
 import Footer from "@/components/footer/page";
 
-let data = {
+const data = {
   mark:'https://img.imageboss.me/me/cdn/quality:50/20240619170345659.jpg',
   detail:"Se tem música, a criançada já anima! E a musicalização infantil é um tipo de abordagem na educação que pode atrair ainda mais...",
 }

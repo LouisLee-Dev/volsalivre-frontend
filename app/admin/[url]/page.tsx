@@ -1,29 +1,29 @@
 'use client';
 
-import React, {useState} from 'react';
-import {AlunosBoard, EscolaBoard, OfertasBoard, PainelBoard, ServiceBoard} from '@/components/admin/dashboard';
+import React, { useState } from 'react';
+import { AlunosBoard, EscolaBoard, OfertasBoard, PainelBoard, ServiceBoard } from '@/components/admin/dashboard';
 import Header from "@/components/admin/header";
 import Footer from "@/components/maisAlunos/footer/page";
 import "@/app/globals.css";
 
-const Page = (url:any) => {
+const Page = (url: any) => {
     const decode_url = decodeURIComponent(url.params.url);
     let showDashboard;
     switch (decode_url) {
         case 'Painel do Gestor':
-            showDashboard = <PainelBoard title={decode_url} key={1}/>;
+            showDashboard = <PainelBoard title={decode_url} key={1} />;
             break;
         case 'Minha Escola':
-            showDashboard = <EscolaBoard  title={decode_url} key={1}/>;
+            showDashboard = <EscolaBoard title={decode_url} key={1} />;
             break;
         case 'Minhas Ofertas':
-            showDashboard = <OfertasBoard  title={decode_url} key={1}/>;
+            showDashboard = <OfertasBoard title={decode_url} key={1} />;
             break;
         case 'Meus Alunos':
-            showDashboard = <AlunosBoard  title={decode_url} key={1}/>;
+            showDashboard = <AlunosBoard title={decode_url} key={1} />;
             break;
         case 'Servios':
-            showDashboard = <ServiceBoard  title={decode_url} key={1}/>;
+            showDashboard = <ServiceBoard title={decode_url} key={1} />;
             break;
     }
     return (

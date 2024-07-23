@@ -9,27 +9,6 @@ interface Title {
   title: string;
 }
 
-let PrivateSchools = [
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230111134036974.jpg",
-    star: 1,
-    title: "Santo Antonio College",
-    at: "Joinville - SC",
-    position: "Iririu",
-    scholarUnit: "BRL",
-    amount: "306.57",
-  },
-  {
-    mark: "https://img.imageboss.me/me/cover:center/48x48/format:auto/20230323142359118.png",
-    star: 5,
-    title: "Intergenius College",
-    at: "Joinville - SC",
-    position: "Juliao Ramos",
-    scholarUnit: "BRL",
-    amount: "306.57",
-  },
-];
-
 const PainelBoard: React.FC<Title> = ({ title }) => {
   return (
     <div className="flex flex-col md:flex-row md:px-24 py-10 md:space-x-10 sm:space-y-10">

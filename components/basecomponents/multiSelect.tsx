@@ -145,7 +145,7 @@ const MultiSelect: React.FC<MultiSelectProps> = ({ options = [], selectedOptions
     onChange([...selectedOptions.filter(opt => opt !== option), { level: option.level, grade: grade }]);
   }
 
-  let ano = [];
+  const ano:any = [];
   for (let i = 1; i <= 12; i++) {
     ano.push(
       <option key={i} value={i}>

@@ -10,7 +10,7 @@ const axiosBaseQuery =
       const result = await axios({ url: baseUrl + url, method, data, params });
       return { data: result.data };
     } catch (axiosError) {
-      let err = axiosError as any;
+      const err = axiosError as any;
       toast.error(err);
       return {
         error: {

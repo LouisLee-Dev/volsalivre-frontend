@@ -16,7 +16,7 @@ interface SearchButtonProps {
   setFilters?: any;
 };
 
-let checkedData = [
+const checkedData = [
   ["2023", "2024", "2025", "2026"],
   ["Morning", "Afternoon", "Full", "Semi-integral", "Nocturnal", "EAD", "Saturday"],
   ["Super School"],
@@ -26,7 +26,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
   const [geo, setGeo] = useState<string | any>("Sao Paulo, SP");
   const [showGeo, setShowGeo] = useState<boolean>(false);
   const handleFilters = () => {
-    setFilters({...filters, geo: geo});
+    setFilters({ ...filters, geo: geo });
   }
   return (
     <div className={`${className}`}>
@@ -63,8 +63,8 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               type="text"
               className={`py-3 focus:outline-none rounded-full w-4/5 text-sm `}
               value={geo}
-              onChange={(e) => {setGeo(e.target.value); handleFilters();}}
-              onClick={() =>  setShowGeo(!showGeo)}
+              onChange={(e) => { setGeo(e.target.value); handleFilters(); }}
+              onClick={() => setShowGeo(!showGeo)}
             />
           </div>
         </>
@@ -79,7 +79,7 @@ const SearchButton: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               className="px-7 py-1 rounded-full w-full focus:outline-none focus:ring-2 focus:ring-purple-500 border border-purple-500"
               value={geo}
               onClick={() => setShowGeo(!showGeo)}
-              onChange={(e) => {setGeo(e.target.value); handleFilters();}}
+              onChange={(e) => { setGeo(e.target.value); handleFilters(); }}
             />
             <span className="absolute left-2">
               <svg
@@ -150,7 +150,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
   const [neigh, setNeigh] = useState<string>("");
   const [showNeigh, setShowNeigh] = useState<boolean>(false);
   const handleFilters = () => {
-    setFilters({...filters, neigh: neigh});
+    setFilters({ ...filters, neigh: neigh });
   }
   return (
     <div className={`${className} relative`}>
@@ -180,7 +180,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               type="text"
               className={`text-sm py-3 focus:outline-none rounded-full w-4/5`}
               value={neigh}
-              onChange={(e) => {setNeigh(e.target.value); handleFilters();}}
+              onChange={(e) => { setNeigh(e.target.value); handleFilters(); }}
               placeholder="Eter your neighbor"
               onClick={() => setShowNeigh(!showNeigh)}
             />
@@ -198,7 +198,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
               className="px-10 py-1.5 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-2 focus:ring-purple-500"
               value={neigh}
               onClick={() => { setShowNeigh(!showNeigh) }}
-              onChange={(e) => {setNeigh(e.target.value); handleFilters();}}
+              onChange={(e) => { setNeigh(e.target.value); handleFilters(); }}
             />
             <span className="absolute left-2">
               <svg
@@ -247,23 +247,23 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
   const [schools, setSchools] = useState<any[]>([]);
   const [school, setSchool] = useState<string>("");
   const [showSchool, setShowSchool] = useState<boolean>(false);
- 
+
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/schools/all`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/schools/all`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await res.json();        
+        const data = await res.json();
         setSchools(data);
       } catch (err) {
         console.error('Error: Level loading error!!!');
       }
     };
     fetchSchools();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetSchool = (value: string) => {
     setSchool(value);
@@ -298,7 +298,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
               type="text"
               className={`text-sm py-3 focus:outline-none rounded-full w-4/5`}
               value={school}
-              onChange={(e) => {handleSetSchool(e.target.value);}}
+              onChange={(e) => { handleSetSchool(e.target.value); }}
               placeholder="Enter your neighbor"
               onClick={() => setShowSchool(!showSchool)}
             />
@@ -317,7 +317,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
                 className="px-10 py-1 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-purple-500 focus:ring-2"
                 value={school}
                 onClick={() => setShowSchool(!showSchool)}
-                onChange={(e) => {handleSetSchool(e.target.value); }}
+                onChange={(e) => { handleSetSchool(e.target.value); }}
               />
               <span className="absolute left-2">
                 <svg
@@ -347,12 +347,12 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
           } absolute top-full flex flex-col max-h-48 mt-4 overflow-y-auto rounded border border-slate-150 z-50`}
       >
         <p
-          className="px-4 py-2 font-semibold bg-slate-100 text-slate-500 cursor-pointer"          
+          className="px-4 py-2 font-semibold bg-slate-100 text-slate-500 cursor-pointer"
         >
           SEARCH BY SCHOOL
         </p>
         <ul role="listbox" className="bg-white">
-        { schools && schools.map((schoolObje: any) => (
+          {schools && schools.map((schoolObje: any) => (
             <li
               key={schoolObje._id}
               className="hover:bg-orange-400 hover:text-white px-4 py-1 cursor-pointer"
@@ -383,11 +383,11 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   const [sereiesList, setSeriesList] = useState<any>();
   const [series, setSeries] = useState<string | any>();
   const [showValue, setShowValue] = useState<boolean>(false);
-  
+
   useEffect(() => {
     const fetchSeries = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/series/all/${level && level}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all/${level && level}`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
@@ -398,13 +398,13 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
       }
     };
     fetchSeries();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleFilters = () => {
-    setFilters({...filters, series: series})
+    setFilters({ ...filters, series: series })
   }
-  
+
   return (
     <div className={`${className} relative`} >
       {disp === 0 ? (
@@ -433,7 +433,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               type="text"
               className={`text-sm py-1 focus:outline-none rounded-full w-4/5`}
               value={series}
-              onChange={(e) => {setSeries(e.target.value); handleFilters()}}
+              onChange={(e) => { setSeries(e.target.value); handleFilters() }}
               placeholder="Select a series"
               onClick={() => setShowValue(!showValue)}
             />
@@ -469,7 +469,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               className="px-10 py-1.5 text-sm rounded-full w-full border focus:outline-none border-purple-500 focus:ring-2 focus:ring-purple-500"
               value={series}
               onClick={() => setShowValue(!showValue)}
-              onChange={(e) => {setSeries(e.target.value); handleFilters();}}
+              onChange={(e) => { setSeries(e.target.value); handleFilters(); }}
             />
             <span className="absolute left-2">
               <svg
@@ -498,7 +498,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
           } absolute top-full flex flex-col w-full max-h-48 mt-4 overflow-y-auto rounded border border-slate-150 bg-white text-orange-600 z-10`}
       >
         <ul role="listbox">
-        {sereiesList?.map((seriesObj: any) => (
+          {sereiesList?.map((seriesObj: any) => (
             <li
               key={seriesObj._id}
               className="hover:bg-orange-400 hover:text-white px-4 py-1 cursor-pointer"
@@ -532,7 +532,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
   useEffect(() => {
     const fetchLevels = async () => {
       try {
-        const res = await fetch('http://localhost:5000/api/levels/all');
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/levels/all`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
@@ -546,7 +546,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
   }, []);
 
   const handleFilters = () => {
-    setFilters({...filters, level: state});
+    setFilters({ ...filters, level: state });
   }
 
   return (
@@ -562,7 +562,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
             className="px-10 py-1.5 text-sm rounded-full w-full border focus:outline-none border-purple-500 focus:ring-2 focus:ring-purple-500"
             value={state}
             onClick={() => setShowValue(!showValue)}
-            onChange={(e) =>{ setState(e.target.value); handleFilters(); }}
+            onChange={(e) => { setState(e.target.value); handleFilters(); }}
           />
           <span className="absolute left-2">
             <svg
@@ -622,7 +622,7 @@ const SearchRadius: React.FC<SearchButtonProps> = ({
   const [radiusValue, setRadiusValue] = useState<number | any>();
 
   const handleFilters = () => {
-    setFilters({...filters, radius: radiusValue});
+    setFilters({ ...filters, radius: radiusValue });
   }
   return (
     <div className={`${className} relative`}>
@@ -634,7 +634,7 @@ const SearchRadius: React.FC<SearchButtonProps> = ({
           <p>Up to {radiusValue} km</p>
           <input
             type="range"
-            onChange={(e) => {setRadiusValue(e.target.value); handleFilters();}}
+            onChange={(e) => { setRadiusValue(e.target.value); handleFilters(); }}
             value={radiusValue}
             id="currency-input"
             className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700 accent-indigo-600"
@@ -684,13 +684,13 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
   const length = checkedData[disp - 1].length;
   for (let i = 0; i < length; i++) {
     const element = checkedData[disp - 1][i];
-    
-      const data = disp === 1 ? years : disp === 2 ? shift : benefit;
-      const setData = disp === 1 ? setYears : disp === 2 ? setShift : setBenefit;
-      if (disp === 1 || disp === 2)
+
+    const data = disp === 1 ? years : disp === 2 ? shift : benefit;
+    const setData = disp === 1 ? setYears : disp === 2 ? setShift : setBenefit;
+    if (disp === 1 || disp === 2)
       checkedDisp.push(
         <div key={i} className="flex items-center mb-4">
-          <input          
+          <input
             id={`default-checkbox${i}-${disp - 1}`}
             type="checkbox"
             value={element}
@@ -702,10 +702,10 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
           </label>
         </div>
       );
-     else if (disp === 3) {
+    else if (disp === 3) {
       checkedDisp.push(
         <div className="flex items-center mb-4">
-          <input          
+          <input
             id={`default-checkbox${i}-${disp - 1}`}
             type="checkbox"
             value={element}

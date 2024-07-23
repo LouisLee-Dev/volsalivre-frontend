@@ -5,7 +5,7 @@ import { Neighborhood, SearchChecked, SearchRadius, SearchSeries, TeachingState 
 
 interface FilterProps {
   type: string;
-  setSearchParam: any;
+  setSearchParam?: any;
 }
 
 const Filters: React.FC<FilterProps> = ({ type, setSearchParam }) => {

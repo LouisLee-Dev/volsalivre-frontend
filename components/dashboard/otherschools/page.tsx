@@ -4,6 +4,7 @@ import Carousel from "@/components/dashboard/otherschools/carousel";
 
 interface OtherSchoolsProps {}
 
+// eslint-disable-next-line no-empty-pattern
 const OtherSchools: React.FC<OtherSchoolsProps> = ({}) => {
   return (
     <div className="flex flex-col gap-5 justify-around bg-purple-300 shadow-lg shadow-purple-700 2xl:w-[70vw] xl:w-[80vw] lg:w-[90vw] w-full p-10 rounded-2xl">

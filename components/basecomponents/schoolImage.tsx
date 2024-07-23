@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 interface SchoolImageProps {
-    title?: String;
+  title?: string;
 }
 
-const SchoolImage:React.FC<SchoolImageProps> = ({ title }) => {
+const SchoolImage: React.FC<SchoolImageProps> = ({ title }) => {
   const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {

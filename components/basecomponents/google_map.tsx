@@ -28,8 +28,8 @@ const circleOptions = {
 
 const Map = () => {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY,
-        libraries,
+        googleMapsApiKey: process.env.GOOGLE_MAP_API_KEY || "",
+        // libraries,
     });
 
     if (loadError) {

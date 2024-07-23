@@ -63,7 +63,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
         );
 
       } catch (error) {
-
+        console.log(error);
       }
     } else {
       const data = {
@@ -77,7 +77,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           dispatch(setCredentials({ token }));
           setShow(!isShow);
         } else {
-
+          console.log('Error');
         }
       } catch (error) {
         console.error("Failed to login: ", error);

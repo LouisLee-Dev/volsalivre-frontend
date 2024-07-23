@@ -8,7 +8,7 @@ interface IdentificacaoProps {
     searchParams: { [key: string]: string };
 }
 
-const Identificacao: React.FC<IdentificacaoProps> = ({ params, searchParams }) => {    
+const Identificacao: React.FC<IdentificacaoProps> = ({ params, searchParams }) => {
     const { title } = params;
 
     return (
@@ -23,12 +23,12 @@ const Identificacao: React.FC<IdentificacaoProps> = ({ params, searchParams }) =
             <IdentificacaoChildren title={title} />
             <div className="flex justify-around bg-slate-100 py-10">
                 <div className="flex gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Pague com Visa</title><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="32" rx="4"></rect><path fill="#005C9C" d="M22.29 20.778h-2.734L21.265 11H24l-1.71 9.778M16.82 11l-2.422 6.725-.286-1.448-.855-4.396S13.154 11 12.05 11H8.047L8 11.165s1.225.256 2.658 1.118l2.207 8.495h2.648L19.556 11H16.82M34.956 17.319l1.313-3.66.739 3.66h-2.052zm2.75 3.459H40L38 11h-2.01c-.927 0-1.153.729-1.153.729l-3.726 9.049h2.604l.521-1.452h3.177l.293 1.452zM30.772 13.662l.34-2.213S30.063 11 28.971 11c-1.18 0-3.983.582-3.983 3.411 0 2.663 3.29 2.696 3.29 4.094 0 1.398-2.952 1.148-3.925.266L24 21.085s1.062.582 2.685.582 4.072-.949 4.072-3.528c0-2.68-3.32-2.93-3.32-4.094 0-1.165 2.317-1.015 3.335-.383"></path><path d="M14.222 16.333l-.87-4.443s-.105-.89-1.228-.89H8.048L8 11.167s1.96.404 3.84 1.917c1.796 1.447 2.382 3.25 2.382 3.25" fill="#EE9F3F"></path></g></svg>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Pague com Mastercard</title><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="32" rx="4"></rect><g fill-rule="nonzero"><path fill="#FF5F00" d="M21.113 9.68h6.731v12.117h-6.731z"></path><path d="M21.54 15.74a7.697 7.697 0 0 1 2.939-6.06 7.683 7.683 0 0 0-10.405.831 7.715 7.715 0 0 0 0 10.455 7.683 7.683 0 0 0 10.405.831 7.697 7.697 0 0 1-2.938-6.057z" fill="#EB001B"></path><path d="M36.925 15.74a7.707 7.707 0 0 1-4.33 6.93c-2.65 1.29-5.801.95-8.116-.873a7.71 7.71 0 0 0 2.939-6.058 7.71 7.71 0 0 0-2.94-6.059 7.682 7.682 0 0 1 8.116-.873 7.707 7.707 0 0 1 4.331 6.93v.003zM36.19 20.536v-.267h.1v-.056h-.254v.056h.11v.267h.044zm.494 0v-.323h-.077l-.09.231-.09-.23h-.068v.322h.056v-.242l.083.21h.058l.083-.21v.245l.045-.003z" fill="#F79E1B"></path></g></g></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Pague com Visa</title><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="32" rx="4"></rect><path fill="#005C9C" d="M22.29 20.778h-2.734L21.265 11H24l-1.71 9.778M16.82 11l-2.422 6.725-.286-1.448-.855-4.396S13.154 11 12.05 11H8.047L8 11.165s1.225.256 2.658 1.118l2.207 8.495h2.648L19.556 11H16.82M34.956 17.319l1.313-3.66.739 3.66h-2.052zm2.75 3.459H40L38 11h-2.01c-.927 0-1.153.729-1.153.729l-3.726 9.049h2.604l.521-1.452h3.177l.293 1.452zM30.772 13.662l.34-2.213S30.063 11 28.971 11c-1.18 0-3.983.582-3.983 3.411 0 2.663 3.29 2.696 3.29 4.094 0 1.398-2.952 1.148-3.925.266L24 21.085s1.062.582 2.685.582 4.072-.949 4.072-3.528c0-2.68-3.32-2.93-3.32-4.094 0-1.165 2.317-1.015 3.335-.383"></path><path d="M14.222 16.333l-.87-4.443s-.105-.89-1.228-.89H8.048L8 11.167s1.96.404 3.84 1.917c1.796 1.447 2.382 3.25 2.382 3.25" fill="#EE9F3F"></path></g></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><title>Pague com Mastercard</title><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="32" rx="4"></rect><g fill-rule="nonzero"><path fill="#FF5F00" d="M21.113 9.68h6.731v12.117h-6.731z"></path><path d="M21.54 15.74a7.697 7.697 0 0 1 2.939-6.06 7.683 7.683 0 0 0-10.405.831 7.715 7.715 0 0 0 0 10.455 7.683 7.683 0 0 0 10.405.831 7.697 7.697 0 0 1-2.938-6.057z" fill="#EB001B"></path><path d="M36.925 15.74a7.707 7.707 0 0 1-4.33 6.93c-2.65 1.29-5.801.95-8.116-.873a7.71 7.71 0 0 0 2.939-6.058 7.71 7.71 0 0 0-2.94-6.059 7.682 7.682 0 0 1 8.116-.873 7.707 7.707 0 0 1 4.331 6.93v.003zM36.19 20.536v-.267h.1v-.056h-.254v.056h.11v.267h.044zm.494 0v-.323h-.077l-.09.231-.09-.23h-.068v.322h.056v-.242l.083.21h.058l.083-.21v.245l.045-.003z" fill="#F79E1B"></path></g></g></svg>
                 </div>
             </div>
         </div>
-        
+
     )
 }
 

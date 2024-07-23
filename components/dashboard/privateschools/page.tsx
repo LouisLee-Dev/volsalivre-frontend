@@ -22,6 +22,7 @@ interface School {
   __v: number;
 }
 interface PrivateSchoolsProps {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   privateSchoolsData: Object
 }
 

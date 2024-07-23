@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 // features/auth/authSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import setAuthToken from '@/utils/setAuthToken';
@@ -9,7 +10,7 @@ interface LevelState {
   token: string | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  user :{}
+  user: {}
 }
 
 const initialState: LevelState = {
