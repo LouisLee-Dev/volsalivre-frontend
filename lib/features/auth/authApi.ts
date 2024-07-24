@@ -7,6 +7,7 @@ const axiosBaseQuery =
   ({ baseUrl }: { baseUrl: string }) =>
   async ({ url, method, data }: { url: string; method: string; data?: any }) => {
     try {
+      console.log(baseUrl + url);
       const result = await axios({
         url: baseUrl + url,
         method,
@@ -29,7 +30,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_DEV + '/api' }),
   endpoints: (builder) => ({
-    login: builder.mutation<{ token: string }, { email: string; password: string }>({
+    login: builder.mutation<{ token: string, role: string }, { email: string; password: string }>({
       query: (credentials) => ({
         url: '/users/login',
         method: 'post',

@@ -10,4 +10,9 @@ const setAuthToken = token => {
   }
 };
 
+const getAuthToken = () => {
+  return axios.defaults.headers.common["Authorization"];
+}
+
 export default setAuthToken;
+export { getAuthToken }

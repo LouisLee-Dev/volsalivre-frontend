@@ -5,10 +5,11 @@ import { Neighborhood, SearchChecked, SearchRadius, SearchSeries, TeachingState 
 
 interface FilterProps {
   type: string;
+  level?: any;
   setSearchParam?: any;
 }
 
-const Filters: React.FC<FilterProps> = ({ type, setSearchParam }) => {
+const Filters: React.FC<FilterProps> = ({ type, level, setSearchParam }) => {
   const [filters, setFilters] = useState<any>();
   const [school, setSchoolParent] = useState<any>("");
 
@@ -37,7 +38,7 @@ const Filters: React.FC<FilterProps> = ({ type, setSearchParam }) => {
       <div className="flex flex-col text-sm gap-4 text-gray-600 ">
         <Neighborhood disp={1} className="" filters={filters} setFilters={setFilters} />
         {/* <SearchSchool disp={1} className="" setSchoolParent={setSchoolParent} setFilters={setFilters} filters={filters} /> */}
-        {type === "search" && <TeachingState disp={1} className="" filters={filters} setFilters={setFilters} />}
+        {type === "search" && !level && <TeachingState disp={1} className="" filters={filters} setFilters={setFilters} />}
         <SearchSeries disp={1} className="" filters={filters} setFilters={setFilters} />
       </div>
       <div className="flex flex-col space-y-2 text-sm gap-4 text-gray-600">

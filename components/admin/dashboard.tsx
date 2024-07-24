@@ -47,6 +47,10 @@ const PainelBoard: React.FC<Title> = ({ title }) => {
   );
 };
 const EscolaBoard: React.FC<Title> = ({ title }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   return (
     <div className="flex sm:flex-col md:flex-row md:px-24 py-10 space-y-10 md:space-y-0">
       <div className="flex flex-col md:w-[360px] w-full space-y-3">
@@ -66,16 +70,18 @@ const EscolaBoard: React.FC<Title> = ({ title }) => {
           <p className="text-gray-400">
             Esta será a identidade da sua escola em nosso portal, todas as informações abaixo estarão na sua página. É importante que todos os campos estejam preenchidos e conferidos antes do envio.
           </p>
+          <button className="hover:text-gray-800 hover:bg-slate-300 hover:rounded-full flex justify-center items-center py-2 text-orange-500" onClick={() => openModal()}>
+            Editar dados da escola
+          </button>
+
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };
 const OfertasBoard: React.FC<Title> = ({ title }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
   return (
     <div className="flex flex-col md:flex-row md:px-24 rounded-xl py-10 gap-3">
       <div className="flex flex-col justify-between p-10 rounded-xl bg-white">
@@ -90,7 +96,7 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
             </label>
           </div>
           <div className="flex justify-between text-gray-700 gap-3 ">
-            <button className="border rounded-lg bg-slate-200 p-1.5" onClick={()=>openModal()}>ENSINO BÁSICO</button>
+            <button className="border rounded-lg bg-slate-200 p-1.5">ENSINO BÁSICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">TÉCNICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">FACULDADE</button>
           </div>
@@ -125,7 +131,6 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
           </div>
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };

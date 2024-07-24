@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { toast } from 'react-toastify';
-import { removeFromLocalStorage } from "@/utils/localstorage";
+import { getUserRole, removeFromLocalStorage, removeUserRole } from "@/utils/localstorage";
 import Link from 'next/link';
 import SchoolImage from './schoolImage';
 
@@ -139,16 +139,11 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
   scholarUnit,
   amount,
 }) => {
+
   return (
-    <div className="flex flex-col p-5 bg-white rounded-lg justify-between w-60 gap-2 border border-slate-400">
+    <Link href={`/artigos/${title}`} className="flex flex-col p-5 bg-white rounded-lg justify-between w-60 gap-2 border border-slate-400">
       <div className="flex md:flex-row items-center gap-1 md:gap-0">
-        <Image
-          src={mark}
-          alt=""
-          width={70}
-          height={70}
-          className="w-12 h-auto rounded-full"
-        />
+        <SchoolImage title={title} />
         <p className="text-[16px] font-semibold text-gray-700 md:ml-3 md:text-xs text-center md:text-left">{title}</p>
       </div>
       <div className="flex gap-2 justify-center md:justify-start">
@@ -165,7 +160,7 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
         <p className="pb-0 text-gray-400">sholarships form:</p>
         <p className="pt-0 font-semibold text-gray-700">{scholarUnit} {amount}</p>
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -443,7 +438,7 @@ const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({ school }) => {
         </div>
         <p><svg className='float-start mx-1' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path className="" fill="currentColor" d="M277.1 48c23 0 42.5 14.7 49.8 35.2c4.4 12.5 18.1 19 30.6 14.6s19-18.1 14.6-30.6C358.3 28.1 321 0 277.1 0S195.8 28.1 182 67.2c-4.4 12.5 2.1 26.2 14.6 30.6s26.2-2.1 30.6-14.6C234.5 62.7 254.1 48 277.1 48zM66.7 197.5c11.9-5.9 16.7-20.3 10.7-32.2s-20.3-16.7-32.2-10.7l-4.7 2.3C15.7 169.3 0 194.7 0 222.6c0 37.4 28 68.3 64.2 72.9C66.4 344.7 91 388.2 128 416v48c0 26.5 21.5 48 48 48h48c26.5 0 48-21.5 48-48V448h48v16c0 26.5 21.5 48 48 48h48c26.5 0 48-21.5 48-48V426.6c18.7-10.8 35.1-25.4 48-42.6h32c17.7 0 32-14.3 32-32V256c0-17.7-14.3-32-32-32H530.7c-8.2-18.8-19.9-35.7-34.2-49.8l11.3-36.8-22.9-7 22.9 7c6.3-20.6-9.1-41.4-30.6-41.4H456c-31.5 0-60.2 12.2-81.6 32H224c-74.4 0-137 50.8-154.9 119.6c-12-2-21.1-12.5-21.1-25.1c0-9.6 5.4-18.4 14.1-22.8l4.7-2.3zM424 288a24 24 0 1 0 0-48 24 24 0 1 0 0 48zM402.3 168c13.1-14.7 32.1-23.9 53.2-24L446 174.8c-2.9 9.4 .2 19.6 7.9 25.8c17.4 13.9 30.4 32.8 37.1 54.5c3.1 10.1 12.4 17 22.9 17h14v64H499.4c-8.3 0-16 4.3-20.3 11.3c-11.7 18.7-28.7 33.7-48.9 42.8C421.5 394 416 402.5 416 412v52H368V424c0-13.3-10.7-24-24-24H248c-13.3 0-24 10.7-24 24v40H176V403.4c0-8.3-4.3-16-11.3-20.3c-31.7-19.8-52.7-55-52.7-95c0-61.9 50.1-112 112-112H384h0l.4 0c6.8 0 13.4-2.9 17.9-8z"></path></svg>Desconto de 40% nas mensalidades</p>
         <p><svg className='float-start mx-1' xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path className="" fill="currentColor" d="M160 25.4C143 9.6 120.2 0 95.2 0C42.6 0 0 42.6 0 95.2c0 18.8 5.5 36.3 14.9 51.1L160 25.4zM256 112a176 176 0 1 1 0 352 176 176 0 1 1 0-352zm0 400c53.2 0 102.1-18.6 140.5-49.5L439 505c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-42.5-42.5c31-38.4 49.5-87.3 49.5-140.5C480 164.3 379.7 64 256 64S32 164.3 32 288c0 53.2 18.6 102.1 49.5 140.5L39 471c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l42.5-42.5c38.4 31 87.3 49.5 140.5 49.5zM497.1 146.4C506.5 131.6 512 114 512 95.2C512 42.6 469.4 0 416.8 0C391.8 0 369 9.6 352 25.4L497.1 146.4zM280 184c0-13.3-10.7-24-24-24s-24 10.7-24 24V288c0 6.4 2.5 12.5 7 17l48 48c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-41-41V184z"></path></svg> Só restam 1 bolsas! </p>
-        <button className="bg-orange-500 rounded-full p-3 text-white text-xl font-semibold">Quero esta bolsa</button>
+        <Link className="bg-orange-500 rounded-full p-3 text-white text-xl text-center font-semibold" href={`/escola/${school.title}/1`}>Quero esta bolsa</Link>
         <EscolaRegisterCard
           option={selectedSerie}
           options={school.series}
@@ -511,32 +506,38 @@ const EscolaRegisterCard: React.FC<EscolaRegisterCardProps> = ({ options, option
 
 const MenuTipCard: React.FC = () => {
   return (
-    <div className="origin-top-right absolute right-0 mt-48 text-center w-32 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-      <a
+    <div className="origin-top-right z-50 absolute right-0 mt-48 text-center w-32 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
+      <Link
         href={`/meus-dados/${encodeURIComponent('Meu perfil')}`}
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
       >
         Meu perfil
-      </a>
-      <a
+      </Link>
+      <Link
         href={`/meus-dados/${encodeURIComponent('Meus dados')}`}
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
       >
         Meus dados
-      </a>
-      <a
+      </Link>
+      <Link
         href={`/meus-dados/${encodeURIComponent('Minhas bolsas')}`}
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 border-b"
       >
         Minhas bolsas
-      </a>
+      </Link>
+      {
+          getUserRole() !== 'customer' && getUserRole() !== 'student' && (
+            <Link href={`/admin/Painel%20do%20Gestor`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Admin</Link>
+          )
+        }
       <a
         onClick={() => {
           removeFromLocalStorage('token');
+          removeUserRole('role');
           window.location.href = '/';
           toast.success("Successfully logged out....")
         }}
-        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
       >
         Sair
       </a>

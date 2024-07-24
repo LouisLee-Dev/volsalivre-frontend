@@ -75,7 +75,7 @@ const ConfirmDaBolsa: React.FC<ConfirmDaBolsaProps> = ({ title }) => {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <Link href={`/escola/${title}/identificacao/login`} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Confirmar Bolsa</Link>
+                    <Link href={`/escola/${title}/2`} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Confirmar Bolsa</Link>
                 </div>
             </div>
 

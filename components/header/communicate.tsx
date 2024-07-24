@@ -24,8 +24,6 @@ const Communicate: React.FC<CommunicateProps> = ({ menu, setMenu }) => {
     setMenuShow(!menuShow);
   };
 
-  // const loginStatus = getFromLocalStorage('token');
-
   return (
     <>
       <div className="hidden lg:flex gap-2 items-start">

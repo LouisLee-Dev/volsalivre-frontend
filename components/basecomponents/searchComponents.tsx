@@ -2,7 +2,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 
 interface SearchButtonProps {
   disp: number;
@@ -545,9 +544,9 @@ const TeachingState: React.FC<SearchButtonProps> = ({
     fetchLevels();
   }, []);
 
-  const handleFilters = () => {
-    setFilters({ ...filters, level: state });
-  }
+  useEffect(() =>{
+    setFilters({ ...filters, level: state });    
+  }, [state])
 
   return (
     <div className={`${className} relative`}>
@@ -562,7 +561,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
             className="px-10 py-1.5 text-sm rounded-full w-full border focus:outline-none border-purple-500 focus:ring-2 focus:ring-purple-500"
             value={state}
             onClick={() => setShowValue(!showValue)}
-            onChange={(e) => { setState(e.target.value); handleFilters(); }}
+            // onChange={(e) => { setState(e.target.value); handleFilters(); }}
           />
           <span className="absolute left-2">
             <svg
@@ -640,18 +639,7 @@ const SearchRadius: React.FC<SearchButtonProps> = ({
             className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700 accent-indigo-600"
             placeholder="Enter amount" />
         </> :
-        ''
-        // <>
-        //   <label htmlFor="" className="font-semibold text-sm">Monthly fee</label>
-        //   <p>R$ 1.00 to R$ 10000.00</p>
-        //   <input 
-        //     type="range" 
-        //     onChange={(e) => setRadiusValue(e.target.value)} 
-        //     value = {radiusValue} 
-        //     id="currency-input" 
-        //     className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700 accent-indigo-600" 
-        //     placeholder="Enter amount" />
-        // </>
+        ''        
       }
     </div>
   )

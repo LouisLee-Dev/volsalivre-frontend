@@ -22,8 +22,7 @@ const Dashboard: React.FC = () => {
     getByPrivate()
     .unwrap()
     .then((fetchedData) => {
-      setPrivateSchoolsData(fetchedData); // Update state with fetched data
-      console.log('Fetched private school data:', fetchedData);
+      setPrivateSchoolsData(fetchedData); // Update state with fetched data      
     })
     .catch((err) => {
       console.error('Error fetching private school data:', err);

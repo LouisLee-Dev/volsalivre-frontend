@@ -55,38 +55,45 @@ const CarouselComponent: React.FC<privateSchoolsDataProps> = ({
   ));
   return (
     <div className="flex justify-center lg:p-[10px]">
-      <Swiper
-        slidesPerView={1} // Initially show 1 slide on small screens
-        spaceBetween={10}
-        pagination={{ clickable: true }}
-        breakpoints={{
-          640: {
-            slidesPerView: 2, // 2 slides for screens >= 640px
-          },
-          768: {
-            slidesPerView: 3, // 3 slides for screens >= 768px
-          },
-          1024: {
-            slidesPerView: 4, // 4 slides for screens >= 1024px
-          },
-        }}>
-        {schoolsData.map((school: any, index: number) => (
-          <SwiperSlide
-            key={index}
-          >
-            <PrivateSchoolCard
+      {
+        schoolsData.length === 0 && (
+          <div className="justify-center">Loading....</div>
+        )
+      }
+      {schoolsData.length > 0 &&
+        <Swiper
+          slidesPerView={1} // Initially show 1 slide on small screens
+          spaceBetween={10}
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: {
+              slidesPerView: 2, // 2 slides for screens >= 640px
+            },
+            768: {
+              slidesPerView: 3, // 3 slides for screens >= 768px
+            },
+            1024: {
+              slidesPerView: 4, // 4 slides for screens >= 1024px
+            },
+          }}>
+          {schoolsData.map((school: any, index: number) => (
+            <SwiperSlide
               key={index}
-              star={school.star}
-              mark={school.mark}
-              title={school.title}
-              at={school.at}
-              position={school.position}
-              scholarUnit={school.scholarUnit}
-              amount={school.amount}
-            />
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            >
+              <PrivateSchoolCard
+                key={index}
+                star={school.star}
+                mark={school.mark}
+                title={school.title}
+                at={school.at}
+                position={school.position}
+                scholarUnit={school.scholarUnit}
+                amount={school.amount}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      }
     </div>
   );
 };

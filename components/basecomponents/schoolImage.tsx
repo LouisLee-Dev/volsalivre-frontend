@@ -11,8 +11,7 @@ const SchoolImage: React.FC<SchoolImageProps> = ({ title }) => {
 
   useEffect(() => {
     // Construct the URL to fetch the image
-    const url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/schools/img/${title}`;
-    console.log(url)
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/schools/img/${title}`;    
     setImageSrc(url);
   }, [title]);
 

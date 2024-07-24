@@ -24,7 +24,7 @@ const TeachStage: React.FC = () => {
           </p>
           <div className="grid lg:grid-cols-3 lg:gap-10 sm:grid-cols-2 gap-3">
             <Link
-              href="/escola/busca"
+              href="/escola/busca/669dc5b07c0aa62f8cf233e4"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
               <svg
@@ -46,7 +46,7 @@ const TeachStage: React.FC = () => {
               Educação Infantil
             </Link>
             <Link
-              href="/escola/busca"
+              href="/escola/busca/669dc5987c0aa62f8cf233e1"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
               <svg
@@ -77,7 +77,7 @@ const TeachStage: React.FC = () => {
               Ensino Fundamental
             </Link>            
             <Link              
-              href="/escola/busca"
+              href="/escola/busca/669dc5be7c0aa62f8cf233e7"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
               <svg

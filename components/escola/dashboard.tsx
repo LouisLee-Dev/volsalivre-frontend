@@ -5,9 +5,13 @@ import Filters from "@/components/basecomponents/filters";
 import { SearchResultCard } from "@/components/basecomponents/cards";
 import Map from "../basecomponents/google_map";
 
-const Dashboard = () => {
+interface DashboardProps {
+  type?: any;
+}
+
+const Dashboard: React.FC<DashboardProps> = ({ type }) => {
   const [switchMap, setSwitchMap] = useState<boolean>(false);
-  const [searchParam, setSearchParam] = useState<any>(null);
+  const [searchParam, setSearchParam] = useState<any>();
   const [schools, setSchools] = useState<any>(null);
   // const [timer, setTimer] = useState<boolean>(false);
 
@@ -15,14 +19,30 @@ const Dashboard = () => {
 
   useEffect(() => {
     const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools/all';
-
+    let level: any = null;
+    if (type && type.params && type.params.level)
+      switch (type.params?.level) {
+        case '669dc5987c0aa62f8cf233e1':
+          level = 'Ensino Fundamental';
+          break;
+        case '669dc5b07c0aa62f8cf233e4':
+          level = 'Educação Infantil';
+          break;
+        case '669dc5be7c0aa62f8cf233e7':
+          level = 'Ensino Médio';
+          break;
+        default:
+          level = null;
+          break;
+      }
     const fetchSchools = async (searchParam: any) => {
+      const params = level ? { ...searchParam, level: level } : searchParam;
       const requestOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(searchParam), // Include data if required (e.g., for POST requests)
+        body: JSON.stringify(params), // Include data if required (e.g., for POST requests)
       };
 
       try {
@@ -37,17 +57,15 @@ const Dashboard = () => {
       }
     };
 
-    // Clear the previous timeout if it exists
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
 
-    // Set a new timeout
     timeoutRef.current = setTimeout(() => {
+
       fetchSchools(searchParam);
     }, 1000);
 
-    // Cleanup function to clear the timeout on component unmount or before setting a new timeout
     return () => {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
@@ -130,10 +148,15 @@ const Dashboard = () => {
           <Map /> :
           <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
             <div className="max-[1200px]:hidden">
-              <Filters type="search" setSearchParam={setSearchParam} />
+              <Filters type={`search`} level={type.params.level} setSearchParam={setSearchParam} />
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
+              {
+                !schools && (
+                  <div className="flex col-span-2 justify-center items-center">Loading...</div>
+                )
+              }
               {schools && schools.map((result: any, index: number) => (
                 <div
                   key={index}
@@ -149,7 +172,7 @@ const Dashboard = () => {
                     position={result.position}
                     schoolYear={result.years}
                     shift={result.shift}
-                    level = {result.level}
+                    level={result.level}
                     originUnit={result.originUnit}
                     originPrice={result.originPrice}
                     presentUnit={result.presentUnit}

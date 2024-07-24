@@ -17,6 +17,14 @@
       {
         "nested-interactive": "off"
       }
-    ]
+    ],
+    "axe/aria": "off",
+    "axe/structure": [
+      "default",
+      {
+        "list": "off"
+      }
+    ],
+    "no-inline-styles": "off"
   }
 }
