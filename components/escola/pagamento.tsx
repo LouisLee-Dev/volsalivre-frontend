@@ -1,16 +1,22 @@
 'use client';
 
 import React, { useState, useEffect } from 'react'
-import Link from 'next/link';
-import { CPFInput, PhoneInput } from '../basecomponents/input';
+import { CreditCardInput } from '../basecomponents/input';
 import ProgressBar from '../basecomponents/progressbar';
+import PaymentForm from '../basecomponents/stripePayment';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { getAuthToken } from '@/utils/setAuthToken';
 
 interface PagamentoProps {
     title: any;
+    data: any;
+    setData: any;
+    setPage: any;
 }
 
-const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
+const Pagamento: React.FC<PagamentoProps> = ({ title, data, setData, setPage }) => {    
+    const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const [cardType, setCardType] = useState<any>();
     const [cardNumber, setCardNumber] = useState<any>();
     const [cardOwn, setCardOwn] = useState<string>();
@@ -23,14 +29,14 @@ const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
     const [bairro, setBairro] = useState<string>();
     const [address, setAddress] = useState<string>();
     const [número, setNúmero] = useState<string>();
-    const [complemento, setComplemento] = useState<string>();
+    const [complemento, setComplemento] = useState<string>();    
 
     return (
         <div className="flex flex-col gap-5 bg-slate-100">
             <div className="flex flex-col mx-auto p-6 gap-5">
                 <ProgressBar state={3} page={3} />
                 <h2 className="text-2xl font-semibold">Para finalizar, realize o pagamento</h2>
-                <div className='flex flex-col gap-5 p-5 bg-white shadow-md rounded-lg p-6 border border-slate-400'>
+                <div className='flex flex-col gap-5 p-5 bg-white shadow-md rounded-lg border border-slate-400'>
                     <h2 className="text-2xl font-bold">Forma de pagamento</h2>
                     <p>Escolha a melhor forma de pagamento para você</p>
                     <div className="grid lg:grid-cols-3 gap-5">
@@ -47,19 +53,15 @@ const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
                             Cartao de credito
                         </div>
                     </div>
+                    <Elements stripe={stripePromise}>
+                        <PaymentForm />
+                    </Elements>
                     <div className="grid lg:grid-cols-2 gap-5">
                         <div>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                 Número do cartão
                             </label>
-                            <input
-                                type="text"
-                                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-                                placeholder="Escola Mamãe Com Açúcar"
-                                value={cardNumber}
-                                onChange={(e) => { setCardNumber(e.target.value); }}
-                                required
-                            />
+                            <CreditCardInput value={cardNumber} onChange={setCardNumber} />                            
                         </div>
                         <div>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -184,7 +186,7 @@ const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
                                 />
                             </div>
                         </div>
-                        <div className="grid lg:grid-cols-3">
+                        <div className="grid lg:grid-cols-3 gap-5">
                             <div>
                                 <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Número
@@ -221,7 +223,7 @@ const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
                     </div>
                 </div>
 
-                <div className='grid lg:grid-cols-2 gap-5 p-5 bg-white shadow-md rounded-lg p-6 border border-slate-400'>
+                <div className='grid lg:grid-cols-2 gap-5 p-5 bg-white shadow-md rounded-lg border border-slate-400'>
                     <div className="bg-white p-6">
                         <h2 className="text-xl font-bold mb-2">Resumo da sua bolsa</h2>
                         <p className="text-gray-700">Escola: <span className="font-semibold">Portal Do Saber</span></p>
@@ -262,8 +264,8 @@ const Pagamento: React.FC<PagamentoProps> = ({ title }) => {
                 </div>
 
                 <div className="flex justify-center gap-5">
-                    <Link href={`/escola/${title}/2`} className='rounded-full text-center text-purple-500 underline font-bold w-60 px-5 py-3'>Voltar</Link>
-                    <Link href={`/escola/${title}/3`} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Avancar</Link>
+                    <button onClick={() => setPage('2')} className='rounded-full text-center text-purple-500 underline font-bold w-60 px-5 py-3'>Voltar</button>
+                    <button className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Avancar</button>
                 </div>
             </div>
 

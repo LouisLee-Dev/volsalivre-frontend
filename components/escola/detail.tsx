@@ -34,8 +34,7 @@ const Detail: React.FC<DetailProps> = ({ title }) => {
             }
         };
 
-        fetchSchool();
-        console.log(school);
+        fetchSchool();        
     }, [])
 
     return (

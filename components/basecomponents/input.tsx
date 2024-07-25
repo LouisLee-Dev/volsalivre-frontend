@@ -25,7 +25,7 @@ const CPFInput: React.FC<CPFInputProps> = ({ value, onChange }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {  
     const newValue = formatCPF(e.target.value);  
-    setIsValid(validateCPF(newValue));  
+    setIsValid(validateCPF(newValue));
     onChange(newValue);  
   };  
 
@@ -53,7 +53,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange }) => {
   const [isValid, setIsValid] = useState(true);  
 
   const validatePhone = (phone: string): boolean => {  
-    const phoneRegex = /^\+\d{2} $\d{2}$ \d{5}-\d{4}$/;  
+    const phoneRegex = /^\+\d{2} $\d{2}$ \d{5}-\d{4}$/;
     return phoneRegex.test(phone);  
   };  
 
@@ -86,4 +86,46 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ value, onChange }) => {
   );  
 };  
 
-export { CPFInput, PhoneInput };
+interface CreditCardInputProps {  
+  value: string;  
+  onChange: (value: string) => void;  
+}  
+
+const CreditCardInput: React.FC<CreditCardInputProps> = ({ value, onChange }) => {  
+  const [isValid, setIsValid] = useState(true);  
+
+  const validateCreditCard = (cpf: string): boolean => {  
+    const cpfRegex = /^\d{4} \d{4} \d{4} \d{4}$/;
+    return cpfRegex.test(cpf);  
+  };  
+
+  const formatCreditCard = (input: string): string => {  
+    const digits = input.replace(/\D/g, ''); // Remove non-digit characters  
+    const match = digits.match(/^(\d{0,4})(\d{0,4})(\d{0,4})(\d{0,4})$/);  
+    if (!match) return input;  
+
+    return `${match[1]}${match[2] ? ' ' + match[2] : ''}${match[3] ? ' ' + match[3] : ''}${match[4] ? ' ' + match[4] : ''}`;  
+  };  
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {  
+    const newValue = formatCreditCard(e.target.value);  
+    setIsValid(validateCreditCard(newValue));
+    onChange(newValue);
+  };  
+
+  return (  
+    <div className="flex flex-col items-center">  
+      <input  
+        value={value}  
+        onChange={handleChange}  
+        type="text"  
+        aria-describedby="filled_success_help"  
+        className={`block text-sm rounded-full px-16 py-2 w-full text-gray-900 bg-gray-50 border focus:outline-purple-500 appearance-none peer ${isValid ? 'border-gray-300' : 'border-red-500'}`}  
+        placeholder="0000 0000 0000 0000"
+      />  
+      {!isValid && <span className="text-red-500 mt-2">Invalid Card Number format</span>}  
+    </div>  
+  );  
+};  
+
+export { CPFInput, PhoneInput, CreditCardInput };

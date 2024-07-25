@@ -6,9 +6,12 @@ import ProgressBar from '../basecomponents/progressbar';
 
 interface ConfirmDaBolsaProps {
     title: any;
+    data: any;
+    setData: any;
+    setPage: any;
 }
 
-const ConfirmDaBolsa: React.FC<ConfirmDaBolsaProps> = ({ title }) => {
+const ConfirmDaBolsa: React.FC<ConfirmDaBolsaProps> = ({ title, data, setData, setPage }) => {
     
     return (
         <div className="flex flex-col gap-5 bg-slate-100">
@@ -75,7 +78,7 @@ const ConfirmDaBolsa: React.FC<ConfirmDaBolsaProps> = ({ title }) => {
                     </div>
                 </div>
                 <div className="flex justify-center">
-                    <Link href={`/escola/${title}/2`} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Confirmar Bolsa</Link>
+                    <button className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3' onClick={()=>{setPage('2');}}>Confirmar Bolsa</button>
                 </div>
             </div>
 

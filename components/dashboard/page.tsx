@@ -36,7 +36,7 @@ const Dashboard: React.FC = () => {
       <PrivateSchools privateSchoolsData = {privateSchoolsData} />
       <Transforming />
       <OtherSchools />
-      <Works />
+      {/* <Works /> */}
     </div>
   );
 };

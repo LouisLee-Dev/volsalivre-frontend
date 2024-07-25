@@ -13,6 +13,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
   const [switchMap, setSwitchMap] = useState<boolean>(false);
   const [searchParam, setSearchParam] = useState<any>();
   const [schools, setSchools] = useState<any>(null);
+  
   // const [timer, setTimer] = useState<boolean>(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -76,17 +77,17 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
 
   return (
     <div className="flex flex-col bg-slate-100 py-0 space-y-6 items-center">
-      <div className="flex border-b pb-2 gap-3 items-center xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pt-3 w-full">
+      <div className="flex py-2 lg:px-2 px-5 border-b gap-3 items-center xl:w-[80vw] lg:w-[90vw] max-w-screen-xl pt-3 w-full">
         <a href="/" className="text-purple-600 ">
           Home page
         </a>
-        <span className="pt-2 text-gray-500 text-md">{`/`} Search</span>
+        <span className="text-gray-500 text-md">{`/`} Search</span>
       </div>
-      <div className="flex flex-col lg:flex-row lg:justify-between md:flex-row md:justify-between sm:flex-col gap-10 justify-between xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 w-full">
+      <div className="lg:flex hidden flex-col lg:flex-row lg:justify-between md:flex-row md:justify-between sm:flex-col gap-10 justify-between xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 w-full">
         <p>
-          { } bags found in { }
+          { schools?.length } bags found in { schools?.length }
         </p>
-        <div className="flex flex-col sm:flex-row justify-around items-center gap-5 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row justify-around items-center gap-5 w-full sm:w-auto mx-5">
           <div className="flex items-center relative text-gray-700 text-sm w-full sm:w-auto">
             <select
               name="order"
@@ -146,7 +147,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
       {
         switchMap ?
           <Map /> :
-          <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">
+          <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl lg:px-3 pb-5">
             <div className="max-[1200px]:hidden">
               <Filters type={`search`} level={type.params.level} setSearchParam={setSearchParam} />
             </div>

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import Login from "@/components/artigos/login";
 import { MenuTipCard } from "../basecomponents/cards";
 import { getFromLocalStorage, removeFromLocalStorage } from "@/utils/localstorage";
@@ -32,10 +32,8 @@ const Communicate: React.FC<CommunicateProps> = ({ menu, setMenu }) => {
             loginStatus ? "pt-3" : "justify-center"
           } gap-2 items-center`}
         >
-          <button
-            onClick={() => {
-              console.log("2");
-            }}
+          <Link
+            href="https://wa.me/21974734057"
           >
             <span>
               <svg
@@ -59,11 +57,9 @@ const Communicate: React.FC<CommunicateProps> = ({ menu, setMenu }) => {
                 />
               </svg>
             </span>
-          </button>
-          <button
-            onClick={() => {
-              console.log("q");
-            }}
+          </Link>
+          <Link
+            href="tel:2121439986"
           >
             <span>
               <svg
@@ -84,7 +80,7 @@ const Communicate: React.FC<CommunicateProps> = ({ menu, setMenu }) => {
                 />
               </svg>
             </span>
-          </button>
+          </Link>
           <button
             onClick={loginStatus ? toggleEvent:() => setToEnter(!toenter)}
             className={`${loginStatus ? "flex rounded-full border bg-white px-1.5 items-center text-sm text-gray-500 space-x-1" 

@@ -98,7 +98,7 @@ export default function RootLayout() {
             <div className="flex relative items-center space-x-5 pt-1 ">
               <input
                 type="text"
-                placeholder="Enter your neighborhood"
+                placeholder="Enter your BAIRRO"
                 className="px-10 py-3 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-2 focus:ring-purple-500"
               />
               <input

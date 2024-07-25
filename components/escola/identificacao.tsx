@@ -8,14 +8,28 @@ import { getAuthToken } from '@/utils/setAuthToken';
 
 interface IdentificacaoProps {
     title: any;
+    data: any;
+    setData: any;
+    setPage: any;
 }
 
-const Identificacao: React.FC<IdentificacaoProps> = ({ title }) => {
+const Identificacao: React.FC<IdentificacaoProps> = ({ title, data, setData, setPage }) => {
     const [person, setPerson] = useState<string>("");
     const [email, setEmail] = useState<string>("");
     const [phone, setPhone] = useState<string>("");
     const [student, setStudent] = useState<string>("");
-    const [value, setValue] = useState<any>();
+    const [cpf, setCpf] = useState<any>();
+
+    const handleData = () => {
+        setData({
+            ...data,
+            person: person,
+            email: email,
+            phone: phone,
+            student: student,
+            cpf: cpf
+        })
+    }
 
     return (
         <div className="flex flex-col gap-5 bg-slate-100">
@@ -30,7 +44,7 @@ const Identificacao: React.FC<IdentificacaoProps> = ({ title }) => {
                             </h2>
                             <div className="flex flex-col gap-1">
                                 <label htmlFor="" className='text-xl font-semibold'>CPF do responsável</label>
-                                <CPFInput value={value} onChange={setValue} />
+                                <CPFInput value={cpf} onChange={setCpf} />
                             </div>
                         </div> :
                         <div className='flex flex-col gap-5 p-5 bg-white shadow-md rounded-lg p-6 border border-slate-400'>
@@ -39,7 +53,7 @@ const Identificacao: React.FC<IdentificacaoProps> = ({ title }) => {
                             <div className="grid lg:grid-cols-2 gap-5">
                                 <div className="flex flex-col gap-1">
                                     <label htmlFor="" className='text-xl font-semibold'>CPF do responsável</label>
-                                    <CPFInput value={value} onChange={setValue} />
+                                    <CPFInput value={cpf} onChange={setCpf} />
                                 </div>
                                 <div>
                                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -104,8 +118,8 @@ const Identificacao: React.FC<IdentificacaoProps> = ({ title }) => {
                     </div>
                 )}
                 <div className="flex justify-center gap-5">
-                    <Link href={`/escola/${title}/1`} className='rounded-full text-center text-purple-500 underline font-bold w-60 px-5 py-3'>Voltar</Link>
-                    <Link href={`/escola/${title}/3`} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Avancar</Link>
+                    <button onClick={()=>{setPage('1')}} className='rounded-full text-center text-purple-500 underline font-bold w-60 px-5 py-3'>Voltar</button>
+                    <button onClick={()=>{setPage('3')}} className='rounded-full text-center text-white font-semibold w-60 bg-purple-500 px-5 py-3'>Avancar</button>
                 </div>
             </div>
 

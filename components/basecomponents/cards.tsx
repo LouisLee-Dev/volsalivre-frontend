@@ -216,7 +216,7 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
     )
   }
   return (
-    <div className="flex flex-col bg-white rounded-lg justify-between items-between ">
+    <div className="flex flex-col bg-white rounded-lg justify-between items-between gap-5">
       <div className="flex gap-5 items-center">
         {/* <Image
           src={`data:${mark && mark.contentType};base64,${mark && mark.data.toString('base64')}`}

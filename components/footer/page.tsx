@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Footer: React.FC = () => {
   return (
     <div className="flex flex-col gap-10">
@@ -42,9 +44,9 @@ const Footer: React.FC = () => {
         <div className="flex flex-col gap-10">
             <p className="text-lg font-semibold">Parceiros</p>
             <div className="flex flex-col gap-3">
-                <a href="/mais-alunos"><span>Quero ser parceiro</span></a>
-                <a href="/blog"><span>Blog Gestores</span></a>
-                <a href=""><span>Área do Gestor</span></a>                
+                <Link href="/mais-alunos"><span>Quero ser parceiro</span></Link>
+                <Link href="/blog"><span>Blog Gestores</span></Link>
+                <Link href=""><span>Área do Gestor</span></Link>
             </div>
         </div>
         <div className="flex flex-col gap-10">
@@ -52,17 +54,15 @@ const Footer: React.FC = () => {
               Encontre bolsas
             </p>
             <div className="flex flex-col gap-3">
-            <a href=""><span>Melhores escolas de São Paulo</span></a>
-            <a href=""><span>Escolas por cidade e bairro</span></a>
-            <a href=""><span>Bolsas de estudo em escolas</span></a>
+            <Link href="/escola/busca"><span>Instituições de Ensino</span></Link>
             </div>
         </div>
         <div className="flex flex-col gap-10">
             <p className="text-lg font-semibold">Institucional</p>
             <div className="flex flex-col gap-3">
-            <a href=""><span>Sobre o Melhor Escola</span></a>
-            <a href=""><span>Revista Melhor Escola</span></a>
-            <a href=""><span>Trabalhe </span></a>
+            <Link href="/"><span>Sobre o Bolsa Livre</span></Link>
+            <Link href="/artigos">Educação é para todos</Link>
+            <Link href="">Trabalhe conosco</Link>
             </div>
         </div>
         <div className="flex flex-col gap-10">
@@ -70,11 +70,11 @@ const Footer: React.FC = () => {
               Outras bolsas
             </p>
             <div className="flex flex-col gap-3">
-            <a href=""><span>Faculdades e universidades</span></a>
-            <a href=""><span>Escolas de inglês</span></a>
+            <Link href=""><span>Faculdades com Bolsa</span></Link>
+            <Link href=""><span>Cursos Técnicos com Bolsa</span></Link>
             </div>
         </div>
-        <div className="flex flex-col gap-10">
+        {/* <div className="flex flex-col gap-10">
             <p className="text-lg font-semibold">
               Transparência
             </p>
@@ -84,19 +84,19 @@ const Footer: React.FC = () => {
             <a href=""><span>Política de cookies</span></a>
             <a href=""><span>Imprensa</span></a>
             </div>
-        </div>
+        </div> */}
       </div>
-      <div className="lg:flex lg:justify-between items-center lg:px-40 px-10 py-10 bg-slate-200 text-slate-500">
-        <div className="flex justify-start gap-10 text-slate-500">
+      <div className="lg:flex justify-center items-center lg:px-40 px-10 py-10 bg-slate-200 text-slate-500">
+        {/* <div className="flex justify-start gap-10 text-slate-500">
             <a href="" className="rounded-full hover:ring-4 hover:ring-slate-50"><svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512"><path fill="currentColor" fillRule="evenodd" d="M480 257.35c0-123.7-100.3-224-224-224s-224 100.3-224 224c0 111.8 81.9 204.47 189 221.29V322.12h-56.89v-64.77H221V208c0-56.13 33.45-87.16 84.61-87.16c24.51 0 50.15 4.38 50.15 4.38v55.13H327.5c-27.81 0-36.51 17.26-36.51 35v42h62.12l-9.92 64.77H291v156.54c107.1-16.81 189-109.48 189-221.31"/></svg></a>
             <a href="" className="rounded-full hover:ring-4 hover:ring-slate-50"><svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512"><path fill="currentColor" d="M349.33 69.33a93.62 93.62 0 0 1 93.34 93.34v186.66a93.62 93.62 0 0 1-93.34 93.34H162.67a93.62 93.62 0 0 1-93.34-93.34V162.67a93.62 93.62 0 0 1 93.34-93.34zm0-37.33H162.67C90.8 32 32 90.8 32 162.67v186.66C32 421.2 90.8 480 162.67 480h186.66C421.2 480 480 421.2 480 349.33V162.67C480 90.8 421.2 32 349.33 32"/><path fill="currentColor" d="M377.33 162.67a28 28 0 1 1 28-28a27.94 27.94 0 0 1-28 28M256 181.33A74.67 74.67 0 1 1 181.33 256A74.75 74.75 0 0 1 256 181.33m0-37.33a112 112 0 1 0 112 112a112 112 0 0 0-112-112"/></svg></a>
             <a href="" className="rounded-full hover:ring-4 hover:ring-slate-50"><svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512"><path fill="currentColor" d="M508.64 148.79c0-45-33.1-81.2-74-81.2C379.24 65 322.74 64 265 64h-18c-57.6 0-114.2 1-169.6 3.6C36.6 67.6 3.5 104 3.5 149C1 184.59-.06 220.19 0 255.79q-.15 53.4 3.4 106.9c0 45 33.1 81.5 73.9 81.5c58.2 2.7 117.9 3.9 178.6 3.8q91.2.3 178.6-3.8c40.9 0 74-36.5 74-81.5c2.4-35.7 3.5-71.3 3.4-107q.34-53.4-3.26-106.9M207 353.89v-196.5l145 98.2Z"/></svg></a>
             <a href="" className="rounded-full hover:ring-4 hover:ring-slate-50"><svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512"><path fill="currentColor" d="M412.19 118.66a109 109 0 0 1-9.45-5.5a133 133 0 0 1-24.27-20.62c-18.1-20.71-24.86-41.72-27.35-56.43h.1C349.14 23.9 350 16 350.13 16h-82.44v318.78c0 4.28 0 8.51-.18 12.69c0 .52-.05 1-.08 1.56c0 .23 0 .47-.05.71v.18a70 70 0 0 1-35.22 55.56a68.8 68.8 0 0 1-34.11 9c-38.41 0-69.54-31.32-69.54-70s31.13-70 69.54-70a68.9 68.9 0 0 1 21.41 3.39l.1-83.94a153.14 153.14 0 0 0-118 34.52a161.8 161.8 0 0 0-35.3 43.53c-3.48 6-16.61 30.11-18.2 69.24c-1 22.21 5.67 45.22 8.85 54.73v.2c2 5.6 9.75 24.71 22.38 40.82A167.5 167.5 0 0 0 115 470.66v-.2l.2.2c39.91 27.12 84.16 25.34 84.16 25.34c7.66-.31 33.32 0 62.46-13.81c32.32-15.31 50.72-38.12 50.72-38.12a158.5 158.5 0 0 0 27.64-45.93c7.46-19.61 9.95-43.13 9.95-52.53V176.49c1 .6 14.32 9.41 14.32 9.41s19.19 12.3 49.13 20.31c21.48 5.7 50.42 6.9 50.42 6.9v-81.84c-10.14 1.1-30.73-2.1-51.81-12.61"/></svg></a>
-        </div>
+        </div> */}
         <p>
             © Copyright 2024 - Best School • CNPJ 17.669.221/0001-50
         </p>
-        <div><svg width="260" height="40" aria-label="Made with love by Quero Educação" color="var(--color-font-minor)" data-island-uid="19e477f2-ecad-4dbf-b856-0dde8dfb20a4"><g id="all"><text fill="currentColor"><tspan x="0" y="24">Feito com</tspan></text><text fill="currentColor"><tspan x="100" y="24">pela Quero Educação</tspan></text><line id="underline" x1="135" y1="30.5" x2="253" y2="30.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" opacity="0"></line><g transform="translate(85, 20)"><g id="heart-position"><path id="heart" d="M14.2958428,2 C12.3952724,2 10.7408308,3.162878 10.0008145,4.84629823 C9.26079826,3.1645464 7.60635662,2 5.70578622,2 C3.11083934,2 1,4.16225235 1,6.81835245 C1,12.8079249 9.44172735,17.7397289 9.80195553,17.9466111 C9.86389522,17.9816475 9.93072488,18 9.99918453,18 C10.0676442,18 10.1361038,17.9816475 10.1964135,17.9466111 C10.5550117,17.7397289 19,12.8079249 19,6.81835245 C19.001629,4.16225235 16.8907897,2 14.2958428,2 Z" stroke="currentColor" strokeWidth="1.5" fillOpacity="0" fill="#DA1E28" fillRule="nonzero" strokeLinejoin="round" transform="translate(-10, -10)"></path></g></g><rect x="0" y="0" width="260" height="36" opacity="0"></rect></g><animate xlinkHref="#underline" attributeName="opacity" to="1" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#underline" attributeName="opacity" to="0" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#heart" attributeName="stroke" to="#DA1E28" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#heart" attributeName="stroke" to="#697077" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animate id="heart-start" xlinkHref="#heart" attributeName="fill-opacity" to="1" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate id="heart-end" xlinkHref="#heart" attributeName="fill-opacity" to="0" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animateTransform xlinkHref="#heart-position" attributeName="transform" type="scale" values="0.6; 1.1; 0.8; 1.1; 1.1; 0.6;" begin="all.mouseover" dur="1s" repeatCount="indefinite"></animateTransform><animateTransform xlinkHref="#heart-position" attributeName="transform" type="scale" values="1" begin="all.mouseout" dur="1s" repeatCount="1" fill="freeze"></animateTransform></svg></div>
+        {/* <div><svg width="260" height="40" aria-label="Made with love by Quero Educação" color="var(--color-font-minor)" data-island-uid="19e477f2-ecad-4dbf-b856-0dde8dfb20a4"><g id="all"><text fill="currentColor"><tspan x="0" y="24">Feito com</tspan></text><text fill="currentColor"><tspan x="100" y="24">pela Quero Educação</tspan></text><line id="underline" x1="135" y1="30.5" x2="253" y2="30.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" opacity="0"></line><g transform="translate(85, 20)"><g id="heart-position"><path id="heart" d="M14.2958428,2 C12.3952724,2 10.7408308,3.162878 10.0008145,4.84629823 C9.26079826,3.1645464 7.60635662,2 5.70578622,2 C3.11083934,2 1,4.16225235 1,6.81835245 C1,12.8079249 9.44172735,17.7397289 9.80195553,17.9466111 C9.86389522,17.9816475 9.93072488,18 9.99918453,18 C10.0676442,18 10.1361038,17.9816475 10.1964135,17.9466111 C10.5550117,17.7397289 19,12.8079249 19,6.81835245 C19.001629,4.16225235 16.8907897,2 14.2958428,2 Z" stroke="currentColor" strokeWidth="1.5" fillOpacity="0" fill="#DA1E28" fillRule="nonzero" strokeLinejoin="round" transform="translate(-10, -10)"></path></g></g><rect x="0" y="0" width="260" height="36" opacity="0"></rect></g><animate xlinkHref="#underline" attributeName="opacity" to="1" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#underline" attributeName="opacity" to="0" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#heart" attributeName="stroke" to="#DA1E28" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate xlinkHref="#heart" attributeName="stroke" to="#697077" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animate id="heart-start" xlinkHref="#heart" attributeName="fill-opacity" to="1" begin="all.mouseover" dur="80ms" repeatCount="1" fill="freeze"></animate><animate id="heart-end" xlinkHref="#heart" attributeName="fill-opacity" to="0" begin="all.mouseout" dur="80ms" repeatCount="1" fill="freeze"></animate><animateTransform xlinkHref="#heart-position" attributeName="transform" type="scale" values="0.6; 1.1; 0.8; 1.1; 1.1; 0.6;" begin="all.mouseover" dur="1s" repeatCount="indefinite"></animateTransform><animateTransform xlinkHref="#heart-position" attributeName="transform" type="scale" values="1" begin="all.mouseout" dur="1s" repeatCount="1" fill="freeze"></animateTransform></svg></div> */}
       </div>
     </div>
   );

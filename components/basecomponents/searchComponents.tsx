@@ -188,12 +188,12 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
       ) : (
         <>
           <label htmlFor="" className="font-semibold text-sm">
-            Neighborhood:
+            Bairro:
           </label>
           <div className="pt-1 flex items-center relative rounded-full">
             <input
               type="text"
-              placeholder="Enter your neighborhood"
+              placeholder="Enter your Bairro"
               className="px-10 py-1.5 text-sm rounded-full w-full focus:outline-none border border-purple-500 focus:ring-2 focus:ring-purple-500"
               value={neigh}
               onClick={() => { setShowNeigh(!showNeigh) }}
@@ -226,7 +226,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
           } absolute top-full flex flex-col max-h-48 mt-4 overflow-y-auto rounded border border-slate-150 z-20`}
       >
         <p className="px-4 py-2 font-semibold bg-slate-100 text-slate-500">
-          SEARCH BY NEIGHBORHOOD
+          SEARCH BY BAIRRO
         </p>
         <p className="px-4 py-2 sm text-slate-500 bg-white">
           No results for search.
@@ -380,13 +380,15 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   setFilters,
 }) => {
   const [sereiesList, setSeriesList] = useState<any>();
-  const [series, setSeries] = useState<string | any>();
+  const [series, setSeries] = useState<string | any>('');
   const [showValue, setShowValue] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchSeries = async () => {
+      console.log(level);
+      const url = level ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all/${level}` : `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all/`;
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all/${level && level}`);
+        const res = await fetch(url);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
@@ -401,7 +403,8 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   }, []);
 
   const handleFilters = () => {
-    setFilters({ ...filters, series: series })
+    series &&
+      setFilters({ ...filters, series: series })
   }
 
   return (
@@ -552,7 +555,7 @@ const TeachingState: React.FC<SearchButtonProps> = ({
     <div className={`${className} relative`}>
       <>
         <label htmlFor="" className="font-semibold text-sm">
-          Teaching Level:
+          Etapa de ensino:
         </label>
         <div className={`flex pt-1 items-center relative rounded-full`}>
           <input
@@ -692,7 +695,7 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
       );
     else if (disp === 3) {
       checkedDisp.push(
-        <div className="flex items-center mb-4">
+        <div key={disp} className="flex items-center mb-4">
           <input
             id={`default-checkbox${i}-${disp - 1}`}
             type="checkbox"
