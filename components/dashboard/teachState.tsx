@@ -20,7 +20,7 @@ const TeachStage: React.FC = () => {
 
         <div className="flex flex-col gap-5 space-y-3 pb-4">
           <p className="text-lg lg:text-2xl font-semibold text-gray-800">
-            Busca pelo etapa de ensino
+            Busca pela etapa de formação 
           </p>
           <div className="grid lg:grid-cols-3 lg:gap-10 sm:grid-cols-2 gap-3">
             <Link
