@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
   }, []); // Empty dependency array ensures useEffect runs only on mount
   
   return (
-    <div className="flex flex-col gap-10 items-center py-10 sm:gap-8 sm:py-8 md:gap-6 md:py-6">
+    <div className="flex flex-col gap-10 items-center sm:gap-8 md:gap-6">
       <TeachStage />
       <PrivateSchools privateSchoolsData = {privateSchoolsData} />
       <Transforming />

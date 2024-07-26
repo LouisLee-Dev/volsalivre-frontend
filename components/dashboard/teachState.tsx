@@ -1,28 +1,30 @@
-import teachImage from "@/public/assets/images/banner-home.png";
-import Image from "next/image";
+import AutoCarousel from "../basecomponents/carousel";
+import Select from "../basecomponents/selectComponent";
 import Link from "next/link";
+
+const carouselImage = [
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_graduacao.png",
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_pos.png",
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_basico.png",
+]
 
 const TeachStage: React.FC = () => {
   const level = {
-    child:'Educação Infantil',
-    junior:'Ensino Fundamental I',
-    senior:'Ensino Médio'
+    child: 'Educação Infantil',
+    junior: 'Ensino Fundamental I',
+    senior: 'Ensino Médio'
   };
   const queryString = new URLSearchParams(level).toString();
   return (
-    <div className="flex flex-col bg-white 2xl:w-[70vw] xl:w-[80vw] lg:w-[90vw] w-full px-2">
-      <div className="flex flex-col space-y-5 gap-5">
-        <Image
-          src={teachImage}
-          alt="this is teach image"
-          className="rounded-xl pb-3 w-full h-auto"
-        />
+    <div className="flex flex-col justify-center items-center bg-white w-full">
+      <div className="flex flex-col items-center relative">
+        <AutoCarousel images={carouselImage} />
 
-        <div className="flex flex-col gap-5 space-y-3 pb-4">
-          <p className="text-lg lg:text-2xl font-semibold text-gray-800">
-            Busca pela etapa de formação 
+        <div className="absolute flex flex-col justify-center bottom-0 lg:w-1/2">
+          <p className="font-semibold lg:self-start px-5 py-1 text-purple-500 text-center bg-white rounded-t-3xl">
+            Busca pela etapa de formação
           </p>
-          <div className="grid lg:grid-cols-3 lg:gap-10 sm:grid-cols-2 gap-3">
+          <div className="flex gap-5 bg-white justify-center p-5 rounded-tr-lg">
             <Link
               href="/escola/busca/669dc5b07c0aa62f8cf233e4"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
@@ -75,8 +77,8 @@ const TeachStage: React.FC = () => {
                 />
               </svg>
               Curso Técnico
-            </Link>            
-            <Link              
+            </Link>
+            <Link
               href="/escola/busca/669dc5be7c0aa62f8cf233e7"
               className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
             >
@@ -96,7 +98,14 @@ const TeachStage: React.FC = () => {
           </div>
         </div>
       </div>
-    </div>
+      <div className="lg:flex grid lg:justify-center gap-5 p-5 shadow-md">
+        <Select />
+        <Select />
+        <button className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
+          Buscr bolsas
+        </button>
+      </div>
+    </div >
   );
 };
 

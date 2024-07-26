@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 mt-10">
       <div className="md:flex bg-purple-600 lg:px-40 px-5 py-5 lg:gap-20 text-white">
         <div className="flex gap-5 items-center">
           <span className="bg-purple-700 rounded-full p-2">
