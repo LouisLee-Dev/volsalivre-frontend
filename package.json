@@ -9,7 +9,6 @@
     "lint": "tsc --noEmit && next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.1.2",
     "@material-tailwind/react": "^2.1.9",
     "@react-google-maps/api": "^2.19.3",
     "@reduxjs/toolkit": "^2.2.6",

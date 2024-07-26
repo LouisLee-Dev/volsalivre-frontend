@@ -1,5 +1,4 @@
 import AutoCarousel from "../basecomponents/carousel";
-import Select from "../basecomponents/selectComponent";
 import Link from "next/link";
 
 const carouselImage = [
@@ -98,9 +97,22 @@ const TeachStage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex grid lg:justify-center gap-5 p-5 shadow-md">
-        <Select />
-        <Select />
+      <div className="lg:flex grid lg:justify-around lg:w-1/2 gap-5 pb-5 shadow-md rounded-b-lg">
+        <div className="flex flex-col gap-1">
+          <label htmlFor="">Escolha uma cidade:</label>
+          <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
+            <option disabled selected>Who shot first?</option>
+            <option>LIO DE JIANEIRO</option>            
+          </select>
+        </div>
+        <div className="flex flex-col gap-1">
+          <label htmlFor="">Idioma que deseja estudar:</label>
+          <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
+            <option disabled selected>Who shot first?</option>
+            <option>Han Solo</option>
+            <option>Greedo</option>
+          </select>
+        </div>
         <button className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
           Buscr bolsas
         </button>
