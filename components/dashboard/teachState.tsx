@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import AutoCarousel from "../basecomponents/carousel";
+import CustomSelect from "../basecomponents/selectComponent";
 
 const carouselImageFull = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_graduacao.png",
@@ -16,9 +17,27 @@ const carouselImageMobile = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/p/banner_home_basico.png",
 ];
 
+const cities = [
+  "Rio de Janeiro",
+  "Nova",
+  "Nova Iguaçu",
+  "Duque de Caxias",
+  "Niterói",
+  "São Gonçalo",
+]
+
 const TeachStage: React.FC = () => {
   const [series, setSeries] = useState<string>('');
+  const [isDropdownCities, setDropdownCities] = useState<boolean>(false);
   const [sereiesList, setSeriesList] = useState<any>();
+  const countryRef = useRef(null);
+
+  const handleClickCountry = () => {
+    setDropdownCities(!isDropdownCities);
+    if (countryRef.current) {
+      countryRef.current.focus();
+    }
+  }
 
   useEffect(() => {
     const fetchSeries = async () => {
@@ -142,9 +161,7 @@ const TeachStage: React.FC = () => {
       <div className="lg:flex lg:justify-around items-end lg:w-2/3 grid w-lvw gap-5 p-5 shadow-custom rounded-b-lg z-10">
         <div className="flex flex-col gap-1">
           <label htmlFor="">Escolha uma cidade:</label>
-          <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
-            <option>LIO DE JIANEIRO</option>
-          </select>
+          <CustomSelect items={cities} />
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="">Idioma que deseja estudar:</label>
