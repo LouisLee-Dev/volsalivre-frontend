@@ -103,7 +103,7 @@ const TeachStage: React.FC = () => {
               href="/escola/busca/669dc5987c0aa62f8cf233e1"
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
-              <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
+              <div className="bg-blue-700 group-hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="2.5em"
@@ -130,7 +130,7 @@ const TeachStage: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
+              <span className="bg-blue-700 group-hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
                 Curso Técnico
               </span>
             </Link>
@@ -138,7 +138,7 @@ const TeachStage: React.FC = () => {
               href="/escola/busca/669dc5be7c0aa62f8cf233e7"
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
-              <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
+              <div className="bg-pink-700 group-hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="2.5em"
@@ -151,7 +151,7 @@ const TeachStage: React.FC = () => {
                   ></path>
                 </svg>
               </div>
-              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-3 pr-3 rounded-r-lg">
+              <span className="bg-pink-700 group-hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-3 pr-3 rounded-r-lg">
                 Graduação
               </span>
             </Link>
