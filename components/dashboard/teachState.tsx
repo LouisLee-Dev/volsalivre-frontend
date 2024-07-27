@@ -1,5 +1,8 @@
-import AutoCarousel from "../basecomponents/carousel";
+'use client';
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import AutoCarousel from "../basecomponents/carousel";
 
 const carouselImage = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_graduacao.png",
@@ -8,6 +11,27 @@ const carouselImage = [
 ]
 
 const TeachStage: React.FC = () => {
+  const [series, setSeries] = useState<string>('');
+  const [sereiesList, setSeriesList] = useState<any>();
+
+  useEffect(() => {
+    const fetchSeries = async () => {
+      const url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all`;
+      try {
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        console.log(data);
+        setSeriesList(data);
+      } catch (err) {
+        console.error('Error: Level loading error!!!');
+      }
+    };
+    fetchSeries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const level = {
     child: 'Educação Infantil',
     junior: 'Ensino Fundamental I',
@@ -19,103 +43,116 @@ const TeachStage: React.FC = () => {
       <div className="flex flex-col items-center relative">
         <AutoCarousel images={carouselImage} />
 
-        <div className="absolute flex flex-col justify-center bottom-0 lg:w-1/2">
-          <p className="font-semibold lg:self-start px-5 py-1 text-purple-500 text-center bg-white rounded-t-3xl">
+        <div className="absolute flex flex-col justify-center bottom-0 lg:w-2/3">
+          <p className="font-semibold lg:self-start px-10 py-1 text-purple-500 text-center bg-white rounded-t-3xl">
             Busca pela etapa de formação
           </p>
-          <div className="flex gap-5 bg-white justify-center p-5 rounded-tr-lg">
+          <div className="flex gap-5 bg-white justify-around p-5 rounded-tr-lg">
             <Link
               href="/escola/busca/669dc5b07c0aa62f8cf233e4"
-              className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
+              className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
-              <svg
-                className="text-white"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="2.5em"
-                height="2.5em"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth="2"
-                  d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
-                />
-              </svg>
-              Ensino básico
+              <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2.5em"
+                  height="2.5em"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeWidth="2"
+                    d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"
+                  />
+                </svg>
+              </div>
+              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg">
+                Ensino básico
+              </span>
             </Link>
             <Link
               href="/escola/busca/669dc5987c0aa62f8cf233e1"
-              className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
+              className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2.5em"
-                height="2.5em"
-                viewBox="0 0 512 512"
-              >
-                <circle
-                  cx="256"
-                  cy="256"
-                  r="192"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeMiterlimit="10"
-                  strokeWidth="32"
-                />
-                <path
-                  fill="none"
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="32"
-                  d="m256 175.15l-76.09 63.83L200 320h112l20.09-81.02zm76.09 63.83l52.87-22.4l25.78-73.26M447 269.97l-62.04-53.39m-205.05 22.4l-52.87-22.4l-25.78-73.26M65 269.97l62.04-53.39M256 175.15v-57.57l64-42.64m-128-.01l64 42.65M312 320l28 48l-28 71m98.74-71H342m-142-48l-28 48l28.37 71.5M101.63 368H172"
-                />
-              </svg>
-              Curso Técnico
+              <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2.5em"
+                  height="2.5em"
+                  viewBox="0 0 512 512"
+                >
+                  <circle
+                    cx="256"
+                    cy="256"
+                    r="192"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeMiterlimit="10"
+                    strokeWidth="32"
+                  />
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="32"
+                    d="m256 175.15l-76.09 63.83L200 320h112l20.09-81.02zm76.09 63.83l52.87-22.4l25.78-73.26M447 269.97l-62.04-53.39m-205.05 22.4l-52.87-22.4l-25.78-73.26M65 269.97l62.04-53.39M256 175.15v-57.57l64-42.64m-128-.01l64 42.65M312 320l28 48l-28 71m98.74-71H342m-142-48l-28 48l28.37 71.5M101.63 368H172"
+                  />
+                </svg>
+              </div>
+              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg">
+                Curso Técnico
+              </span>
             </Link>
             <Link
               href="/escola/busca/669dc5be7c0aa62f8cf233e7"
-              className="px-4 py-3 lg:px-6 lg:py-3.5 text-sm lg:text-base font-medium text-white inline-flex gap-2 items-center bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg text-center"
+              className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="2.5em"
-                height="2.5em"
-                viewBox="0 0 612 512"
-              >
-                <path
-                  fill="currentColor"
-                  d="M307.2 66.2L47.6 160l74 26.7c10.3-6.9 21.5-12.6 33.4-17.1l159.4-59.8c8.3-3.1 17.5 1.1 20.6 9.4s-1.1 17.5-9.4 20.6L166.2 199.6c-1.5 .5-2.9 1.1-4.3 1.7l145.3 52.5c4.1 1.5 8.4 2.2 12.8 2.2s8.7-.8 12.8-2.2L592.4 160 332.8 66.2c-4.1-1.5-8.4-2.2-12.8-2.2s-8.7 .8-12.8 2.2zM296.3 283.9L126.9 222.7C99.4 246 82.1 279.9 80.2 316.9c5.9 13.2 10.2 27.5 13.4 41.5c6.4 27.6 10.7 65.9 2.1 108.7c-.9 4.3-3.4 8-7.1 10.4s-8.2 3.1-12.4 2l-64-16c-5.2-1.3-9.4-5.1-11.2-10.2s-.9-10.7 2.3-14.9c8.6-11.7 16-24.6 22.5-37.6C37.2 377.8 48 348.4 48 320c0-.6 0-1.2 .1-1.8c1.4-41 18-79.1 45.1-107.7L15.8 182.6C6.3 179.1 0 170.1 0 160s6.3-19.1 15.8-22.6L296.3 36.1c7.6-2.7 15.6-4.1 23.7-4.1s16.1 1.4 23.7 4.1L624.2 137.4c9.5 3.4 15.8 12.5 15.8 22.6s-6.3 19.1-15.8 22.6L343.7 283.9c-7.6 2.7-15.6 4.1-23.7 4.1s-16.1-1.4-23.7-4.1zm-122-10L160.4 406.3c.7 .8 1.8 2.1 3.7 3.7c6 5.2 16.5 11.5 31.9 17.5C226.4 439.4 270.3 448 320 448s93.6-8.6 124.1-20.6c15.4-6 25.8-12.3 31.9-17.5c1.9-1.6 3-2.8 3.7-3.7L465.7 273.8l31-11.2L512 408c0 35.3-86 72-192 72s-192-36.7-192-72l15.3-145.4 31 11.2zM480.5 405a.2 .2 0 1 0 -.3-.1 .2 .2 0 1 0 .3 .1zm-321 0a.1 .1 0 1 0 .2 0 .1 .1 0 1 0 -.2 0zM67 444.2c2.5-20.7 1.7-40-.5-56.7c-3.8 10-8 19.3-12.1 27.6c-3.8 7.6-7.9 15.2-12.5 22.8L67 444.2z"
-                ></path>
-              </svg>
-              Graduação
+              <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2.5em"
+                  height="2.5em"
+                  viewBox="0 0 612 512"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M307.2 66.2L47.6 160l74 26.7c10.3-6.9 21.5-12.6 33.4-17.1l159.4-59.8c8.3-3.1 17.5 1.1 20.6 9.4s-1.1 17.5-9.4 20.6L166.2 199.6c-1.5 .5-2.9 1.1-4.3 1.7l145.3 52.5c4.1 1.5 8.4 2.2 12.8 2.2s8.7-.8 12.8-2.2L592.4 160 332.8 66.2c-4.1-1.5-8.4-2.2-12.8-2.2s-8.7 .8-12.8 2.2zM296.3 283.9L126.9 222.7C99.4 246 82.1 279.9 80.2 316.9c5.9 13.2 10.2 27.5 13.4 41.5c6.4 27.6 10.7 65.9 2.1 108.7c-.9 4.3-3.4 8-7.1 10.4s-8.2 3.1-12.4 2l-64-16c-5.2-1.3-9.4-5.1-11.2-10.2s-.9-10.7 2.3-14.9c8.6-11.7 16-24.6 22.5-37.6C37.2 377.8 48 348.4 48 320c0-.6 0-1.2 .1-1.8c1.4-41 18-79.1 45.1-107.7L15.8 182.6C6.3 179.1 0 170.1 0 160s6.3-19.1 15.8-22.6L296.3 36.1c7.6-2.7 15.6-4.1 23.7-4.1s16.1 1.4 23.7 4.1L624.2 137.4c9.5 3.4 15.8 12.5 15.8 22.6s-6.3 19.1-15.8 22.6L343.7 283.9c-7.6 2.7-15.6 4.1-23.7 4.1s-16.1-1.4-23.7-4.1zm-122-10L160.4 406.3c.7 .8 1.8 2.1 3.7 3.7c6 5.2 16.5 11.5 31.9 17.5C226.4 439.4 270.3 448 320 448s93.6-8.6 124.1-20.6c15.4-6 25.8-12.3 31.9-17.5c1.9-1.6 3-2.8 3.7-3.7L465.7 273.8l31-11.2L512 408c0 35.3-86 72-192 72s-192-36.7-192-72l15.3-145.4 31 11.2zM480.5 405a.2 .2 0 1 0 -.3-.1 .2 .2 0 1 0 .3 .1zm-321 0a.1 .1 0 1 0 .2 0 .1 .1 0 1 0 -.2 0zM67 444.2c2.5-20.7 1.7-40-.5-56.7c-3.8 10-8 19.3-12.1 27.6c-3.8 7.6-7.9 15.2-12.5 22.8L67 444.2z"
+                  ></path>
+                </svg>
+              </div>
+              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-3 pr-3 rounded-r-lg">
+                Graduação
+              </span>
             </Link>
           </div>
         </div>
       </div>
-      <div className="lg:flex grid lg:justify-around lg:w-1/2 gap-5 pb-5 shadow-md rounded-b-lg">
+      <div className="lg:flex lg:justify-around items-end lg:w-2/3 gap-5 p-5 shadow-custom rounded-b-lg z-10">
         <div className="flex flex-col gap-1">
           <label htmlFor="">Escolha uma cidade:</label>
           <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
-            <option disabled selected>Who shot first?</option>
-            <option>LIO DE JIANEIRO</option>            
+            <option>LIO DE JIANEIRO</option>
           </select>
         </div>
         <div className="flex flex-col gap-1">
           <label htmlFor="">Idioma que deseja estudar:</label>
-          <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
+          <select onChange={(e) => setSeries(e.target.value)} className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
             <option disabled selected>Who shot first?</option>
-            <option>Han Solo</option>
-            <option>Greedo</option>
+            {
+              sereiesList && sereiesList.map((serie: any, index: number) => (
+                <option key={index} value={serie.level}>{serie.series}</option>
+              ))
+            }
           </select>
         </div>
-        <button className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
+        <Link href={`/escola/busca/${series}`} className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
           Buscr bolsas
-        </button>
+        </Link>
       </div>
     </div >
   );
