@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Custom CSS to hide scrollbar */  
+.tag-container::-webkit-scrollbar {  
+    display: none; /* Safari and Chrome */  
+}  
+
+.tag-container {  
+    -ms-overflow-style: none;  /* Internet Explorer and Edge */  
+    scrollbar-width: none;      /* Firefox */  
+}  

@@ -4,11 +4,17 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import AutoCarousel from "../basecomponents/carousel";
 
-const carouselImage = [
+const carouselImageFull = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_graduacao.png",
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_pos.png",
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_basico.png",
-]
+];
+
+const carouselImageMobile = [
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/p/banner_home_graduacao.png",
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/p/banner_home_pos.png",
+  "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/p/banner_home_basico.png",
+];
 
 const TeachStage: React.FC = () => {
   const [series, setSeries] = useState<string>('');
@@ -41,13 +47,14 @@ const TeachStage: React.FC = () => {
   return (
     <div className="flex flex-col justify-center items-center bg-white w-full">
       <div className="flex flex-col items-center relative">
-        <AutoCarousel images={carouselImage} />
+        <AutoCarousel images={carouselImageFull} className="lg:block hidden" />
+        <AutoCarousel images={carouselImageMobile} className="block lg:hidden" />
 
-        <div className="absolute flex flex-col justify-center bottom-0 lg:w-2/3">
-          <p className="font-semibold lg:self-start px-10 py-1 text-purple-500 text-center bg-white rounded-t-3xl">
+        <div className="absolute flex flex-col justify-center bottom-0 lg:w-2/3 mx-5 w-lvw">
+          <p className="font-semibold lg:self-start self-center px-4 lg:px-10 py-1 text-purple-500 text-center bg-white rounded-t-3xl">
             Busca pela etapa de formação
           </p>
-          <div className="flex gap-5 bg-white justify-around p-5 rounded-tr-lg">
+          <div className="tag-container overflow-auto inline-flex gap-5 bg-white justify-around p-5 rounded-tr-lg">
             <Link
               href="/escola/busca/669dc5b07c0aa62f8cf233e4"
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
@@ -69,7 +76,7 @@ const TeachStage: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg">
+              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
                 Ensino básico
               </span>
             </Link>
@@ -104,7 +111,7 @@ const TeachStage: React.FC = () => {
                   />
                 </svg>
               </div>
-              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg">
+              <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
                 Curso Técnico
               </span>
             </Link>
@@ -132,7 +139,7 @@ const TeachStage: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="lg:flex lg:justify-around items-end lg:w-2/3 gap-5 p-5 shadow-custom rounded-b-lg z-10">
+      <div className="lg:flex lg:justify-around items-end lg:w-2/3 grid w-lvw gap-5 p-5 shadow-custom rounded-b-lg z-10">
         <div className="flex flex-col gap-1">
           <label htmlFor="">Escolha uma cidade:</label>
           <select className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">

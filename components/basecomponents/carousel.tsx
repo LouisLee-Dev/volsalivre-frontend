@@ -3,10 +3,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 type CarouselProps = {
+  className?: string;
   images: string[];
 };
 
-const AutoCarousel: React.FC<CarouselProps> = ({ images }) => {
+const AutoCarousel: React.FC<CarouselProps> = ({ images, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +37,7 @@ const AutoCarousel: React.FC<CarouselProps> = ({ images }) => {
   };
 
   return (
-    <div className="relative w-full overflow-hidden">
+    <div className={`${className} relative w-full overflow-hidden`}>
       <div
         className="flex transition-transform duration-500"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
