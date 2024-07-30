@@ -4,14 +4,7 @@ import TeachStage from "./teachState";
 import Transforming from "./transforming/page";
 import OtherSchools from "./otherschools/page";
 import PrivateSchools from "./privateschools/page";
-import Works from "./works/page";
 import { useGetByPrivateMutation } from "@/lib/features/schools/schoolsApi";
-
-
-// interface DashboardProps {
-//   data: any; // Adjust the type as per your API response structure
-// }
-
 
 const Dashboard: React.FC = () => {
   const [privateSchoolsData, setPrivateSchoolsData] = useState<any>(); // State to hold fetched data
@@ -40,6 +33,5 @@ const Dashboard: React.FC = () => {
     </div>
   );
 };
-
 
 export default Dashboard;

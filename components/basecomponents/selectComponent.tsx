@@ -1,15 +1,17 @@
-// components/CustomSelect.tsx  
-import React, { useState } from 'react';  
+import React, { useEffect, useState } from 'react';  
 import { isEmpty } from '@/utils/is-empty';  
 
-interface CustomSelectProps {  
-  items: string[]; // Keeping it as string[] for this case  
+// Define a generic type for the items and a display function for rendering them  
+interface CustomSelectProps<T> {  
+  items: T[];  
+  setItem: (item: T) => void;  
+  // A function to render the item as a string in the dropdown  
+  renderItem?: (item: T) => string;
 }  
 
-const CustomSelect: React.FC<CustomSelectProps> = ({ items }) => {  
+const CustomSelect = <T,>({ items, setItem, renderItem }: CustomSelectProps<T>) => {  
   const [inputValue, setInputValue] = useState<string>('');  
-  const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);  
-  const [selectedItem, setSelectedItem] = useState<string>('');  
+  const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);    
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {  
     const value = e.target.value;  
@@ -17,16 +19,23 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ items }) => {
     setDropdownVisible(true); // Always show dropdown when typing  
   };  
 
-  const handleItemClick = (item: string) => {  
-    setSelectedItem(item);  
-    setInputValue(item);  
+  const handleItemClick = (item: T) => {      
+    setInputValue(renderItem ? renderItem(item) : String(item)); // Convert to string based on render function  
+    setItem(item);
     setDropdownVisible(false); // Hide dropdown when an item is selected  
   };  
 
   // Filter items based on input value or show all if input is empty  
   const filteredItems = inputValue.length > 0  
-    ? items.filter(item => item.toLowerCase().includes(inputValue.toLowerCase()))  
+    ? items.filter(item => {  
+        const itemString = renderItem ? renderItem(item) : String(item);
+        return itemString.toLowerCase().includes(inputValue.toLowerCase());
+      })  
     : items; // Show all items if input is empty  
+
+  useEffect(() => {
+    setInputValue("");
+  }, [items])
 
   return (  
     <div className="relative">  
@@ -35,7 +44,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ items }) => {
         value={inputValue}  
         onChange={handleInputChange}  
         onFocus={() => setDropdownVisible(true)} // Show dropdown when focused  
-        className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs"  
+        className="px-5 py-2 rounded-lg w-full max-w-xs"  
         placeholder="Select an item"  
       />  
 
@@ -48,7 +57,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({ items }) => {
                 onClick={() => handleItemClick(item)}  
                 className="px-5 py-2 hover:bg-slate-200 cursor-pointer"  
               >  
-                {item}  
+                {renderItem ? renderItem(item) : String(item)}  
               </li>  
             ))  
           ) : (  

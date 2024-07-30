@@ -37,7 +37,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
 
   useEffect(() => {
     const fetchRole = async () => {
-      const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/roles/all';
+      const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/roles';
       const role = await fetch(url);
       const data = await role.json();
       setRoles(data)

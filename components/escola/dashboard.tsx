@@ -19,7 +19,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools/all';
+    const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
     let level: any = null;
     if (type && type.params && type.params.level)
       switch (type.params?.level) {
@@ -39,11 +39,11 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
     const fetchSchools = async (searchParam: any) => {
       const params = level ? { ...searchParam, level: level } : searchParam;
       const requestOptions = {
-        method: 'POST',
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(params), // Include data if required (e.g., for POST requests)
+        // body: JSON.stringify(params), // Include data if required (e.g., for POST requests)
       };
 
       try {

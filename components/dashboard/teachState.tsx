@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import AutoCarousel from "../basecomponents/carousel";
-import CustomSelect from "../basecomponents/selectComponent";
+import { SearchCity, SearchSeries } from "../basecomponents/searchComponents";
 
 const carouselImageFull = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/g/banner_home_graduacao.png",
@@ -17,52 +17,29 @@ const carouselImageMobile = [
   "https://images.educamaisbrasil.com.br/content/internal/marketplace/educamaisbrasil/images/banner/p/banner_home_basico.png",
 ];
 
-const cities = [
-  "Rio de Janeiro",
-  "Nova",
-  "Nova Iguaçu",
-  "Duque de Caxias",
-  "Niterói",
-  "São Gonçalo",
-]
-
 const TeachStage: React.FC = () => {
-  const [series, setSeries] = useState<string>('');
-  const [isDropdownCities, setDropdownCities] = useState<boolean>(false);
-  const [sereiesList, setSeriesList] = useState<any>();
-  const countryRef = useRef(null);
-
-  const handleClickCountry = () => {
-    setDropdownCities(!isDropdownCities);
-    if (countryRef.current) {
-      countryRef.current.focus();
-    }
-  }
+  const [filters, setFilters] = useState<any>();  
+  const [levels, setLevels] = useState<any>();
 
   useEffect(() => {
-    const fetchSeries = async () => {
-      const url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all`;
+    const fetchLevels = async () => {
+      const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/levels';
+      
       try {
-        const res = await fetch(url);
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
+        const result = await fetch(url);
+        if (!result.ok) {
+          throw new Error(`HTTP error! Status: ${result.status}`);
         }
-        const data = await res.json();
-        console.log(data);
-        setSeriesList(data);
-      } catch (err) {
-        console.error('Error: Level loading error!!!');
+        const data = await result.json();
+        setLevels(data);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
       }
-    };
-    fetchSeries();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const level = {
-    child: 'Educação Infantil',
-    junior: 'Ensino Fundamental I',
-    senior: 'Ensino Médio'
-  };
-  const queryString = new URLSearchParams(level).toString();
+    }
+
+    fetchLevels();
+  }, [])
+  
   return (
     <div className="flex flex-col justify-center items-center bg-white w-full">
       <div className="flex flex-col items-center relative">
@@ -74,8 +51,8 @@ const TeachStage: React.FC = () => {
             Busca pela etapa de formação
           </p>
           <div className="tag-container overflow-auto inline-flex gap-5 bg-white justify-around p-5 rounded-tr-lg">
-            <Link
-              href="/escola/busca/669dc5b07c0aa62f8cf233e4"
+            <button
+              onClick={() => {setFilters({...filters, level: levels[0]._id})}}
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
               <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
@@ -98,9 +75,9 @@ const TeachStage: React.FC = () => {
               <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
                 Ensino básico
               </span>
-            </Link>
-            <Link
-              href="/escola/busca/669dc5987c0aa62f8cf233e1"
+            </button>
+            <button
+              onClick={() => {setFilters({...filters, level: levels[1]._id})}}
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
               <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
@@ -133,9 +110,9 @@ const TeachStage: React.FC = () => {
               <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-2 pr-3 rounded-r-lg text-nowrap">
                 Curso Técnico
               </span>
-            </Link>
-            <Link
-              href="/escola/busca/669dc5be7c0aa62f8cf233e7"
+            </button>
+            <button
+              onClick={() => {setFilters({...filters, level: levels[2]._id})}}
               className="inline-flex -space-x-2 group text-sm text-white lg:text-base font-medium items-center text-center"
             >
               <div className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-full p-2">
@@ -154,27 +131,20 @@ const TeachStage: React.FC = () => {
               <span className="bg-purple-700 group-hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 py-1 pl-3 pr-3 rounded-r-lg">
                 Graduação
               </span>
-            </Link>
+            </button>
           </div>
         </div>
       </div>
       <div className="lg:flex lg:justify-around items-end lg:w-2/3 grid w-lvw gap-5 p-5 shadow-custom rounded-b-lg z-10">
         <div className="flex flex-col gap-1">
           <label htmlFor="">Escolha uma cidade:</label>
-          <CustomSelect items={cities} />
+          <SearchCity disp={2} filters={filters} setFilters={setFilters} />
         </div>
         <div className="flex flex-col gap-1">
-          <label htmlFor="">Idioma que deseja estudar:</label>
-          <select onChange={(e) => setSeries(e.target.value)} className="border border-slate-400 px-5 py-2 rounded-lg w-full max-w-xs">
-            <option disabled selected>Who shot first?</option>
-            {
-              sereiesList && sereiesList.map((serie: any, index: number) => (
-                <option key={index} value={serie.level}>{serie.series}</option>
-              ))
-            }
-          </select>
+          <label htmlFor="">Série que deseja estudar:</label>
+          <SearchSeries disp={2} filters={filters} setFilters={setFilters} />
         </div>
-        <Link href={`/escola/busca/${series}`} className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
+        <Link href={`/escola/busca/${filters && filters.series}`} className="rounded-lg bg-purple-500 px-5 py-2 text-white text-center">
           Buscr bolsas
         </Link>
       </div>

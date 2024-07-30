@@ -2,7 +2,7 @@
 
 import { useState } from "react";  
 import {  
-  SearchButton,  
+  SearchCity,  
   Neighborhood,  
   SearchSchool,  
   SearchSeries,  
@@ -13,31 +13,38 @@ interface SearchListProps {
   setMenu: (menu: number) => void; // More specific type for setMenu  
 }  
 
-const SearchList: React.FC<SearchListProps> = ({ menu, setMenu }) => {  
-  const [school, setSchool] = useState<string>("");  
+const SearchList: React.FC<SearchListProps> = ({ menu, setMenu }) => {    
+  const [filters, setFilters] = useState<any>();
 
   // Determine the width class based on the school state  
-  const widthClass = school ? "w-1/4" : "w-1/3";  
+  const widthClass = filters && filters.school ? "w-1/4" : "w-1/3";  
 
   return (  
     <>  
       <div className="flex flex-wrap items-center rounded-full bg-white my-1.5 2xl:w-[40vw] xl:w-[50vw] lg:w-[60vw] md:w-[87vw] sm:w-[86vw] w-[74vw]">  
-        <SearchButton  
+        <SearchCity  
           disp={0}  
           className={`lg:flex hidden flex-col relative ${widthClass} px-2 border-r-2 border-slate-300`}  
+          filters={filters}
+          setFilters={setFilters}
         />  
         <Neighborhood  
           disp={0}  
           className={`lg:flex hidden flex-col relative ${widthClass} px-2 border-r-2 border-slate-300`}  
+          filters={filters}
+          setFilters={setFilters}
         />  
         <SearchSchool  
-          disp={0}  
-          setSchoolParent={setSchool}  
+          disp={0}            
           className={`lg:flex hidden flex-col relative ${widthClass} px-2`}  
+          filters={filters}
+          setFilters={setFilters}
         />  
         <SearchSeries  
           disp={0}  
-          className={`relative ${school && "lg:flex"} hidden flex-col border-l-2 border-slate-300 w-1/4 px-2`}  
+          className={`relative ${filters && filters.school && "lg:flex"} hidden flex-col border-l-2 border-slate-300 w-1/4 px-2`}  
+          filters={filters}
+          setFilters={setFilters}
         />  
 
         {/* Mobile Search Menu */}  
@@ -68,17 +75,19 @@ const SearchList: React.FC<SearchListProps> = ({ menu, setMenu }) => {
             </span>  
             <p className="text-xl font-bold">Search for a school</p>  
 
-            <SearchButton disp={1} className="flex flex-col gap-1 mx-8" />  
-            <Neighborhood disp={1} className="flex flex-col gap-1 mx-8" />  
+            <SearchCity disp={1} className="flex flex-col gap-1 mx-8" filters={filters} setFilters={setFilters} />  
+            <Neighborhood disp={1} className="flex flex-col gap-1 mx-8" filters={filters} setFilters={setFilters} />  
             <SearchSchool  
               disp={1}  
-              setSchoolParent={setSchool}  
               className="flex flex-col gap-1 mx-8"  
+              filters={filters}
+              setFilters={setFilters}
             />  
             <SearchSeries  
               disp={1}  
-              school={school}  
               className="flex flex-col gap-1 mx-8"  
+              filters={filters}
+              setFilters={setFilters}
             />  
 
             <button className="mx-14 py-2 bg-orange-500 text-white hover:bg-orange-400 rounded-full">  

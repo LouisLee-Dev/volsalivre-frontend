@@ -12,14 +12,14 @@ interface DetailProps {
 const Detail: React.FC<DetailProps> = ({ title }) => {
     const [school, setSchool] = useState<any>();
     useEffect(() => {
-        const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools/all';
+        const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
         const fetchSchool = async () => {
             const requestOptions = {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ title: title }), // Include data if required (e.g., for POST requests)
+                // body: JSON.stringify({ title: title }),
             };
 
             try {

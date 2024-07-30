@@ -11,15 +11,13 @@ interface FilterProps {
 
 const Filters: React.FC<FilterProps> = ({ type, level, setSearchParam }) => {
   const [filters, setFilters] = useState<any>();
-  const [school, setSchoolParent] = useState<any>("");  
 
   const clearFilters = () => {
     setFilters({});
-    setSchoolParent("");
   };
 
   useEffect(() => {    
-    setSearchParam(filters);    
+    setSearchParam(filters);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters])
 
@@ -39,7 +37,7 @@ const Filters: React.FC<FilterProps> = ({ type, level, setSearchParam }) => {
         <Neighborhood disp={1} className="" filters={filters} setFilters={setFilters} />
         {/* <SearchSchool disp={1} className="" setSchoolParent={setSchoolParent} setFilters={setFilters} filters={filters} /> */}
         {type === "search" && !level && <TeachingState disp={1} className="" filters={filters} setFilters={setFilters} />}
-        <SearchSeries disp={1} className="" filters={filters} level={level} setFilters={setFilters} />
+        <SearchSeries disp={1} className="" filters={filters} setFilters={setFilters} />
       </div>
       <div className="flex flex-col space-y-2 text-sm gap-4 text-gray-600">
         {type === "search" && <SearchRadius disp={1} className="" filters={filters} setFilters={setFilters} />}

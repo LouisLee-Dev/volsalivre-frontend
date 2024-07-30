@@ -12,6 +12,8 @@ export const isArrayEmpty = (arr: any[]): boolean => {
       return isArrayEmpty(input); // Check for empty array  
     } else if (input && typeof input === 'object') {  
       return isObjectEmpty(input); // Check for empty object  
-    }  
+    } else if (input && typeof input === 'string') {
+      return input.trim().length === 0; // Check for empty
+    }
     return !input; // Treat anything other than arrays and objects as empty  
   };
