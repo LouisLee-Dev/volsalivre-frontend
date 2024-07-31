@@ -527,7 +527,7 @@ const MenuTipCard: React.FC = () => {
       </Link>
       {
           getUserRole() !== 'customer' && getUserRole() !== 'student' && (
-            <Link href={`/admin/Painel%20do%20Gestor`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Admin</Link>
+            <Link href={`/admin/Panel%20do%20Gestor`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer">Management</Link>
           )
         }
       <a

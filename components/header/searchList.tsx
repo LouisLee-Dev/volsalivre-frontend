@@ -30,7 +30,7 @@ const SearchList: React.FC<SearchListProps> = ({ menu, setMenu }) => {
         />  
         <Neighborhood  
           disp={0}  
-          className={`lg:flex hidden flex-col relative ${widthClass} px-2 border-r-2 border-slate-300`}  
+          className={`lg:flex hidden flex-col relative ${widthClass} border-r-2 border-slate-300`}  
           filters={filters}
           setFilters={setFilters}
         />  

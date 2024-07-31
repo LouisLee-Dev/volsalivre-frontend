@@ -9,7 +9,7 @@ interface Title {
   title: string;
 }
 
-const PainelBoard: React.FC<Title> = ({ title }) => {
+const PanelBoard: React.FC<Title> = ({ title }) => {
   return (
     <div className="flex flex-col md:flex-row md:px-24 py-10 md:space-x-10 sm:space-y-10">
       <div className="flex flex-col md:w-[360px] w-full space-y-3">
@@ -342,4 +342,4 @@ const ServiceBoard: React.FC<Title> = ({ title }) => {
   );
 };
 
-export { PainelBoard, EscolaBoard, OfertasBoard, AlunosBoard, ServiceBoard };
+export { PanelBoard, EscolaBoard, OfertasBoard, AlunosBoard, ServiceBoard };

@@ -21,8 +21,6 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
   const [cpfVal, setCPFVal] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [emailVal, setEmailVal] = useState<boolean>(false);
-  const [phone, setPhone] = useState<string>("");
-  const [phoneVal, setPhoneVal] = useState<boolean>(false);
   const [role, setRole] = useState<string>("customer");
   const [password, setPassword] = useState<string>("");
   const [passwordVal, setPasswordVal] = useState<boolean>(false);
@@ -52,7 +50,6 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
         name: name,
         email: email,
         cpf: cpf,
-        phone: phone,
         role: role,
         password: password,
         password2: password,
@@ -66,7 +63,6 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           setCPF('');
           setName('');
           setEmail('');
-          setPhone('');
           setPassword('');
           setRole('customer');
         }
@@ -185,21 +181,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   onBlur={() => setEmailVal(true)}
                 />
               </div>
-            </div>
-            <div className="col-span-2">
-              <div>
-                <label
-                  htmlFor="filled_success"
-                  className={`font-bold text-gray-700 text-sm px-2 ${phoneVal === true &&
-                    (phone.length !== 13 ? "text-green-500" : "text-red-500")
-                    }`}
-                >
-                  WhatsApp
-                </label>
-                <span className="text-gray-600 text-xs"> (obrigatório) </span>
-                <PhoneInput value={phone} onChange={setPhone} />
-              </div>
-            </div>
+            </div>            
             <div className="col-span-2">
             <div>
                 <label

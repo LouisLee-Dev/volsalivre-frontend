@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/assets/images/logo_blue.png";
 import { toast } from 'react-toastify';
@@ -24,7 +25,7 @@ const Header: React.FC<CommunicateProps> = () => {
     <>
       <div className="bg-white md:flex-row sm:flex-col flex justify-between items-center border-b px-4 py-1 md:px-24 sticky top-0 z-30">
         <div className="flex justify-between w-full md:w-auto sm:h-auto">
-          <a href="/">
+          <Link href="/">
             <Image
               src={Logo}
               alt="this is logo"
@@ -32,7 +33,7 @@ const Header: React.FC<CommunicateProps> = () => {
               width={147}
               height={37}
             />
-          </a>
+          </Link>
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -59,44 +60,44 @@ const Header: React.FC<CommunicateProps> = () => {
         <div className="hidden md:flex md:flex-row justify-between items-center">
           <ul className="flex justify-between items-center space-x-1">
             <li className="">
-              <a
-                href={`/admin/${encodeURIComponent("Painel do Gestor")}`}
+              <Link
+                href={`/admin/${encodeURIComponent("Panel do Gestor")}`}
                 className="flex text-orange-500 justify-between items-center hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text[12px]"
               >
                 <span>Painel do Gestor</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Minha Escola")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minha Escola</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Minhas Ofertas")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minhas Ofertas</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Meus Alunos")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Meus Alunos</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Servios")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Servios</span>
-              </a>
+              </Link>
             </li>
             <li className="">
               <div className="flex justify-between items-center text-sm border rounded-lg p-1 border-gray-500 text-gray-500 space-x-1">
@@ -148,44 +149,44 @@ const Header: React.FC<CommunicateProps> = () => {
         >
           <ul className="flex flex-col items-center space-y-5 p-4">
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Painel do Gestor")}`}
                 className="flex text-orange-500 justify-between items-center hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text[12px]"
               >
                 <span>Painel do Gestor</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Minha Escola")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minha Escola</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Minhas Ofertas")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minhas Ofertas</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Meus Alunos")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Meus Alunos</span>
-              </a>
+              </Link>
             </li>
             <li className="">
-              <a
+              <Link
                 href={`/admin/${encodeURIComponent("Servios")}`}
                 className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Servios</span>
-              </a>
+              </Link>
             </li>
             <li className="">
               <div className="flex justify-between items-center text-sm border rounded-lg p-1 border-gray-500 text-gray-500 space-x-1">

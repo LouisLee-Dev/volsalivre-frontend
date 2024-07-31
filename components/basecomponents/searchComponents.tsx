@@ -185,7 +185,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
     <div className={`${className} relative`}>
       {disp === 0 ? (
         <>
-          <div className="flex gap-1 items-center px-5">
+          <div className="flex gap-1 items-center px-2">
             <span>
               <svg
                 className="w-6 h-6 text-slate-500 dark:text-white"
@@ -219,6 +219,7 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
           </label>
           <div className="pt-1 flex items-center relative rounded-full">
             <CustomSelect
+              className="px-10"
               items={neighs}
               setItem={setSelectedNeigh}
               renderItem={renderItem}
@@ -303,7 +304,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
     <div className={`${className} relative`} >
       {disp === 0 ? (
         <>
-          <div className="flex gap-1 items-center px-5">
+          <div className="flex gap-1 items-center">
             <span>
               <svg
                 className="w-6 h-6 text-slate-500 dark:text-white"
@@ -338,6 +339,7 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
             </label>
             <div className="flex pt-1.5 items-center relative rounded-full">
               <CustomSelect
+                className="px-10"
                 items={schools}
                 setItem={setSelectedSchool}
                 renderItem={renderItem}
@@ -469,6 +471,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
           }
           <div className={`flex pt-1 items-center relative rounded-full`}>
             <CustomSelect
+              className="px-10"
               items={sereiesList}
               setItem={setSelectedSeries}
               renderItem={renderItem}
