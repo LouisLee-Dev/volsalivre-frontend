@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Logo from "@/public/assets/images/logo_blue.png";
-import Login from "@/components/artigos/login";
+import Login from "@/components/header/login";
 import Menu from "@/components/artigos/header/menu";
 import { MenuTipCard } from "@/components/basecomponents/cards";
 
