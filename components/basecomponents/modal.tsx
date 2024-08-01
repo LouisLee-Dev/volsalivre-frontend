@@ -6,25 +6,10 @@ import {
   useAddSchoolMutation,
   useGetAllMutation,
 } from "@/lib/features/schools/schoolsApi";
-import { MultiOption, MultiSeries, MultiSelect } from "./multiSelect";
+import CustomSelect from "./selectComponent";
+import { MultiOption } from "./multiSelect";
 import { toast } from "react-toastify";
-
-const shifts = [
-  "Morning",
-  "Afternoon",
-  "Full",
-  "Semi-integral",
-  "Nocturnal",
-  "EAD",
-  "Saturday",
-];
-
-const years = [
-  "2023",
-  "2024",
-  "2025",
-  "2026",
-];
+import { getUserId } from "@/utils/localstorage";
 
 interface ModalProps {
   isOpen: boolean;
@@ -39,17 +24,21 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [imagePreview, setImagePreview] = useState<any>(null);
   const [schoolTitle, setSchoolTitle] = useState<string>("");
   const [schoolTitleList, setSchoolTitleList] = useState<any>(null);
-  const [at, setAt] = useState<string>("");
-  const [position, setPosition] = useState<string>("");
-  const [selectedYears, setSelectedYears] = useState<string[]>([]);
-  const [levels, setLevels] = useState<any>(null);
-  const [changeLevels, setChangeLevels] = useState<any>([]);
-  const [series, setSeries] = useState<any[]>([]);
-  const [steps, setSteps] = useState<any[]>([]);
+  const [cities, setCities] = useState<any>([]);
+  const [city, setCity] = useState<string>();
+  const [neighs, setNeighs] = useState<any>([]);
+  const [neigh, setNeigh] = useState<string>();
+  const [levels, setLevels] = useState<any>([]);
+  const [changeLevel, setChangeLevel] = useState<string>(); // edu level
+  const [series, setSeries] = useState<any>([]);
+  const [step, setStep] = useState<string>(); // edu series
   const [type, setType] = useState<string>("public");
-  const [shift, setShift] = useState<string[]>([]);
+  const [selectedYears, setSelectedYears] = useState<string[]>([]);
+  const [years, setYears] = useState<any>([]);
+  const [turno, setTurno] = useState<string[]>([]); // edu shift
+  const [turnos, setTurnos] = useState<any>([]);
   const [monthly, setMonthly] = useState<string>("");
-  const [monthlyState, setMonthlyState] = useState<string>("");
+  const [monthlyState, setMonthlyState] = useState<string>(""); // monthly fee percentage
   const [regFee, setRegFee] = useState<string>("");
   const [vacancies, setVacancies] = useState<string>("");
   const [commit, setCommit] = useState<string>("");
@@ -60,11 +49,43 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const [formSwitch, setFormSwitch] = useState<boolean>(false);
 
+  const setCityValue = (city: any) => {
+    city && city._id && setCity(city._id);
+  }
+
+  const renderCity = (item: any) => {
+    return item.city;
+  }
+
+  const setNeighValue = (neigh: any) => {
+    neigh && neigh._id && setNeigh(neigh._id);
+  }
+
+  const renderNeigh = (item: any) => {
+    return item.neigh;
+  }
+
+  const renderLevel = (item:any) => {
+    return item.level;
+  }
+
+  const setLevelValue = (item: any) => {
+    item && item._id && setChangeLevel(item._id);
+  }
+
+  const renderSeries = (item: any) => {
+    return item.series;
+  }
+
+  const setSeriesValue = (item: any) => {
+    item && item._id && setStep(item._id)
+  }
+
   useEffect(() => {
     // Fetch private school data when component mounts
     const fetchLevels = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/levels/all`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/levels`);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
@@ -74,6 +95,48 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         console.error('Error: Level loading error!!!');
       }
     };
+
+    const fetchCities = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/cities`);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error('Error: Level loading error!!!');
+      }
+    }
+
+    const fetchYears = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/periodo`);
+        if(!res.ok) {
+          throw new Error('Netowrk response was no OK');
+        }
+        const data = await res.json();
+        setYears(data);
+        console.log(years);
+      } catch (err) {
+        console.log('Error: Years Loading error!!');
+      }
+    }
+    
+    const fetchTurnos = async () => {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/turno`);
+        if(!res.ok) {
+          throw new Error('Netowrk response was not OK');
+        }
+        const data = await res.json();
+        console.log(data)
+        setTurnos(data);
+      } catch (err) {
+        console.log('Error: Years Loading error!!');
+      }
+    }
+
     getAll()
       .unwrap()
       .then((fetchedData) => {
@@ -82,23 +145,51 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       .catch((err) => {
         console.error("Error fetching private school data:", err);
       });
+    
+    fetchCities();
+    fetchLevels();
+    fetchYears();
+    fetchTurnos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Empty dependency array ensures useEffect runs only on mount
+
+  useEffect(() => {
     const fetchSeries = async () => {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series/all`);
+        const url = changeLevel ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series?levelId=${changeLevel}` : `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series`;
+        const res = await fetch(url);
         if (!res.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await res.json();
-        console.log(data)
         setSeries(data);
       } catch (err) {
         console.error('Error: Level loading error!!!');
       }
     };
-    fetchLevels();
-    fetchSeries();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array ensures useEffect runs only on mount
+
+    changeLevel && fetchSeries();
+  }, [changeLevel])
+
+  useEffect(() => {
+    const fetchNeighs = async () => {
+      try {
+        const url = changeLevel ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/neighs?city=${city}` : `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/neighs`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await res.json();
+        console.log(data)
+        setNeighs(data);
+      } catch (err) {
+        console.error('Error: Level loading error!!!');
+      }
+    };
+
+    city && fetchNeighs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [city])
 
   const changeImage = (e: any) => {
     setImage(e.target.files[0]);
@@ -113,10 +204,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const SaveAndEdit = async () => {
     const schoolData = {
+      user: getUserId(),
       title: schoolTitle,
       years: selectedYears,
-      level: changeLevels,
-      series: steps,
+      level: changeLevel,
+      series: step,
       scholarUnit: "R$",
       amount: monthly,
       monthlyState: monthlyState,
@@ -124,9 +216,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       vagas: vacancies,
       type: type,
       star: "4",
-      position: position,
-      at: at,
-      shift: shift,
+      city: city,
+      neigh: neigh,
+      turno: turno,
       mark: image
     };
 
@@ -136,7 +228,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       if (success) {
         toast.success(`Successfully ${formSwitch ? 'Added' : 'Updated'} School ....`);
         setSchoolTitle("");
-        setChangeLevels([]);
+        setChangeLevel("");
         setTimeout(() => {
           setFormSwitch(true);
         }, 1000);
@@ -208,62 +300,52 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           <div className="mb-5 col-span-2 grid grid-cols-2 gap-2">
             <div className="flex flex-col">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                At:
+                City:
               </label>
-              <select
-                onChange={(e) => setAt(e.target.value)}
-                value={at}
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-              >
-                <option>Select At</option>
-                <option value="Juliao-RC">Juliao-RC</option>
-              </select>
+              <CustomSelect className="border rounded-full px-5" 
+                items={cities}
+                setItem={setCityValue}
+                renderItem={renderCity}
+              />
             </div>
             <div className="flex flex-col">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Position:
+                Bairro:
               </label>
-              <select
-                onChange={(e) => setPosition(e.target.value)}
-                value={position}
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-              >
-                <option>Select Position</option>
-                <option value="Juliao">Juliao</option>
-              </select>
+              <CustomSelect className="border rounded-full px-5" items={neighs} setItem={setNeighValue} renderItem={renderNeigh}/>
             </div>
           </div>
-          <div className="mb-5 col-span-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Ano letivo:
-            </label>
-            <MultiOption
-              options={years}
-              selectedOptions={selectedYears}
-              onChange={setSelectedYears}
-            />
-          </div>
+          <div className="mb-5">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            nível
+          </label>
+          <CustomSelect className="border rounded-full px-5" 
+            items={levels}
+            setItem={setLevelValue}
+            renderItem={renderLevel}
+          />
+        </div>
           <div className="mb-5 col-span-2 grap-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Mensalidade sem desconto:
             </label>
-            <MultiSeries
-              options={series}
-              selectedOptions={steps}
-              onChange={setSteps}
+            <CustomSelect className="border rounded-full px-5" 
+             items={series}
+             setItem={setSeriesValue}
+             renderItem={renderSeries}
             />
           </div>
-        </div>
-        <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            nível
-          </label>
-          <MultiSelect
-            options={levels}
-            selectedOptions={changeLevels}
-            onChange={setChangeLevels}
-          />
-        </div>
+        </div>        
+        <div className="mb-5 col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Ano letivo:
+            </label>
+            <MultiOption
+              options={[...years.map((year:any) => year.year)]}
+              selectedOptions={selectedYears}
+              onChange={setSelectedYears}
+            />
+          </div>
         <div className="grid grid-cols-2 p-1 gap-3">
           <div className="mb-5">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -402,9 +484,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               Shift:
             </label>
             <MultiOption
-              options={shifts}
-              selectedOptions={shift}
-              onChange={setShift}
+              options={[...turnos.map((turno:any) => turno.turno)]}
+              selectedOptions={turno}
+              onChange={setTurno}
             />
           </div>
 

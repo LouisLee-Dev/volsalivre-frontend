@@ -34,3 +34,18 @@ export const removeUserRole = (key: string) => {
   }
   localStorage.removeItem('role')
 }
+
+export const getUserId = () => {
+  return localStorage.getItem('user_id');
+}
+
+export const setUserId = (key: string) => {
+  if (!key || typeof window === 'undefined') {
+    return ""
+  }
+  localStorage.setItem('user_id', key);
+}
+
+export const removeUerId = () => {
+  localStorage.removeItem('user_id');
+}

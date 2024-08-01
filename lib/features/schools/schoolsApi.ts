@@ -30,7 +30,7 @@ export const schoolsApi = createApi({
         data: credentials,
       }),
     }),
-    addSchool: builder.mutation<{ success: string }, { title: string; star: string; position: string; at: string; level: any; shift: any; type: string; scholarUnit: string; amount: string; mark: File; }>({
+    addSchool: builder.mutation<{ success: string }, { title: string; star: string; city: string; neigh: string; level: string; turno: string[]; type: string; scholarUnit: string; amount: string; monthlyState:string; regFee: string; vagas: string; mark: File; }>({
       query: (credentials) => {
         const formData = new FormData();    
     
@@ -47,12 +47,7 @@ export const schoolsApi = createApi({
           }
           formData.append(key, value);
         });
-    
-        // Log FormData to verify contents
-        formData.forEach((value, key) => {
-          console.log(`FormData key: ${key}, value:`, value);
-        });
-    
+        
         return {
           url: '/add',
           method: 'POST',
@@ -83,7 +78,7 @@ export const schoolsApi = createApi({
       }),
     }),
     // eslint-disable-next-line @typescript-eslint/ban-types
-    getAllByParams: builder.mutation<{ schoolByParamList: {}}, { title: string; star: string; position: string; at: string; level: any; shift: any; type: string; scholarUnit: any; amount: string; benefits: any; }>({
+    getAllByParams: builder.mutation<{ schoolByParamList: {}}, { title: string; star: string; city: string; neigh: string; level: any; shift: any; type: string; scholarUnit: any; amount: string; benefits: any; }>({
       query: () => ({
         url: '/getParams',
         method: 'get',

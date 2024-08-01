@@ -5,21 +5,34 @@ import Image from "next/image";
 import "swiper/scss";
 import "swiper/scss/pagination";
 import Modal from '@/components/basecomponents/modal';
+import { MeusPerpil, MeusDados, MeusPagamentos } from '@/components/admin/painel/dashboard';
+import Minhasofertas from "./minhasofertas/page";
 interface Title {
   title: string;
 }
 
 const PanelBoard: React.FC<Title> = ({ title }) => {
+  const [tab, setTab] = useState<number>(1);
+
   return (
     <div className="flex flex-col md:flex-row md:px-24 py-10 md:space-x-10 sm:space-y-10">
       <div className="flex flex-col md:w-[360px] w-full space-y-3">
         <p className="text-gray-800 font-semibold text-lg">{title}</p>
-        <p className="text-gray-800 bg-slate-300 rounded-full flex justify-center items-center py-2">
-          <span className="items-center">{title}</span>
+        <p onClick={() => setTab(1)} className="text-gray-800 bg-slate-300 rounded-full flex justify-center items-center py-2 cursor-pointer">
+          <span className="items-center">Meus Perpil</span>
+        </p>
+        <p onClick={() => setTab(2)} className="text-gray-800 bg-slate-300 rounded-full flex justify-center items-center py-2 cursor-pointer">
+          <span className="items-center">Meus Dados</span>
+        </p>
+        <p onClick={() => setTab(3)} className="text-gray-800 bg-slate-300 rounded-full flex justify-center items-center py-2 cursor-pointer">
+          <span className="items-center">Meus Paagamentos</span>
         </p>
       </div>
       <div className="w-full md:w-full space-y-10">
-        <div className="flex flex-col bg-white border p-5 rounded-xl gap-3">
+        {tab === 1 && <MeusPerpil />}
+        {tab === 2 && <MeusDados />}
+        {tab === 3 && <MeusPagamentos />}
+        {/* <div className="flex flex-col bg-white border p-5 rounded-xl gap-3">
           <p className="text-2xl md:text-3xl text-gray-700 font-bold">
             Bem-vindo, Escola Teste
           </p>
@@ -41,16 +54,15 @@ const PanelBoard: React.FC<Title> = ({ title }) => {
             Média por etapa de ensino no meio período <br />
             Cidade: <strong> Capixaba </strong>
           </p>
-        </div>
+        </div> */}
+
       </div>
     </div>
   );
 };
-const EscolaBoard: React.FC<Title> = ({ title }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+const EscolaBoard: React.FC<Title> = ({ title }) => {
+  
   return (
     <div className="flex sm:flex-col md:flex-row md:px-24 py-10 space-y-10 md:space-y-0">
       <div className="flex flex-col md:w-[360px] w-full space-y-3">
@@ -70,17 +82,21 @@ const EscolaBoard: React.FC<Title> = ({ title }) => {
           <p className="text-gray-400">
             Esta será a identidade da sua escola em nosso portal, todas as informações abaixo estarão na sua página. É importante que todos os campos estejam preenchidos e conferidos antes do envio.
           </p>
-          <button className="hover:text-gray-800 hover:bg-slate-300 hover:rounded-full flex justify-center items-center py-2 text-orange-500" onClick={() => openModal()}>
+          <button className="hover:text-gray-800 hover:bg-slate-300 hover:rounded-full flex justify-center items-center py-2 text-orange-500">
             Editar dados da escola
           </button>
 
         </div>
       </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      
     </div>
   );
 };
 const OfertasBoard: React.FC<Title> = ({ title }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="flex flex-col md:flex-row md:px-24 rounded-xl py-10 gap-3">
@@ -96,13 +112,13 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
             </label>
           </div>
           <div className="flex justify-between text-gray-700 gap-3 ">
-            <button className="border rounded-lg bg-slate-200 p-1.5">ENSINO BÁSICO</button>
+            <button className="border rounded-lg bg-slate-200 p-1.5"  onClick={() => openModal()}>ENSINO BÁSICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">TÉCNICO</button>
             <button className="border rounded-lg bg-slate-200 p-1.5">FACULDADE</button>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between pt-10 w-full gap-5">
-          <div className="flex flex-col md:w-1/2 bg-white border p-5 rounded-xl">
+          {/* <div className="flex flex-col md:w-1/2 bg-white border p-5 rounded-xl">
             <p className="text-3xl text-gray-700 font-bold">
               Parceria com o Melhor Escola
             </p>
@@ -128,9 +144,11 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
             </p>
             <strong>Maio/2023</strong>
             <p className="text-orange-500">Ver regras</p>
-          </div>
+          </div> */}
+          <Minhasofertas />
         </div>
       </div>
+      <Modal isOpen={isModalOpen} onClose={closeModal} />
     </div>
   );
 };

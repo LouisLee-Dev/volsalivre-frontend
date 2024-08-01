@@ -9,16 +9,14 @@ import { removeFromLocalStorage } from "@/utils/localstorage";
 
 
 interface CommunicateProps {
-  // menu: number;
+  activeTab?: number;
 }
 
-const Header: React.FC<CommunicateProps> = () => {
+const Header: React.FC<CommunicateProps> = ({activeTab}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [menuShow, setMenuShow] = useState<boolean>(false);
+  const [menuShow, setMenuShow] = useState<boolean>(false);  
   
-  const toggleEvent = () => {
-    console.log('sss');
-    
+  const toggleEvent = () => {    
     setMenuShow(!menuShow);
   };
   return (
@@ -59,7 +57,7 @@ const Header: React.FC<CommunicateProps> = () => {
         </div>
         <div className="hidden md:flex md:flex-row justify-between items-center">
           <ul className="flex justify-between items-center space-x-1">
-            <li className="">
+            <li className={`${activeTab === 1 && 'bg-slate-300 rounded-full'}`}>
               <Link
                 href={`/admin/${encodeURIComponent("Panel do Gestor")}`}
                 className="flex text-orange-500 justify-between items-center hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text[12px]"
@@ -67,34 +65,34 @@ const Header: React.FC<CommunicateProps> = () => {
                 <span>Painel do Gestor</span>
               </Link>
             </li>
-            <li className="">
+            <li className={`${activeTab === 2 && 'bg-slate-300 rounded-full'}`}>
               <Link
                 href={`/admin/${encodeURIComponent("Minha Escola")}`}
-                className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
+                className="flex text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minha Escola</span>
               </Link>
             </li>
-            <li className="">
+            <li className={`${activeTab === 3 && 'bg-slate-300 rounded-full'}`}>
               <Link
                 href={`/admin/${encodeURIComponent("Minhas Ofertas")}`}
-                className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
+                className="flex text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Minhas Ofertas</span>
               </Link>
             </li>
-            <li className="">
+            <li className={`${activeTab === 4 && 'bg-slate-300 rounded-full'}`}>
               <Link
                 href={`/admin/${encodeURIComponent("Meus Alunos")}`}
-                className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
+                className="flex text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Meus Alunos</span>
               </Link>
             </li>
-            <li className="">
+            <li className={`${activeTab === 5 && 'bg-slate-300 rounded-full'}`}>
               <Link
                 href={`/admin/${encodeURIComponent("Servios")}`}
-                className="text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
+                className="flex text-orange-500 justify-between items-center  hover:rounded-full hover:bg-gray-300 p-3 md:text-[15px] sm:text-[12px]"
               >
                 <span>Servios</span>
               </Link>

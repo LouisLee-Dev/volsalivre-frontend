@@ -30,7 +30,7 @@ export const authApi = createApi({
   reducerPath: 'authApi',
   baseQuery: axiosBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_BACKEND_DEV + '/api' }),
   endpoints: (builder) => ({
-    login: builder.mutation<{ token: string, role: string }, { email: string; password: string }>({
+    login: builder.mutation<{ token: string, role: string, _id: string }, { email: string; password: string }>({
       query: (credentials) => ({
         url: '/users/login',
         method: 'post',

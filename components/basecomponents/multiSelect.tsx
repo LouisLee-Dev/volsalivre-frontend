@@ -8,7 +8,7 @@ interface MultiOptionProps {
   onChange: (selected: any[]) => void;  
 }
 
-const MultiOption: React.FC<MultiOptionProps> = ({ options, selectedOptions = [], onChange }) => {
+const MultiOption: React.FC<MultiOptionProps> = ({ options, selectedOptions = [], onChange }) => {  
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSelect = (value: string) => {

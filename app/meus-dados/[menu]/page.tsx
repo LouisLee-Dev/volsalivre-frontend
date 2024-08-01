@@ -1,4 +1,4 @@
-import Dashboard from "@/components/meus-dados/dashboard";
+import Dashboard from "@/components/admin/painel/dashboard";
 import Header from "@/components/artigos/header/page";
 import Footer from "@/components/artigos/footer/page";
 import "@/app/globals.css";

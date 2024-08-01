@@ -7,7 +7,8 @@ import { toast } from 'react-toastify'
 import { useLoginMutation, useRegisterMutation } from "@/lib/features/auth/authApi";
 import { useAppDispatch, RootState } from "@/lib/store";
 import { setCredentials } from "@/lib/features/auth/authSlice";
-import { setUserRole } from "@/utils/localstorage";
+import { setUserId, setUserRole } from "@/utils/localstorage";
+import { isEmpty } from "@/utils/is-empty";
 
 interface ToEnterProps {
   isShow: boolean;
@@ -64,7 +65,6 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
           setName('');
           setEmail('');
           setPassword('');
-          setRole('customer');
         }
       } catch (error:any) {
         toast.error(error);
@@ -75,11 +75,12 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
         password: password,
       };      
       try {
-        const { token, role } = await login(data).unwrap();
+        const { token, role, _id } = await login(data).unwrap();
         if (token) {
           dispatch(setCredentials({ token }));
           toast.success("Loginned exactly");
           setUserRole(role)
+          setUserId(_id);
           setShow(!isShow);
         } else {
           toast.error("Unregistered Email!");
@@ -197,7 +198,7 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   onChange={(e) => setRole(e.target.value)}                  
                 >
                    <option value="">Select Role</option>
-                   {roles.map((role:any) => (
+                   { isEmpty(roles) && roles?.map((role:any) => (
                       <option key={role.id} value={role.role}>{role.role}</option>
                    ))}
                 </select>

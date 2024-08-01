@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import Login from "@/components/artigos/login";
+import Login from "./login";
 import { MenuTipCard } from "../basecomponents/cards";
 import { getFromLocalStorage, removeFromLocalStorage } from "@/utils/localstorage";
 

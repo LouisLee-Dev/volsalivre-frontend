@@ -508,7 +508,8 @@ const MenuTipCard: React.FC = () => {
   return (
     <div className="origin-top-right z-50 absolute right-0 mt-48 text-center w-32 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
       <Link
-        href={`/meus-dados/${encodeURIComponent('Meu perfil')}`}
+        href={`/admin/Panel%20do%20Gestor`}
+        // href={`/meus-dados/${encodeURIComponent('Meu perfil')}`}
         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
       >
         Meu perfil
