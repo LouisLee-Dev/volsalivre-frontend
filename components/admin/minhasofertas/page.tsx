@@ -63,6 +63,7 @@ const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
         } catch (e) {
             console.error(e)
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isDel, selectedSchools])
 
     return (

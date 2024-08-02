@@ -41,8 +41,8 @@ const CarouselComponent: React.FC = () => {
                 star={school.star}
                 mark={school.mark}
                 title={school.title}
-                at={school.at}
-                position={school.position}
+                city={school.city.city}
+                neigh={school.neigh.neigh}
                 scholarUnit={school.scholarUnit}
                 amount={school.amount}
               />
