@@ -124,8 +124,8 @@ interface PrivateSchoolCardProps {
   mark: any;
   title: string;
   star: number;
-  at: string;
-  position: string;
+  city: string;
+  neigh: string;
   scholarUnit: string;
   amount: number;
 }
@@ -134,8 +134,8 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
   mark,
   title,
   star,
-  at,
-  position,
+  city,
+  neigh,
   scholarUnit,
   amount,
 }) => {
@@ -153,8 +153,8 @@ const PrivateSchoolCard: React.FC<PrivateSchoolCardProps> = ({
         <span>{star}</span>
       </div>
       <div className="flex flex-col gap-2 text-gray-400 text-center md:text-left">
-        <p>{position}</p>
-        <p>{at}</p>
+        <p>{city}</p>
+        <p>{neigh}</p>
       </div><hr className="p-2" />
       <div className="flex flex-col space-y-0 text-center md:text-left">
         <p className="pb-0 text-gray-400">sholarships form:</p>
@@ -168,11 +168,11 @@ interface SearchResultCardProps {
   mark: any;
   title: string;
   star: number;
-  at: string;
+  city: string;
+  neigh: string;
   period: string;
-  position: string;
   schoolYear: any;
-  shift: any;
+  turno: any;
   level: any;
   originUnit: string;
   originPrice: number;
@@ -184,24 +184,24 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
   mark,
   title,
   star,
-  at,
+  city,
   period,
-  position,
+  neigh,
   schoolYear,
   level,
-  shift,
+  turno,
   originUnit,
   originPrice,
   presentUnit,
   presentPrice,
 }) => {  
-  const shiftArray: any = [];
+  const turnoArray: any = [];
   const schoolYearArray: any = [];
-  const shiftlength = shift.length;
+  const turnolength = turno.length;
   const yearlength = schoolYear.length;
-  for (let i = 0; i < shiftlength; i++) {
-    const element = shift[i];
-    shiftArray.push(
+  for (let i = 0; i < turnolength; i++) {
+    const element = turno[i];
+    turnoArray.push(
       <button key={i} type="button" className="text-purple-700 border rounded-full border-purple-700 hover:bg-slate-200 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium text-sm px-4 py-1 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
         {element}
       </button>
@@ -236,20 +236,20 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
       </div>
       <div className="flex flex-col gap-2 text-gray-400">
         <p className="text-gray-700 text-sm">{period}</p>
-        <p className="text-sm">{position}</p>
-        <p className="text-sm">{at}</p>
+        <p className="text-sm">{city}</p>
+        <p className="text-sm">{neigh}</p>
       </div><hr className="p-2" />
       <div className="flex flex-col text-sm">
         <p>School year</p>
         <span className="flex justify-start">
           {schoolYearArray}
         </span>
-        <p>Shift</p>
+        <p>turno</p>
         <span className="flex flex-wrap justify-start">
-          {shiftArray}
+          {turnoArray}
         </span>
         {/* <span className="flex justify-start">
-          {shiftArray}
+          {turnoArray}
         </span> */}
       </div>
       <div className="flex justify-between items-center">
@@ -261,15 +261,8 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
         </p>
       </div>
       <div className="flex flex-col justify-between">
-        <span>Levels</span>
-        {
-          level && level.map((l: any, index: any) => (
-            <div key={index} className="flex gap-5 pt-0 font-semibold text-gray-700">
-              <span>{l.level}</span>
-              <span>{l.grade}</span>
-            </div>
-          ))
-        }
+        <span>Level</span>
+        <span>{level}</span>
       </div>
 
       <div className="flex flex-col">
@@ -369,13 +362,13 @@ interface EscolaDetailCardProps {
 const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({ school }) => {
   const [selectedYear, setSelectedYear] = useState<any>();
   const [selectedSerie, setSelectedSerie] = useState<any>("");
-  const [selectedShift, setSelectedShift] = useState<any>("");
+  const [selectedturno, setSelectedturno] = useState<any>("");
   const [serieShow, setSerieShow] = useState<boolean>(false);
-  const [shiftShow, setShiftShow] = useState<boolean>(false);
+  const [turnoShow, setturnoShow] = useState<boolean>(false);
 
   useEffect(() => {
-    school && setSelectedSerie(school.series[0]);
-    school && setSelectedShift(school.shift[0]);
+    school && setSelectedSerie(school.series);
+    school && setSelectedturno(school.turno[0]);
   }, [school])
 
   if (school) {
@@ -423,10 +416,10 @@ const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({ school }) => {
           <div className="flex justify-between gap-5">
             <span>
               {
-                selectedShift
+                selectedturno
               }
             </span>
-            <button className="rounded-full bg-purple-100 text-purple-500 border border-purple-300 focus:ring-purple-300 px-5 py-2" onClick={() => setShiftShow(true)}>
+            <button className="rounded-full bg-purple-100 text-purple-500 border border-purple-300 focus:ring-purple-300 px-5 py-2" onClick={() => setturnoShow(true)}>
               Alterar
             </button>
           </div>
@@ -441,17 +434,17 @@ const EscolaDetailCard: React.FC<EscolaDetailCardProps> = ({ school }) => {
         <Link className="bg-orange-500 rounded-full p-3 text-white text-xl text-center font-semibold" href={`/escola/${school.title}/1`}>Quero esta bolsa</Link>
         <EscolaRegisterCard
           option={selectedSerie}
-          options={school.series}
+          options={school.series.series}
           setOption={setSelectedSerie}
           show={serieShow}
           setShow={setSerieShow}
         />
         <EscolaRegisterCard
-          option={selectedShift}
-          options={school.shift}
-          setOption={setSelectedShift}
-          show={shiftShow}
-          setShow={setShiftShow}
+          option={selectedturno}
+          options={school.turno}
+          setOption={setSelectedturno}
+          show={turnoShow}
+          setShow={setturnoShow}
         />
       </div>
     )

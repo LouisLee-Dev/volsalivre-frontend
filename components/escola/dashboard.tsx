@@ -20,28 +20,13 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
 
   useEffect(() => {
     const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
-    let level: any = null;
-    if (type && type.params && type.params.level)
-      switch (type.params?.level) {
-        case '669dc5987c0aa62f8cf233e1':
-          level = 'Ensino Fundamental';
-          break;
-        case '669dc5b07c0aa62f8cf233e4':
-          level = 'Educação Infantil';
-          break;
-        case '669dc5be7c0aa62f8cf233e7':
-          level = 'Ensino Médio';
-          break;
-        default:
-          level = null;
-          break;
-      }
+      
     const fetchSchools = async (searchParam: any) => {
-      const params = level ? { ...searchParam, level: level } : searchParam;
+      const params = type.params.level ? { ...searchParam, level: type.params.level } : searchParam;
       const requestOptions = {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',          
         },
         // body: JSON.stringify(params), // Include data if required (e.g., for POST requests)
       };
@@ -52,6 +37,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
           throw new Error(`HTTP error! Status: ${result.status}`);
         }
         const data = await result.json();
+
         setSchools(data);
       } catch (error) {
         console.error('Error fetching schools:', error);
@@ -168,12 +154,12 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
                     mark={result.mark}
                     title={result.title}
                     star={result.star}
-                    at={result.at}
+                    city={result.city.city}
+                    neigh={result.neigh.neigh}
                     period={result.period}
-                    position={result.position}
                     schoolYear={result.years}
-                    shift={result.shift}
-                    level={result.level}
+                    turno={result.turno}
+                    level={result.level.level}
                     originUnit={result.originUnit}
                     originPrice={result.originPrice}
                     presentUnit={result.presentUnit}

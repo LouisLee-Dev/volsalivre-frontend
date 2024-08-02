@@ -30,7 +30,7 @@ export const schoolsApi = createApi({
         data: credentials,
       }),
     }),
-    addSchool: builder.mutation<{ success: string }, { title: string; star: string; city: string; neigh: string; level: string; turno: string[]; type: string; scholarUnit: string; amount: string; monthlyState:string; regFee: string; vagas: string; mark: File; }>({
+    addSchool: builder.mutation<{ success: string }, { title: string; star: string; city: string; neigh: string; level: string; turno: string[]; type: string; scholarUnit: string; amount: string; monthlyState:string; regFee: string; vagas: string; comments: string; mark: File; }>({
       query: (credentials) => {
         const formData = new FormData();    
     

@@ -105,6 +105,7 @@ const SearchCity: React.FC<SearchButtonProps> = ({ disp, className, filters, set
               items={cities}
               setItem={setSelectedCity}
               renderItem={renderItem}
+              className="px-2"
             />
             {
               disp === 1 && (

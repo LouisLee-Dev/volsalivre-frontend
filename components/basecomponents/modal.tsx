@@ -23,7 +23,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [image, setImage] = useState<any | null>(null);
   const [imagePreview, setImagePreview] = useState<any>(null);
   const [schoolTitle, setSchoolTitle] = useState<string>("");
-  const [schoolTitleList, setSchoolTitleList] = useState<any>(null);
   const [cities, setCities] = useState<any>([]);
   const [city, setCity] = useState<string>();
   const [neighs, setNeighs] = useState<any>([]);
@@ -65,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     return item.neigh;
   }
 
-  const renderLevel = (item:any) => {
+  const renderLevel = (item: any) => {
     return item.level;
   }
 
@@ -112,40 +111,29 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const fetchYears = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/periodo`);
-        if(!res.ok) {
+        if (!res.ok) {
           throw new Error('Netowrk response was no OK');
         }
         const data = await res.json();
         setYears(data);
-        console.log(years);
       } catch (err) {
         console.log('Error: Years Loading error!!');
       }
     }
-    
+
     const fetchTurnos = async () => {
       try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/turno`);
-        if(!res.ok) {
+        if (!res.ok) {
           throw new Error('Netowrk response was not OK');
         }
         const data = await res.json();
-        console.log(data)
         setTurnos(data);
       } catch (err) {
         console.log('Error: Years Loading error!!');
       }
     }
 
-    getAll()
-      .unwrap()
-      .then((fetchedData) => {
-        setSchoolTitleList(fetchedData); // Update state with fetched data        
-      })
-      .catch((err) => {
-        console.error("Error fetching private school data:", err);
-      });
-    
     fetchCities();
     fetchLevels();
     fetchYears();
@@ -180,7 +168,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           throw new Error('Network response was not ok');
         }
         const data = await res.json();
-        console.log(data)
         setNeighs(data);
       } catch (err) {
         console.error('Error: Level loading error!!!');
@@ -188,19 +175,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     };
 
     city && fetchNeighs();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city])
 
   const changeImage = (e: any) => {
     setImage(e.target.files[0]);
     setImagePreview(URL.createObjectURL(e.target.files[0]));
+    console.log(imagePreview);
   }
-
-  const schoolsData =
-    schoolTitleList && typeof schoolTitleList === "object"
-      ? Object.values(schoolTitleList)
-      : [];
-
 
   const SaveAndEdit = async () => {
     const schoolData = {
@@ -219,10 +201,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       city: city,
       neigh: neigh,
       turno: turno,
+      comments: commit,
       mark: image
     };
 
-    try {      
+    try {
       const { success } = await addSchool(schoolData).unwrap()
 
       if (success) {
@@ -236,7 +219,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         toast.warning("Try again ...");
       }
     } catch (error: any) {
-      toast.error(`Confirm fields value: , ${error}`);      
+      toast.error(`Confirm fields value: , ${error}`);
     }
   };
 
@@ -253,56 +236,29 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <label htmlFor="mark" className="flex w-20 h-20 rounded-full cursor-pointer bg-slate-400 border border-spacing-4 border-purple-700 justify-center items-center">{imagePreview && <img src={imagePreview} alt="" width={200} height={200} className="rounded-full" />}</label>
             <input type="file" id="mark" className="hidden" onChange={changeImage} />
           </div>
-          <div className="flex absolute right-1 top-1">
-            <button
-              className="border bg-purple-500 rounded-full p-2 text-white text-sm px-2"
-              onClick={() => setFormSwitch(!formSwitch)}
-            >
-              {!formSwitch ? "Atualização" : "Register"}
-            </button>
-          </div>
         </div>
 
         <div className="grid grid-cols-2 p-1 gap-3">
-          {formSwitch ? (
-            <div className="mb-5">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Escola
-              </label>
-              <select
-                value={schoolTitle}
-                onChange={(e) => setSchoolTitle(e.target.value)}
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-              >
-                <option>Escolha uma escola</option>
-                {schoolsData.map((value: any, index: number) => (
-                  <option key={index} value={value.title}>
-                    {value.title}
-                  </option>
-                ))}
-              </select>
-            </div>
-          ) : (
-            <div className="mb-5">
-              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                Escola
-              </label>
-              <input
-                type="text"
-                className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
-                placeholder="Escola Mamãe Com Açúcar"
-                value={schoolTitle}
-                onChange={(e) => { setSchoolTitle(e.target.value); }}
-                required
-              />
-            </div>
-          )}
+          <div className="mb-5">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Escola
+            </label>
+            <input
+              type="text"
+              className="bg-gray-50 focus:outline-none focus:ring-1 border focus:ring-purple-500 text-gray-900 text-sm rounded-full block w-full p-2.5"
+              placeholder="Escola Mamãe Com Açúcar"
+              value={schoolTitle}
+              onChange={(e) => { setSchoolTitle(e.target.value); }}
+              required
+            />
+          </div>
+
           <div className="mb-5 col-span-2 grid grid-cols-2 gap-2">
             <div className="flex flex-col">
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 City:
               </label>
-              <CustomSelect className="border rounded-full px-5" 
+              <CustomSelect className="border rounded-full px-5"
                 items={cities}
                 setItem={setCityValue}
                 renderItem={renderCity}
@@ -312,40 +268,40 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Bairro:
               </label>
-              <CustomSelect className="border rounded-full px-5" items={neighs} setItem={setNeighValue} renderItem={renderNeigh}/>
+              <CustomSelect className="border rounded-full px-5" items={neighs} setItem={setNeighValue} renderItem={renderNeigh} />
             </div>
           </div>
           <div className="mb-5">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            nível
-          </label>
-          <CustomSelect className="border rounded-full px-5" 
-            items={levels}
-            setItem={setLevelValue}
-            renderItem={renderLevel}
-          />
-        </div>
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              nível
+            </label>
+            <CustomSelect className="border rounded-full px-5"
+              items={levels}
+              setItem={setLevelValue}
+              renderItem={renderLevel}
+            />
+          </div>
           <div className="mb-5 col-span-2 grap-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Mensalidade sem desconto:
             </label>
-            <CustomSelect className="border rounded-full px-5" 
-             items={series}
-             setItem={setSeriesValue}
-             renderItem={renderSeries}
+            <CustomSelect className="border rounded-full px-5"
+              items={series}
+              setItem={setSeriesValue}
+              renderItem={renderSeries}
             />
           </div>
-        </div>        
+        </div>
         <div className="mb-5 col-span-2">
-            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-              Ano letivo:
-            </label>
-            <MultiOption
-              options={[...years.map((year:any) => year.year)]}
-              selectedOptions={selectedYears}
-              onChange={setSelectedYears}
-            />
-          </div>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Ano letivo:
+          </label>
+          <MultiOption
+            options={[...years.map((year: any) => year.year)]}
+            selectedOptions={selectedYears}
+            onChange={setSelectedYears}
+          />
+        </div>
         <div className="grid grid-cols-2 p-1 gap-3">
           <div className="mb-5">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -484,7 +440,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               Shift:
             </label>
             <MultiOption
-              options={[...turnos.map((turno:any) => turno.turno)]}
+              options={[...turnos.map((turno: any) => turno.turno)]}
               selectedOptions={turno}
               onChange={setTurno}
             />

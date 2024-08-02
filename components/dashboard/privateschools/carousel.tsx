@@ -46,8 +46,8 @@ const CarouselComponent: React.FC<privateSchoolsDataProps> = ({
         star={school.star}
         mark={school.mark}
         title={school.title}
-        at={school.at}
-        position={school.position}
+        city={school.city}
+        neigh={school.neigh}
         scholarUnit={school.scholarUnit}
         amount={school.amount}
       />
@@ -85,8 +85,8 @@ const CarouselComponent: React.FC<privateSchoolsDataProps> = ({
                 star={school.star}
                 mark={school.mark}
                 title={school.title}
-                at={school.at}
-                position={school.position}
+                city={school.city}
+                neigh={school.neigh}
                 scholarUnit={school.scholarUnit}
                 amount={school.amount}
               />
