@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';  
 import { isEmpty } from '@/utils/is-empty';  
 
@@ -5,12 +6,13 @@ import { isEmpty } from '@/utils/is-empty';
 interface CustomSelectProps<T> {  
   className?: string;
   items: T[];  
+  value?: T;
   setItem: (item: T) => void;  
   // A function to render the item as a string in the dropdown  
   renderItem?: (item: T) => string;  
 }  
 
-const CustomSelect = <T,>({ className, items, setItem, renderItem }: CustomSelectProps<T>) => {  
+const CustomSelect = <T,>({ className, items, value, setItem, renderItem }: CustomSelectProps<T>) => {  
   const [inputValue, setInputValue] = useState<string>('');  
   const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);  
   const dropdownRef = useRef<HTMLDivElement | null>(null); // Create a reference for the component  
@@ -28,14 +30,21 @@ const CustomSelect = <T,>({ className, items, setItem, renderItem }: CustomSelec
   };  
 
   // Filter items based on input value or show all if input is empty  
-  const filteredItems = inputValue.length > 0  
+  const filteredItems = inputValue && inputValue.length > 0  
     ? items.filter(item => {  
         const itemString = renderItem ? renderItem(item) : String(item);  
         return itemString.toLowerCase().includes(inputValue.toLowerCase());  
       })  
     : items; // Show all items if input is empty  
 
-  useEffect(() => {  
+  useEffect(() => {
+    console.log(value)
+    value && !isEmpty(value) && setInputValue(renderItem(value));
+    value && !isEmpty(value) && setItem(value);
+  }, [value])
+  
+  useEffect(() => {     
+
     const handleClickOutside = (event: MouseEvent) => {  
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {  
         setDropdownVisible(false);  
@@ -48,6 +57,7 @@ const CustomSelect = <T,>({ className, items, setItem, renderItem }: CustomSelec
       // Cleanup the event listener on unmount  
       document.removeEventListener('mousedown', handleClickOutside);  
     };  
+
   }, []);  
 
   useEffect(() => {  

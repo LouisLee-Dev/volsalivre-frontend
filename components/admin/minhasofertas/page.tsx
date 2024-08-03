@@ -2,14 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 import { getUserId, getUserRole } from '@/utils/localstorage';
+import Modal from '@/components/basecomponents/modal';
 
 interface MinhasofertasProps {
     isDel: boolean;
     setDel: any;
+    isModalOpen: boolean;
+    openModal: any;
+    closeModal: any;
 }
 
-const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
+const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel, isModalOpen, openModal, closeModal}) => {
     const [schools, setSchools] = useState<any>([]);
+    const [school, setSchool] = useState<any>({});
     const [selectedSchools, setSelectedSchools] = useState<any[]>([]);
 
     const handleCheckboxChange = (event: any) => {
@@ -35,8 +40,7 @@ const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
                 if (!result.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const data = await result.json();  // Await the JSON parsing  
-                console.log(data);
+                const data = await result.json();  // Await the JSON parsing                  
                 setSchools(data);
             } catch (error) {
                 console.error('Error fetching schools:', error);
@@ -57,7 +61,6 @@ const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
                     body: JSON.stringify({schools:selectedSchools})
                 });
             }
-
             isDel && delSchools();
             setDel(false);
         } catch (e) {
@@ -109,7 +112,7 @@ const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
                                 <td>{school.comments}</td>
                                 <td>
                                     <div className="flex gap-5">
-                                        <span className='cursor-pointer'>
+                                        <span className='cursor-pointer' onClick={()=>{setSchool(school); openModal();}}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 512 512">
                                                 <path fill="#a00ec8" d="M103 464H48v-55L358.14 98.09l55.77 55.78zm322.72-322L370 86.28l31.66-30.66C406.55 50.7 414.05 48 421 48a25.9 25.9 0 0 1 18.42 7.62l17 17A25.87 25.87 0 0 1 464 91c0 7-2.71 14.45-7.62 19.36Zm-7.52-70.83" />
                                             </svg>
@@ -131,6 +134,7 @@ const Minhasofertas: React.FC<MinhasofertasProps> = ({isDel, setDel}) => {
                     )}
                 </tbody>
             </table>
+            <Modal isOpen={isModalOpen} onClose={closeModal} school={school} />
         </div>
     );
 }

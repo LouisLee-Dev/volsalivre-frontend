@@ -8,17 +8,19 @@ import {
 } from "@/lib/features/schools/schoolsApi";
 import CustomSelect from "./selectComponent";
 import { MultiOption } from "./multiSelect";
+import SchoolImage from "./schoolImage";
 import { toast } from "react-toastify";
 import { getUserId } from "@/utils/localstorage";
+import { isEmpty } from "@/utils/is-empty";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
+  school?: any;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, school }) => {
   const [addSchool] = useAddSchoolMutation();
-  const [getAll] = useGetAllMutation();
 
   const [image, setImage] = useState<any | null>(null);
   const [imagePreview, setImagePreview] = useState<any>(null);
@@ -40,6 +42,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [monthlyState, setMonthlyState] = useState<string>(""); // monthly fee percentage
   const [regFee, setRegFee] = useState<string>("");
   const [vacancies, setVacancies] = useState<string>("");
+  const [fullVacanies, setFullVacancies] = useState<string>("");
   const [commit, setCommit] = useState<string>("");
 
   const [isValidMonthly, setIsValidMonthly] = useState<boolean>(true);
@@ -72,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     item && item._id && setChangeLevel(item._id);
   }
 
-  const renderSeries = (item: any) => {
+  const renderSeries = (item: any) => {    
     return item.series;
   }
 
@@ -178,6 +181,26 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city])
 
+  useEffect(() => {
+    const setInitialvalue = (school:any) => {
+      setSchoolTitle(school.title);
+      setCity(school.city._id);
+      setNeigh(school.neigh._id);
+      setChangeLevel(school.level._id)
+      setStep(school.series._id);
+      setMonthly(school.amount);
+      setMonthlyState(school.monthlyState);
+      setRegFee(school.regFee);      
+      setCommit(school.comments);
+      setVacancies(school.vagas);
+      setFullVacancies(school.fullvagas);
+      setSelectedYears(school.years)
+      setTurno(school.turno);
+    }
+    school && !isEmpty(school) &&
+      setInitialvalue(school);
+  }, [school])
+
   const changeImage = (e: any) => {
     setImage(e.target.files[0]);
     setImagePreview(URL.createObjectURL(e.target.files[0]));
@@ -233,6 +256,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       <div className="bg-white p-6 rounded-lg shadow-lg z-10 w-11/12 md:w-1/2 lg:w-1/3 overflow-y-auto max-h-[90vh]">
         <div className="relative flex justify-center items-center">
           <div className="flex justify-center items-center">
+            { school && school.title && !imagePreview && <SchoolImage title={school.title} /> }
             <label htmlFor="mark" className="flex w-20 h-20 rounded-full cursor-pointer bg-slate-400 border border-spacing-4 border-purple-700 justify-center items-center">{imagePreview && <img src={imagePreview} alt="" width={200} height={200} className="rounded-full" />}</label>
             <input type="file" id="mark" className="hidden" onChange={changeImage} />
           </div>
@@ -260,6 +284,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               </label>
               <CustomSelect className="border rounded-full px-5"
                 items={cities}
+                value={school.city}
                 setItem={setCityValue}
                 renderItem={renderCity}
               />
@@ -268,7 +293,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                 Bairro:
               </label>
-              <CustomSelect className="border rounded-full px-5" items={neighs} setItem={setNeighValue} renderItem={renderNeigh} />
+              <CustomSelect className="border rounded-full px-5" items={neighs} value={school.neigh} setItem={setNeighValue} renderItem={renderNeigh} />
             </div>
           </div>
           <div className="mb-5">
@@ -277,6 +302,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </label>
             <CustomSelect className="border rounded-full px-5"
               items={levels}
+              value={school.level}
               setItem={setLevelValue}
               renderItem={renderLevel}
             />
@@ -287,6 +313,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </label>
             <CustomSelect className="border rounded-full px-5"
               items={series}
+              value={school.series}
               setItem={setSeriesValue}
               renderItem={renderSeries}
             />

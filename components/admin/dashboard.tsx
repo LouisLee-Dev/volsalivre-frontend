@@ -80,6 +80,7 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  console.log(isModalOpen)
 
   return (
     <div className="flex flex-col md:px-24 rounded-xl py-10 gap-3">
@@ -97,13 +98,13 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between pt-10 w-full gap-5">
-          <Minhasofertas isDel={isDel} setDel={setDel} />
+          <Minhasofertas isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal} isDel={isDel} setDel={setDel} />
         </div>
-      </div>
-      <Modal isOpen={isModalOpen} onClose={closeModal} />
+      </div>      
     </div>
   );
 };
+
 const AlunosBoard: React.FC<Title> = ({ title }) => {
   const [filters, setFilters] = useState<any>([]);
   return (
