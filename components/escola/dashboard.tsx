@@ -4,39 +4,46 @@ import React, { useState, useEffect, useRef } from "react";
 import Filters from "@/components/basecomponents/filters";
 import { SearchResultCard } from "@/components/basecomponents/cards";
 import Map from "../basecomponents/google_map";
+import axios from "axios";
 
 interface DashboardProps {
-  type?: any;
+  param?: any;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ type }) => {
+const Dashboard: React.FC<DashboardProps> = ({ param }) => {
   const [switchMap, setSwitchMap] = useState<boolean>(false);
   const [searchParam, setSearchParam] = useState<any>();
   const [schools, setSchools] = useState<any>(null);
-  
+
   // const [timer, setTimer] = useState<boolean>(false);
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  useEffect(() => {  
+    try {        
+      setSearchParam({  
+        ...searchParam,
+        ...JSON.parse(param)
+      });   
+    } catch (error) { /* empty */ }  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param]); 
+
+  console.log(searchParam);
   useEffect(() => {
     const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
-      
-    const fetchSchools = async (searchParam: any) => {
-      const params = type.params.level ? { ...searchParam, level: type.params.level } : searchParam;
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',          
-        },
-        // body: JSON.stringify(params), // Include data if required (e.g., for POST requests)
-      };
+
+    const fetchSchools = async (searchParams: any) => {      
 
       try {
-        const result = await fetch(url, requestOptions);
-        if (!result.ok) {
+        // const result = await fetch(url, requestOptions);
+        const result = await axios.get(url, {
+          params: searchParams
+        });
+        if (!result) {
           throw new Error(`HTTP error! Status: ${result.status}`);
         }
-        const data = await result.json();
+        const data = await result.data;
 
         setSchools(data);
       } catch (error) {
@@ -49,7 +56,6 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
     }
 
     timeoutRef.current = setTimeout(() => {
-
       fetchSchools(searchParam);
     }, 1000);
 
@@ -71,7 +77,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
       </div>
       <div className="lg:flex hidden flex-col lg:flex-row lg:justify-between md:flex-row md:justify-between sm:flex-col gap-10 justify-between xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 w-full">
         <p>
-          { schools?.length } bags found in { schools?.length }
+          {schools?.length} bags found in {schools?.length}
         </p>
         <div className="flex flex-col sm:flex-row justify-around items-center gap-5 w-full sm:w-auto mx-5">
           <div className="flex items-center relative text-gray-700 text-sm w-full sm:w-auto">
@@ -135,7 +141,7 @@ const Dashboard: React.FC<DashboardProps> = ({ type }) => {
           <Map /> :
           <div className="pt-0 flex gap-5 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl lg:px-3 pb-5">
             <div className="max-[1200px]:hidden">
-              <Filters type={`search`} level={type.params.level} setSearchParam={setSearchParam} />
+              <Filters type={`search`} level={searchParam && searchParam.level} setSearchParam={setSearchParam} />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 xl:w-[80vw] lg:w-[90vw] max-w-screen-xl px-3 pb-5">

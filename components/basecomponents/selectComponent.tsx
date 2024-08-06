@@ -38,7 +38,6 @@ const CustomSelect = <T,>({ className, items, value, setItem, renderItem }: Cust
     : items; // Show all items if input is empty  
 
   useEffect(() => {
-    console.log(value)
     value && !isEmpty(value) && setInputValue(renderItem(value));
     value && !isEmpty(value) && setItem(value);
   }, [value])

@@ -74,8 +74,8 @@ const Header = () => {
 
           {/* Search List and Menu */}  
           <div className={`flex flex-col justify-start 2xl:gap-10 lg:gap-2 ${menu === SHOW_SEARCH ? "flex" : "lg:static"}`}>  
-            <SearchList menu={menu} setMenu={setMenu} />  
-            <Menu menu={menu} />  
+            <SearchList menu={menu} setMenu={setMenu} />
+            {/* <Menu menu={menu} />   */}
           </div>  
         </div>  
         {/* Communicate Component */}  

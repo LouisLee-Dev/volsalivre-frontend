@@ -4,11 +4,11 @@ const Header = dynamic(()=> import("@/components/header/page"), { ssr: false});
 import Footer from "@/components/footer/page";
 import Dashboard from "@/components/escola/dashboard";
 
-export default function Busca(param: any) {
+export default function Busca(param: any) {  
   return (
     <>
       <Header />
-      <Dashboard type={param} />
+      <Dashboard param={decodeURIComponent(param.params.params)} />
       <Footer />
     </>
   );

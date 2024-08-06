@@ -197,8 +197,8 @@ const ToEnter: React.FC<ToEnterProps> = ({ isShow, setShow }) => {
                   value={role}
                   onChange={(e) => setRole(e.target.value)}                  
                 >
-                   <option value="">Select Role</option>
-                   { isEmpty(roles) && roles?.map((role:any) => (
+                   <option key={0} value="">Select Role</option>
+                   { roles && roles?.map((role:any) => (
                       <option key={role.id} value={role.role}>{role.role}</option>
                    ))}
                 </select>

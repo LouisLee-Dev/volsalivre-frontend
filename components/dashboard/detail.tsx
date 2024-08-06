@@ -6,6 +6,7 @@ interface DetailProps {
     title: any;
 }
 
+// eslint-disable-next-line prefer-const
 let cardData = [
     {
         location:"Rua João Passalaqua, 181 - Bela Vista, São Paulo - SP - São Paulo",
@@ -52,13 +53,14 @@ const Detail:React.FC<DetailProps> = ({title}) => {
                 </div>
                 <div className="row-span-1 lg:row-span-2 w-full md:w-full flex justify-center items-center">
                     <EscolaDetailCard 
-                        period={cardData[0].period}
-                        schoolYear={cardData[0].schoolYear}
-                        shift={cardData[0].shift}
-                        originUnit={cardData[0].originUnit}
-                        originPrice={cardData[0].originPrice}
-                        presentUnit={cardData[0].presentUnit}
-                        presentPrice={cardData[0].presentPrice}
+                        school={cardData}
+                        // period={cardData[0].period}
+                        // schoolYear={cardData[0].schoolYear}
+                        // shift={cardData[0].shift}
+                        // originUnit={cardData[0].originUnit}
+                        // originPrice={cardData[0].originPrice}
+                        // presentUnit={cardData[0].presentUnit}
+                        // presentPrice={cardData[0].presentPrice}
                     />
                 </div>
             </div>

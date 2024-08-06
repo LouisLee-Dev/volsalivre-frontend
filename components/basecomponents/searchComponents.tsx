@@ -58,7 +58,13 @@ const SearchCity: React.FC<SearchButtonProps> = ({ disp, className, filters, set
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center">
-            <span>
+            <CustomSelect
+              items={cities}
+              className="px-5"
+              setItem={setSelectedCity}
+              renderItem={renderItem}
+            />
+            <span className="absolute left-1">
               <svg
                 className="w-5 h-5 text-slate-600 dark:text-white"
                 aria-hidden="true"
@@ -84,11 +90,6 @@ const SearchCity: React.FC<SearchButtonProps> = ({ disp, className, filters, set
                 />
               </svg>
             </span>
-            <CustomSelect
-              items={cities}
-              setItem={setSelectedCity}
-              renderItem={renderItem}
-            />
           </div>
         </>
       ) : (
@@ -105,7 +106,7 @@ const SearchCity: React.FC<SearchButtonProps> = ({ disp, className, filters, set
               items={cities}
               setItem={setSelectedCity}
               renderItem={renderItem}
-              className="px-2"
+              className="px-5"
             />
             {
               disp === 1 && (
@@ -187,7 +188,13 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center px-2">
-            <span>
+            <CustomSelect
+              items={neighs}
+              className="px-5"
+              setItem={setSelectedNeigh}
+              renderItem={renderItem}
+            />
+            <span className="absolute left-1">
               <svg
                 className="w-6 h-6 text-slate-500 dark:text-white"
                 aria-hidden="true"
@@ -206,11 +213,6 @@ const Neighborhood: React.FC<SearchButtonProps> = ({ disp, className, filters, s
                 />
               </svg>
             </span>
-            <CustomSelect
-              items={neighs}
-              setItem={setSelectedNeigh}
-              renderItem={renderItem}
-            />
           </div>
         </>
       ) : (
@@ -306,7 +308,13 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center">
-            <span>
+            <CustomSelect
+              items={schools}
+              className="px-5"
+              setItem={setSelectedSchool}
+              renderItem={renderItem}
+            />
+            <span className="absolute left-1">
               <svg
                 className="w-6 h-6 text-slate-500 dark:text-white"
                 aria-hidden="true"
@@ -325,11 +333,6 @@ const SearchSchool: React.FC<SearchButtonProps> = ({
                 />
               </svg>
             </span>
-            <CustomSelect
-              items={schools}
-              setItem={setSelectedSchool}
-              renderItem={renderItem}
-            />
           </div>
         </>
       ) : (
@@ -390,10 +393,10 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
   }
 
   useEffect(() => {
-    const fetchSeries = async () => {      
+    const fetchSeries = async () => {
       const level = filters && filters.level;
       const school = filters && filters.school;
-      const url = school ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series?schoolId=${school}`: level ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series?levelId=${level}` : `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series`;
+      const url = school ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series?schoolId=${school}` : level ? `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series?levelId=${level}` : `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/series`;
       try {
         const res = await fetch(url);
         if (!res.ok) {
@@ -410,14 +413,20 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
 
   useEffect(() => {
     setFilters && setFilters({ ...filters, series: series });
-  }, [filters && filters.series]);
+  }, [series]);
 
   return (
     <div className={`${className} relative`} >
       {disp === 0 ? (
         <>
           <div className="flex gap-1 items-center justify-center">
-            <span>
+            <CustomSelect
+              items={sereiesList}
+              setItem={setSelectedSeries}
+              renderItem={renderItem}
+              className="px-5"
+            />
+            <span className="absolute left-1">
               <svg
                 className="w-6 h-6 text-slate-500 dark:text-white"
                 aria-hidden="true"
@@ -436,12 +445,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
                 />
               </svg>
             </span>
-            <CustomSelect
-              items={sereiesList}
-              setItem={setSelectedSeries}
-              renderItem={renderItem}
-            />
-            <span className="bg-orange-500 rounded-full p-[7px]">
+            <span className="absolute right-1 bg-orange-500 rounded-full p-[7px]">
               <svg
                 className="w-5 h-5 text-white"
                 aria-hidden="true"
@@ -470,7 +474,7 @@ const SearchSeries: React.FC<SearchButtonProps> = ({
               </label>
             )
           }
-          <div className={`flex pt-1 items-center relative rounded-full`}>
+          <div className={`flex pt-1 items-center relative rounded-full border`}>
             <CustomSelect
               className="px-10"
               items={sereiesList}
@@ -548,37 +552,36 @@ const TeachingState: React.FC<SearchButtonProps> = ({
 
   return (
     <div className={`${className} relative`}>
-      <>
-        <label htmlFor="" className="font-semibold text-sm">
-          Etapa de ensino:
-        </label>
-        <div className={`flex pt-1 items-center relative rounded-full`}>
-          <CustomSelect
-            items={levels}
-            setItem={setselectedLevel}
-            renderItem={renderItem}
-          />
-          <span className="absolute left-2">
-            <svg
-              className="w-6 h-6 text-slate-500 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="square"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-              />
-            </svg>
-          </span>
-        </div>
-      </>
+      <label htmlFor="" className="font-semibold text-sm">
+        Etapa de ensino:
+      </label>
+      <div className="flex pt-1 items-center relative rounded-full">
+        <CustomSelect
+          items={levels}
+          setItem={setselectedLevel}
+          className="px-5"
+          renderItem={renderItem}
+        />
+        <span className="absolute left-2">
+          <svg
+            className="w-6 h-6 text-slate-500 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="square"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M10 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h2m10 1a3 3 0 0 1-3 3m3-3a3 3 0 0 0-3-3m3 3h1m-4 3a3 3 0 0 1-3-3m3 3v1m-3-4a3 3 0 0 1 3-3m-3 3h-1m4-3v-1m-2.121 1.879-.707-.707m5.656 5.656-.707-.707m-4.242 0-.707.707m5.656-5.656-.707.707M12 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+            />
+          </svg>
+        </span>
+      </div>
     </div>
   )
 };
@@ -641,7 +644,7 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
 
   useEffect(() => {
     let url;
-    if (disp === 1) {      
+    if (disp === 1) {
       url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/periodo`;
     } else if (disp === 2) {
       url = `${process.env.NEXT_PUBLIC_BACKEND_DEV}/api/turno`;
@@ -656,7 +659,7 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
           throw new Error('Network response was not ok');
         }
         const data = await res.json();
-        setDataList(data)        
+        setDataList(data)
       } catch (err) {
         console.error('Error: Level loading error!!!');
       }
@@ -667,7 +670,7 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
   const length = dataList.length;
   for (let i = 0; i < length; i++) {
     const element = dataList[i];
-    
+
     if (disp === 1 || disp === 2)
       checkedDisp.push(
         <div key={i} className="flex items-center mb-4">
@@ -679,7 +682,7 @@ const SearchChecked: React.FC<SearchButtonProps> = ({ disp, className, checkedLa
             onChange={(e) => handleFilters(e.target.value, selectedData, setSelectedData)}
           />
           <label htmlFor={`default-checkbox${i}-${disp - 1}`} className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-            { element.year || element.turno}
+            {element.year || element.turno}
           </label>
         </div>
       );
