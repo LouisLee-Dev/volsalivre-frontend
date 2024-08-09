@@ -4,16 +4,16 @@ import React, { useState } from "react";
 import Image from "next/image";
 import "swiper/scss";
 import "swiper/scss/pagination";
-import Modal from '@/components/basecomponents/modal';
+
 import Minhasofertas from "./minhasofertas/page";
 import Minhaescola from "./minhaescola/page";
-import { SearchCity } from "../basecomponents/searchComponents";
+import Meusalunos from "./meusalunos/page";
 interface Title {
   title: string;
 }
 
 const PanelBoard: React.FC<Title> = ({ title }) => {
-    const [tab, setTab] = useState<number>(1);
+  const [tab, setTab] = useState<number>(1);
 
   return (
     <div className="flex flex-col md:flex-row md:px-24 py-10 md:space-x-10 sm:space-y-10">
@@ -74,6 +74,7 @@ const EscolaBoard: React.FC<Title> = ({ title }) => {
     </div>
   );
 };
+
 const OfertasBoard: React.FC<Title> = ({ title }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDel, setDel] = useState<boolean>(false);
@@ -93,20 +94,21 @@ const OfertasBoard: React.FC<Title> = ({ title }) => {
           </div>
           <div className="flex justify-between text-gray-700 gap-3 ">
             <button className="border rounded-full bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5" onClick={() => openModal()}>Adicionar</button>
-            <button onClick={()=>setDel(true)} className="border rounded-full bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5">Excluir</button>
+            <button onClick={() => setDel(true)} className="border rounded-full bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5">Excluir</button>
             <button className="border rounded-full bg-purple-600 hover:bg-purple-500 text-white px-3 py-1.5">Publicar Ofertas</button>
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between pt-10 w-full gap-5">
           <Minhasofertas isModalOpen={isModalOpen} openModal={openModal} closeModal={closeModal} isDel={isDel} setDel={setDel} />
         </div>
-      </div>      
+      </div>
     </div>
   );
 };
 
 const AlunosBoard: React.FC<Title> = ({ title }) => {
-  const [filters, setFilters] = useState<any>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  
   return (
     <div className="flex flex-col md:px-24 rounded-xl py-10 gap-3">
       <div className="flex flex-col justify-between space-y-10 py-10 px-5 rounded-xl">
@@ -119,152 +121,16 @@ const AlunosBoard: React.FC<Title> = ({ title }) => {
             dados, comprovantes, status e entre outros. Utilize o filtro para
             facilitar a sua busca
           </label>
+          <button className="rounded-full bg-purple-400 text-white px-5 py-2" onClick={()=>setShowModal(true)}>
+            Register
+          </button>
         </div>
-        <div className="flex flex-col pt-10">
-          <div className="border-b pb-5 border-gray-700">
-            <p className="text-2xl">
-              <strong>Alunos Cadastrados</strong>
-            </p>
-          </div>
-        </div>
-        <div className="flex flex-col space-y-2">
-          <p className="text-gray-500 hidden md:block">Buscar por:</p>
-          <div className="flex flex-col md:flex-row justify-between gap-5">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-              <div className="flex justify-between gap-3">
-                <SearchCity disp={2} filters={filters} setFilters={setFilters} className="" />
-                <input
-                  type="text"
-                  id="first_name"
-                  className="bg-gray-50 border py-2.5 px-3 sm:w-auto border-gray-500 text-gray-900 text-sm rounded-full w-full md:w-auto"
-                  placeholder="John"
-                  required
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <p>
-                  <svg
-                    className="text-5xl"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      className="text-orange-500"
-                      fill="currentColor"
-                      d="M256 64C150.13 64 64 150.13 64 256s86.13 192 192 192s192-86.13 192-192S361.87 64 256 64m91.31 283.31a16 16 0 0 1-22.62 0l-42.84-42.83a88.08 88.08 0 1 1 22.63-22.63l42.83 42.84a16 16 0 0 1 0 22.62"
-                    ></path>
-                    <circle
-                      className="text-orange-500"
-                      cx={232}
-                      cy={232}
-                      r={56}
-                      fill="currentColor"
-                    ></circle>
-                  </svg>
-                </p>
-                <button className="text-orange-500 border py-1.5 px-3 border-orange-500 rounded-full">
-                  Limpar Filtros
-                </button>
-              </div>
-            </div>
-            <div className="flex justify-between items-center gap-1">
-              <p className="text-gray-500">Filtrar por:</p>
-              <button className="text-orange-500 border py-1 px-2 bg-slate-100 border-gray-500 rounded-full">
-                Regular
-              </button>
-              <button className="text-orange-500 border py-1 px-2 bg-slate-100 border-gray-500 rounded-full">
-                Cancelado
-              </button>
-              <button className="text-orange-500 border py-1 px-2 bg-slate-100 border-gray-500 rounded-full">
-                Inadimplente
-              </button>
-            </div>
-          </div>
-          <div className="relative overflow-x-auto">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-gray-900 uppercase dark:text-gray-400">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    Nome do Aluno
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Nome do Responsavel
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    CPF do Responsavel
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Serie ou periodo
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Ano
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Status
-                  </th>
-                  <th scope="col" className="px-6 py-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="dark:bg-gray-800">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    Teste Techhh
-                  </th>
-                  <td className="px-6 py-4">Michael Vinicius</td>
-                  <td className="px-6 py-4">474.116.338-52</td>
-                  <td className="px-6 py-4">
-                    Educacao Infantil - Bercario(0 a 1 ano - Manha)
-                  </td>
-                  <td className="px-6 py-4">2o23</td>
-                  <td className="px-6 py-4">
-                    <span className="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400 uppercase">
-                      regular
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                      viewBox="0 0 512 512"
-                    >
-                      <circle
-                        className="text-orange-500"
-                        cx={256}
-                        cy={256}
-                        r={48}
-                        fill="currentColor"
-                      ></circle>
-                      <circle
-                        className="text-orange-500"
-                        cx={256}
-                        cy={416}
-                        r={48}
-                        fill="currentColor"
-                      ></circle>
-                      <circle
-                        className="text-orange-500"
-                        cx={256}
-                        cy={96}
-                        r={48}
-                        fill="currentColor"
-                      ></circle>
-                    </svg>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <Meusalunos showModal={showModal} setShowModal={setShowModal} />
       </div>
     </div>
   );
 };
+
 const ServiceBoard: React.FC<Title> = ({ title }) => {
   return (
     <div className="flex sm:flex-col md:flex-row md:px-24 sm:px-5 py-10 space-y-10 md:space-y-0 md:space-x-10">

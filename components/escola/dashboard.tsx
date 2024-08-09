@@ -25,11 +25,10 @@ const Dashboard: React.FC<DashboardProps> = ({ param }) => {
         ...searchParam,
         ...JSON.parse(param)
       });   
-    } catch (error) { /* empty */ }  
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [param]); 
-
-  console.log(searchParam);
+    } catch (error) { throw new Error("throw error params"); }    
+  }, []);
+  console.log(searchParam, JSON.parse(param));
+  
   useEffect(() => {
     const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
 

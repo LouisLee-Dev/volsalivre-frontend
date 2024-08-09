@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 import { EscolaDetailCard } from '@/components/basecomponents/cards';
 
 interface DetailProps {
@@ -13,21 +14,16 @@ const Detail: React.FC<DetailProps> = ({ title }) => {
     const [school, setSchool] = useState<any>();
     useEffect(() => {
         const url = process.env.NEXT_PUBLIC_BACKEND_DEV + '/api/schools';
-        const fetchSchool = async () => {
-            const requestOptions = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                // body: JSON.stringify({ title: title }),
-            };
+        const fetchSchool = async () => {           
 
             try {
-                const result = await fetch(url, requestOptions);
-                if (!result.ok) {
+                const result = await axios({method: "GET", url: url, params: {title: title}});
+                if (!result) {
                     throw new Error(`HTTP error! Status: ${result.status}`);
                 }
-                const data = await result.json();
+                const data = await result.data;
+                console.log(data);
+                
                 setSchool(data[0]);
             } catch (error) {
                 console.error('Error fetching schools:', error);

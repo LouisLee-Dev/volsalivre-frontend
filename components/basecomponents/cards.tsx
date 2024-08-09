@@ -266,13 +266,13 @@ const SearchResultCard: React.FC<SearchResultCardProps> = ({
       </div>
 
       <div className="flex flex-col">
-        <a
+        <Link
           // type="button" 
           href={`/escola/${encodeURIComponent(title)}`}
           className="text-white py-2 bg-orange-500 hover:bg-orange-600 focus:outline-double focus:ring-4 focus:ring-purple-500 font-medium rounded-full text-sm px-5 text-center me-2"
         >
           See Scholarship
-        </a>
+        </Link>
       </div>
     </div>
   )
